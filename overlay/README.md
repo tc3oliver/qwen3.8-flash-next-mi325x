@@ -6,30 +6,29 @@ Mount read-only over `vllm/models/qwen4_exp/amd/ops/qsa.py` in `vllm/vllm-openai
 -v $PWD/overlay/qsa.py:/usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/ops/qsa.py:ro
 ```
 
-**Only valid for that image** (stock file sha256 `7a7c8501e0b92a4236e382c6ef494670d684ee1dfeb2d673f942a4f38fccf69b`,
-overlay sha256 `2d0c0ee8e2e605604d973497659371644247999de975af6d3907e44bab0ccef7`). After any image change, re-port it
-and re-check it with `tools/kernels/test_qsa.py`, or drop it.
+**Only valid for that image.** Stock file sha256 `7a7c8501e0b92a4236e382c6ef494670d684ee1dfeb2d673f942a4f38fccf69b`
+(identical to vLLM main at the time), overlay sha256 `6c84b3f942a23b36842caf81d41ce15fe06879d389d2bd473c90131147a767eb`.
 
-Changes (everything else is the stock file):
+Content: the stock file plus
 
-* `_qsa_mqa_paged_kernel_v2` (default, `VLLM_QSA_MQA_IMPL=v2`): QSA indexer scoring with 16x64 tiles,
-  `tl.dot` (MFMA), one key tile per request block, early exit past the visible range. The stock kernel
-  scores every row against max_model_len/4 = 65,536 columns. 4.6-20x faster; logits |diff| <= 5e-7; every
-  differing top-k pick is an exact score tie. `orig` / `v1` remain selectable for A/B.
-* `VLLM_QSA_GQA_PREFILL="block_n,splits,warps,stages"`: overrides the sparse-GQA launch profile used for
-  more than 512 programs (prefill). Use `32,1,2,1` (2.0x faster kernel on gfx942). Unset = stock profile.
-  Do not use (64,1,4,1) or (128,1,4,1): they fault the GPU on gfx942.
-* `VLLM_QSA_LOGITS_WORKSPACE_MB` (default 128 = stock).
+* [vllm-project/vllm#62589](https://github.com/vllm-project/vllm/pull/62589): tiled QSA indexer scoring
+  (16 rows × 64 keys per program, `tl.dot`), per-request skip of column blocks past the visible range, fp16 dot
+  for fp16 inputs;
+* [vllm-project/vllm#62590](https://github.com/vllm-project/vllm/pull/62590): sparse-GQA prefill BLOCK_N=32 on
+  gfx942 when BLOCK_M >= 16.
 
-Measured end to end: prefill +70%, decode c64 +41% (e02), then +9-10% prefill from the GQA profile (e14, t14).
-GSM8K-1319 0.9666 vs stock 0.9621 (TP1). Details: `docs/lab-notebook.md`, raw data in `results/experiments/`.
+No environment variables. Drop the overlay once both PRs are in the image you run.
 
-## When it becomes unnecessary
+Validated as `d02-tp2-combo-upstream` (TP2 + EP, QuickReduce INT6, tuned MoE table), raw data in
+`results/experiments/`:
 
-| overlay part | upstream | 
-|---|---|
-| v2 indexer kernel | [vllm-project/vllm#62589](https://github.com/vllm-project/vllm/pull/62589) |
-| `VLLM_QSA_GQA_PREFILL=32,1,2,1` | [vllm-project/vllm#62590](https://github.com/vllm-project/vllm/pull/62590) (same profile, applied automatically on gfx942 when BLOCK_M >= 16) |
+| | stock (e00) | d02 |
+|---|---:|---:|
+| prefill 8 × 32K | 11,469 tok/s | 24,266 tok/s |
+| decode c64 | 2,167 tok/s | 3,208 tok/s |
+| agent 32K × 16 sessions, wall | 63.1 s | 31.9 s |
 
-Once both are in a released vLLM ROCm image, use that image without the overlay and without `VLLM_QSA_GQA_PREFILL`.
-The upstream versions are not byte-identical to this overlay; their own measurements are in `upstream/`.
+Gate (`gate-tp2-d02.*`): functional 9/9, GSM8K-1319 0.9629, 238K needle 3/3. Through LiteLLM on 2 × TP2:
+functional 9/9 (`results/gateway/functional-gateway-tp2x2-upstream-overlay.json`).
+
+Not measured end to end on TP1. Both PRs cover the TP1 shapes (the microbenchmarks in `upstream/` include them).

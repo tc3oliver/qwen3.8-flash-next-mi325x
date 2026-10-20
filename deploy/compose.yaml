@@ -43,17 +43,14 @@ x-vllm-env: &vllm-env
   VLLM_WORKER_MULTIPROC_METHOD: spawn
   TORCH_BLAS_PREFER_HIPBLASLT: "1"
   OMP_NUM_THREADS: "8"
-  # Local QSA overlay (../overlay/qsa.py, see ../overlay/README.md): sparse-GQA prefill launch profile
-  # tuned on gfx942 (BLOCK_N 32, 1 split, 2 warps, 1 stage; stock profile was tuned on GB300).
-  VLLM_QSA_GQA_PREFILL: "32,1,2,1"
 
 # Volumes used by every replica (expanded per service below; YAML cannot merge lists):
 x-vllm-volumes: &vllm-volumes
   - ${MODEL_DIR:?set in .env}:/models/qwen3.8-flash-next-fp8:ro
   - ./runtime/aiter:/root/.aiter
   - ../tuned/aiter:/aiter-tuned:ro
-  # QSA indexer/sparse-GQA overlay for vLLM v0.32.0 (base sha256 7a7c8501...). 4-20x faster indexer
-  # scoring; measured +70% prefill, +41% decode c64 (e02 in ../docs/lab-notebook.md).
+  # QSA overlay for vLLM v0.32.0 only (stock sha256 7a7c8501...): stock file + vllm#62589 + vllm#62590.
+  # TP2 8x32K prefill 24,266 vs 11,469 tok/s stock (d02, ../results/experiments/). See ../overlay/README.md.
   - ../overlay/qsa.py:/usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/ops/qsa.py:ro
 
 x-cmd-tp1: &cmd-tp1
