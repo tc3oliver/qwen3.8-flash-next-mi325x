@@ -1,0 +1,13 @@
+arch gfx942:sramecc+:xnack-
+case | main select ms | branch select ms | dtype select ms | skipA select ms | skipB select ms | max |logit diff| vs branch (visible)
+MTP-off mixed 8K-200K 16x1 seed0 | 0.0940 | 0.1055 | 0.1059 | 0.1056 | 0.0904 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+MTP-off mixed 8K-200K 16x1 seed1 | 0.0949 | 0.1026 | 0.1027 | 0.1050 | 0.0914 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+MTP-off mixed 8K-200K 64x1 seed0 | 0.2628 | 0.2726 | 0.2731 | 0.2542 | 0.1719 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+MTP-off mixed 8K-200K 64x1 seed1 | 0.2652 | 0.2840 | 0.2727 | 0.2610 | 0.1880 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+MTP-off mixed 8K-200K 128x1 seed0 | 0.5282 | 0.5267 | 0.5268 | 0.4708 | 0.3436 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+MTP-off mixed 8K-200K 128x1 seed1 | 0.5346 | 0.5293 | 0.5179 | 0.4645 | 0.3485 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+MTP-off fixed 32768 16x1 | 0.0691 | 0.0642 | 0.0643 | 0.0701 | 0.0668 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+MTP-off fixed 262000 16x1 | 0.1131 | 0.1227 | 0.1228 | 0.1565 | 0.1272 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+MTP3 decode 64x4 mixed | 0.8656 | 0.2903 | 0.2906 | 0.2952 | 0.2319 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+prefill 32K | 91.0516 | 4.4921 | 4.5009 | 4.7549 | 4.5067 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00
+mixed prefill+decode | 36.8458 | 1.8972 | 1.8964 | 2.1517 | 1.9255 | dtype 0.0e+00, skipA 0.0e+00, skipB 0.0e+00

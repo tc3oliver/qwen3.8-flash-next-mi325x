@@ -1,0 +1,6 @@
+case | stock ms | final_skip
+prefill 32K (32000 rows) | 90.698 | 4.577 (19.8x, err 2.4e-07)
+chunk 16K at 96K | 48.356 | 4.419 (10.9x, err 4.8e-07)
+decode 64 req x4 | 0.925 | 0.261 (3.5x, err 4.8e-07)
+decode 16 req x4 | 0.226 | 0.067 (3.4x, err 6.0e-07)
+decode 1 req x4 | 0.065 | 0.067 (1.0x, err 3.6e-07)

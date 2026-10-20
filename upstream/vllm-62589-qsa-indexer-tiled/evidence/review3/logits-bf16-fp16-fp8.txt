@@ -1,0 +1,4 @@
+arch gfx942:sramecc+:xnack- | kernel /work/final_skip.py
+bf16       max abs err vs fp64 reference 9.15e-07 (|ref| max 7.5)
+fp16       max abs err vs fp64 reference 1.02e-06 (|ref| max 7.5)
+fp8e4m3fn  max abs err vs fp64 reference 6.57e-07 (|ref| max 7.5)

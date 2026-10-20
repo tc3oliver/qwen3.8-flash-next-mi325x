@@ -1,0 +1,9 @@
+arch gfx942:sramecc+:xnack-
+visible per row (unique): [0, 250, 512, 513, 514, 24560, 24561, 24562, 24563, 24564, 24565, 24566, 24567, 24568, 24569, 24570, 24571, 24572, 24573, 24574, 24575, 24576, 37500, 65500] | capacity 65600
+raw torch.empty region past visible: NaN fraction 0.881
+raw kernel output (NaN)      count_ok=True only_valid_or_-1=True unique=True selected_scores==topk_over_visible=True indices>=visible=0
+NaN past visible             count_ok=True only_valid_or_-1=True unique=True selected_scores==topk_over_visible=True indices>=visible=0
++inf past visible            count_ok=True only_valid_or_-1=True unique=True selected_scores==topk_over_visible=True indices>=visible=0
+1e30 past visible            count_ok=True only_valid_or_-1=True unique=True selected_scores==topk_over_visible=True indices>=visible=0
+clean (-inf) control         count_ok=True only_valid_or_-1=True unique=True selected_scores==topk_over_visible=True indices>=visible=0
+negative control (seq_lens=capacity, 1e30 poison): indices>=visible=35940 -> check detects reads past visible
