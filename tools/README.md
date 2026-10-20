@@ -24,29 +24,21 @@ benchmarks/make_corpus.sh      # -> benchmarks/corpus/ (about 20 MB)
 | `compare.py <run> ...` | side-by-side table; reads `../results/experiments/` (set `RESULTS=experiments/results` for new runs) |
 | `profile.py --phase prefill|decode` | torch profile of one phase (engine started with `--profiler-config`) |
 
-Example, d01:
+Example, d02:
 
 ```bash
-experiments/run.sh b d01-tp2-combo PATCH_QSA=1 VLLM_QSA_GQA_PREFILL=32,1,2,1 \
+experiments/run.sh b d02-tp2-combo-upstream PATCH_QSA=1 \
   VLLM_ROCM_QUICK_REDUCE_QUANTIZATION=INT6 VLLM_ROCM_QUICK_REDUCE_CAST_BF16_TO_FP16=0 \
   AITER_CONFIG_FMOE=/usr/local/lib/python3.12/dist-packages/aiter/configs/tuned_fmoe.csv:/tuned/tuned_fmoe_qwen38_ep2.csv
 ```
 
 The exact flags and env of every shipped run are in `results/experiments/<run>.config.txt`.
 
-## kernels/
+## Kernel checks
 
-Kernel checks for `overlay/qsa.py`, run inside the vLLM image with the overlay and the scripts mounted at `/patch`:
-
-```bash
-mkdir -p /tmp/patch && cp ../overlay/qsa.py kernels/*.py /tmp/patch/
-docker run --rm --device /dev/kfd --device /dev/dri --group-add video --group-add render --ipc host \
-  -e HIP_VISIBLE_DEVICES=0 -v /tmp/patch:/patch:ro --entrypoint python3 "$VLLM_IMAGE" /patch/test_qsa.py
-```
-
-`test_qsa.py`: correctness (logits, selection) and speed vs the stock kernel. `test_qsa_ties.py`: shows differing
-selections are exact ties. `sweep_qsa.py`, `sweep2.py`: indexer tile sweep. `sweep_gqa.py`, `sweep_gqa2.py`:
-sparse-GQA launch-profile sweep (`sweep_gqa2.py` runs each config in its own process; some configs fault the GPU).
+The shipped overlay is vllm#62589 + #62590. Its kernel tests and microbenchmarks are the PRs' own:
+`tests/models/qwen4_exp/test_qsa_amd.py` in the vLLM PR branches, plus the scripts and outputs in
+`upstream/vllm-62589-qsa-indexer-tiled/evidence/` and `upstream/vllm-62590-sparse-gqa-gfx942/evidence/`.
 
 ## tests/
 
