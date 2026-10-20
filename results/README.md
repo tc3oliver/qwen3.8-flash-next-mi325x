@@ -19,6 +19,7 @@ overlay revision (own indexer kernel, `VLLM_QSA_GQA_PREFILL` env var), which is 
 | `gate-<run>.gsm8k1319.json` | full GSM8K, 1319 questions, zero-shot |
 | `gate-<run>.needle.json` | 238K-token needle at 3 positions |
 | `kv-cache-capacity.txt` | "GPU KV cache size" lines from the server logs (logs not included) |
+| `invalid/` | first d02 attempt, kept as a failed run: the overlay was mounted at a wrong path (zsh `:r` modifier), so it ran stock `qsa.py`. Not valid; d02 was re-run |
 | `sweep_gqa2.txt` | sparse-GQA prefill launch-profile sweep, each config in its own process |
 
 Key runs:
@@ -63,6 +64,7 @@ Through LiteLLM v1.105.1.
 | `sim100-tp2x2.json` | 100 simulated users, 15 min, 2 × TP2, first overlay revision (`tools/tests/sim_users.py`). `summary` + one row per request |
 | `affinity-*.json` | 16 sessions × 4 turns, 24K prefix, with/without `x-session-id`, shuffle vs least-busy, staggered or not (`tools/tests/affinity_cache.py`) |
 | `failover-tp1x4*.json` | pinned replica stopped mid-session (`tools/tests/failover.py`). v1: `allowed_fails: 1`; v2-v4: `allowed_fails: 0`, aiohttp; v5: httpx transport |
+| `session-id-affinity-tp2x2.json` | pinning per session-id format, 8 sessions × 4 requests each; `.` and `:` break it (`tools/tests/session_id_probe.py`) |
 | `functional-gateway-*.json` | functional suite through the gateway. `tp2x2-upstream-overlay` = shipped overlay, the others the first revision |
 | `opencode-run*`, `pi-run*` | real agent task (`tools/tests/agent_real.sh`): summary `.json`, pytest output, agent transcript `.jsonl` (paths anonymized) |
 

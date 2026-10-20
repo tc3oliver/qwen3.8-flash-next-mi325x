@@ -193,6 +193,8 @@ Header support: OpenCode 1.19.3 sends `x-opencode-session-id`, recognised as is.
 `compat.sessionAffinityFormat: "openrouter"` to send `x-session-id`. Any client can send `x-litellm-session-id`.
 LiteLLM pins are claim-once: after failover the session returns to its original replica, cold, once that is back.
 
+**Session ids must not contain `.` or `:`.** Pinning breaks for such ids (tp2x2, 8 sessions x 4 requests per format): `a.b` 7/8 sessions switched replica, `a:b` 6/8, `0.<digits>` 7/8; hex, UUID, digits, `-` and `_` formats 0/8 ([result](results/gateway/session-id-affinity-tp2x2.json), [probe](tools/tests/session_id_probe.py)). Without a pin every request is routed at random and the prefix cache rarely hits; cause not investigated.
+
 Gateway checks: functional suite 9/9 on tp2x2 with the shipped overlay
 ([file](results/gateway/functional-gateway-tp2x2-upstream-overlay.json)). With the previous overlay: 9/9 on tp1x4
 ([file](results/gateway/functional-gateway-tp1x4.json)), 8/9 on tp2x2

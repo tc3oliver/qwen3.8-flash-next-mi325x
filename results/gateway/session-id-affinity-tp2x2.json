@@ -1,0 +1,128 @@
+{
+ "t-<hex8>": {
+  "sessions": 8,
+  "switched": 0,
+  "replicas": [
+   "aaaa",
+   "aaaa",
+   "bbbb",
+   "aaaa",
+   "aaaa",
+   "aaaa",
+   "aaaa",
+   "aaaa"
+  ]
+ },
+ "hex32": {
+  "sessions": 8,
+  "switched": 0,
+  "replicas": [
+   "aaaa",
+   "bbbb",
+   "bbbb",
+   "aaaa",
+   "bbbb",
+   "aaaa",
+   "bbbb",
+   "bbbb"
+  ]
+ },
+ "uuid4": {
+  "sessions": 8,
+  "switched": 0,
+  "replicas": [
+   "aaaa",
+   "aaaa",
+   "bbbb",
+   "bbbb",
+   "aaaa",
+   "bbbb",
+   "aaaa",
+   "aaaa"
+  ]
+ },
+ "sess-<n>": {
+  "sessions": 8,
+  "switched": 0,
+  "replicas": [
+   "bbbb",
+   "aaaa",
+   "bbbb",
+   "bbbb",
+   "aaaa",
+   "bbbb",
+   "bbbb",
+   "bbbb"
+  ]
+ },
+ "digits": {
+  "sessions": 8,
+  "switched": 0,
+  "replicas": [
+   "bbbb",
+   "aaaa",
+   "aaaa",
+   "bbbb",
+   "bbbb",
+   "bbbb",
+   "aaaa",
+   "aaaa"
+  ]
+ },
+ "a_b": {
+  "sessions": 8,
+  "switched": 0,
+  "replicas": [
+   "aaaa",
+   "aaaa",
+   "aaaa",
+   "bbbb",
+   "bbbb",
+   "bbbb",
+   "aaaa",
+   "aaaa"
+  ]
+ },
+ "a.b": {
+  "sessions": 8,
+  "switched": 7,
+  "replicas": [
+   "bbaa",
+   "abaa",
+   "abaa",
+   "baaa",
+   "bbbb",
+   "baaa",
+   "aaba",
+   "abba"
+  ]
+ },
+ "a:b": {
+  "sessions": 8,
+  "switched": 6,
+  "replicas": [
+   "aabb",
+   "bbba",
+   "abaa",
+   "abba",
+   "aaaa",
+   "baab",
+   "bbbb",
+   "aaba"
+  ]
+ },
+ "0.<digits>": {
+  "sessions": 8,
+  "switched": 7,
+  "replicas": [
+   "bbbb",
+   "baaa",
+   "babb",
+   "baaa",
+   "baaa",
+   "abba",
+   "abaa",
+   "aaab"
+  ]
+ }
+}
