@@ -49,6 +49,7 @@ The shipped overlay is vllm#62589 + #62590. Its kernel tests and microbenchmarks
 | `long_needle.py` | needle in a long code prompt |
 | `burst_prefill.py` | N concurrent long prompts, checks the server stays healthy |
 | `affinity_cache.py` | session stickiness and prefix-cache hit through the gateway |
+| `session_id_probe.py` | which session-id formats the gateway pins to one replica |
 | `failover.py` | stops the pinned replica (`docker stop`) mid-session, then restarts it with `deploy/scripts/up.sh` |
 | `sim_users.py` | N users that never clear context, fixed wall time |
 | `header_capture.py` | shows which session headers a client sends |
