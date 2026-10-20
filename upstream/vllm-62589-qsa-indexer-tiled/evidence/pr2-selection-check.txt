@@ -1,0 +1,13 @@
+prefill_32k              rows      0-512    pr2: logits max|err| 2.384e-07 rel 1.26e-07
+prefill_32k              rows  31488-32000  pr2: logits max|err| 4.768e-07 rel 1.86e-07
+prefill_32k              rows= 32000  orig     90.72 ms | pr2     4.51 ms ( 20.1x) identical_rows 0.9983 overlap 1.00000
+prefill_chunk_96k_tail   rows      0-512    pr2: logits max|err| 4.768e-07 rel 1.69e-07
+prefill_chunk_96k_tail   rows  15872-16384  pr2: logits max|err| 4.768e-07 rel 1.76e-07
+prefill_chunk_96k_tail   rows= 16384  orig     48.36 ms | pr2     4.19 ms ( 11.5x) identical_rows 0.9999 overlap 1.00000
+mixed                    rows      0-512    pr2: logits max|err| 3.576e-07 rel 1.42e-07
+mixed                    rows  12493-13005  pr2: logits max|err| 4.768e-07 rel 1.90e-07
+mixed                    rows= 13005  orig     36.34 ms | pr2     1.92 ms ( 18.9x) identical_rows 0.9965 overlap 1.00000
+decode_64x4              rows      0-256    pr2: logits max|err| 4.768e-07 rel 1.70e-07
+decode_64x4              rows      0-256    pr2: logits max|err| 4.768e-07 rel 1.70e-07
+decode_64x4              rows=   256  orig      1.04 ms | pr2     0.31 ms (  3.4x) identical_rows 1.0000 overlap 1.00000
+RESULT PASS
