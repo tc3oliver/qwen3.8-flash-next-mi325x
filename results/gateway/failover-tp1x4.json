@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "session": "failover-f63bb53f",
+    "pinned_replica": "replica-1",
+    "failover_success": "2/3",
+    "first_failover_cached_tokens": 0,
+    "first_failover_prompt_tokens": 9463,
+    "replica_downtime_s": 221.6,
+    "routing_after_restart": [
+      "replica-1",
+      "replica-1",
+      "replica-1"
+    ]
+  },
+  "log": [
+    {
+      "stage": "warm-1",
+      "model_id": "replica-1",
+      "latency_s": 0.61,
+      "prompt_tokens": 9421,
+      "cached_tokens": 0
+    },
+    {
+      "stage": "warm-2",
+      "model_id": "replica-1",
+      "latency_s": 0.26,
+      "prompt_tokens": 9442,
+      "cached_tokens": 6400
+    },
+    {
+      "stage": "after-stop-0",
+      "error": "HTTPStatusError(\"Server error '500 Internal Server Error' for url 'http://127.0.0.1:4000/v1/chat/completions'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500\")"
+    },
+    {
+      "stage": "after-stop-1",
+      "model_id": "replica-2",
+      "latency_s": 3.7,
+      "prompt_tokens": 9463,
+      "cached_tokens": 0
+    },
+    {
+      "stage": "after-stop-2",
+      "model_id": "replica-2",
+      "latency_s": 0.26,
+      "prompt_tokens": 9484,
+      "cached_tokens": 6400
+    },
+    {
+      "stage": "after-restart-0",
+      "model_id": "replica-1",
+      "latency_s": 3.06,
+      "prompt_tokens": 9506,
+      "cached_tokens": 0
+    },
+    {
+      "stage": "after-restart-1",
+      "model_id": "replica-1",
+      "latency_s": 0.24,
+      "prompt_tokens": 9527,
+      "cached_tokens": 6400
+    },
+    {
+      "stage": "after-restart-2",
+      "model_id": "replica-1",
+      "latency_s": 0.56,
+      "prompt_tokens": 9548,
+      "cached_tokens": 6400
+    }
+  ]
+}

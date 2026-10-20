@@ -1,0 +1,73 @@
+{
+  "summary": {
+    "session": "failover-43e7769a",
+    "pinned_replica": "replica-1",
+    "failover_success": "3/3",
+    "first_failover_cached_tokens": 0,
+    "first_failover_prompt_tokens": 9465,
+    "replica_downtime_s": 167.0,
+    "routing_after_restart": [
+      "replica-1",
+      "replica-1",
+      "replica-1"
+    ]
+  },
+  "log": [
+    {
+      "stage": "warm-1",
+      "model_id": "replica-1",
+      "latency_s": 0.79,
+      "prompt_tokens": 9423,
+      "cached_tokens": 0
+    },
+    {
+      "stage": "warm-2",
+      "model_id": "replica-1",
+      "latency_s": 0.26,
+      "prompt_tokens": 9444,
+      "cached_tokens": 6400
+    },
+    {
+      "stage": "after-stop-0",
+      "model_id": "replica-2",
+      "latency_s": 72.11,
+      "prompt_tokens": 9465,
+      "cached_tokens": 0
+    },
+    {
+      "stage": "after-stop-1",
+      "model_id": "replica-2",
+      "latency_s": 0.26,
+      "prompt_tokens": 9486,
+      "cached_tokens": 6400
+    },
+    {
+      "stage": "after-stop-2",
+      "model_id": "replica-2",
+      "latency_s": 0.26,
+      "prompt_tokens": 9508,
+      "cached_tokens": 6400
+    },
+    {
+      "stage": "after-restart-0",
+      "model_id": "replica-1",
+      "latency_s": 0.59,
+      "prompt_tokens": 9529,
+      "cached_tokens": 0
+    },
+    {
+      "stage": "after-restart-1",
+      "model_id": "replica-1",
+      "latency_s": 0.26,
+      "prompt_tokens": 9550,
+      "cached_tokens": 6400
+    },
+    {
+      "stage": "after-restart-2",
+      "model_id": "replica-1",
+      "latency_s": 0.27,
+      "prompt_tokens": 9572,
+      "cached_tokens": 6400
+    }
+  ]
+}

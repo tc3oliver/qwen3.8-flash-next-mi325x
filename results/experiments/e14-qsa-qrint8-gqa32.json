@@ -1,0 +1,106 @@
+{
+ "label": "e14-qsa-qrint8-gqa32",
+ "time": "2026-10-19 11:00:16",
+ "base": "http://127.0.0.1:8012",
+ "prefill_1": {
+  "ttft_s": 1.6469,
+  "prefill_tok_s": 22902,
+  "elapsed_s": 4.7
+ },
+ "prefill_8": {
+  "n": 8,
+  "ttft_p50": 9.6558,
+  "ttft_max": 12.148,
+  "prefill_tok_s": 23555,
+  "uncached_tokens": 286529,
+  "elapsed_s": 12.2
+ },
+ "decode_c1": {
+  "conc": 1,
+  "tpot_p50_ms": 3.8,
+  "tpot_p95_ms": 3.8,
+  "ttft_p50": 0.1034,
+  "out_tok_s": 252.2,
+  "per_seq_tok_s": 263.2,
+  "elapsed_s": 2.0
+ },
+ "decode_c16": {
+  "conc": 16,
+  "tpot_p50_ms": 7.2,
+  "tpot_p95_ms": 7.8,
+  "ttft_p50": 1.5917,
+  "out_tok_s": 1461.4,
+  "per_seq_tok_s": 138.9,
+  "elapsed_s": 5.6
+ },
+ "decode_c64": {
+  "conc": 64,
+  "tpot_p50_ms": 15.3,
+  "tpot_p95_ms": 17.5,
+  "ttft_p50": 1.6595,
+  "out_tok_s": 3238.0,
+  "per_seq_tok_s": 65.4,
+  "elapsed_s": 10.1
+ },
+ "agent_32k_c16": {
+  "sessions": 16,
+  "ctx": 32768,
+  "wall_s": 33.0,
+  "ttft_cold_p50": 14.246,
+  "ttft_cold_p95": 21.3909,
+  "ttft_warm_p50": 0.4372,
+  "ttft_warm_p95": 0.7902,
+  "ttft_p95": 20.4986,
+  "tpot_p50_ms": 15.7,
+  "out_tok_s": 372.4,
+  "cache_hit": 0.6126,
+  "elapsed_s": 33.0
+ },
+ "agent_96k_c8": {
+  "sessions": 8,
+  "ctx": 98304,
+  "wall_s": 43.3,
+  "ttft_cold_p50": 23.7365,
+  "ttft_cold_p95": 35.8094,
+  "ttft_warm_p50": 0.6706,
+  "ttft_warm_p95": 0.9755,
+  "ttft_p95": 32.886,
+  "tpot_p50_ms": 9.1,
+  "out_tok_s": 141.9,
+  "cache_hit": 0.6497,
+  "elapsed_s": 43.3
+ },
+ "agent_32k_c8": {
+  "sessions": 8,
+  "ctx": 32768,
+  "wall_s": 18.4,
+  "ttft_cold_p50": 9.0657,
+  "ttft_cold_p95": 10.9017,
+  "ttft_warm_p50": 0.3548,
+  "ttft_warm_p95": 0.6757,
+  "ttft_p95": 10.762,
+  "tpot_p50_ms": 9.2,
+  "out_tok_s": 333.5,
+  "cache_hit": 0.6116,
+  "elapsed_s": 18.4
+ },
+ "agent_96k_c4": {
+  "sessions": 4,
+  "ctx": 98304,
+  "wall_s": 23.4,
+  "ttft_cold_p50": 15.8464,
+  "ttft_cold_p95": 18.0639,
+  "ttft_warm_p50": 0.466,
+  "ttft_warm_p95": 0.7571,
+  "ttft_p95": 15.8464,
+  "tpot_p50_ms": 6.1,
+  "out_tok_s": 131.3,
+  "cache_hit": 0.6497,
+  "elapsed_s": 23.4
+ },
+ "mtp": {
+  "acceptance": 0.7329,
+  "mean_accepted_len": 3.199
+ },
+ "gsm8k200": 0.98
+}

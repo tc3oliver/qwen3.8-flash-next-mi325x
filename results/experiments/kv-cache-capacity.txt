@@ -1,0 +1,10 @@
+# 'GPU KV cache size' lines from the vLLM server logs of each run (logs not included).
+# Per replica. tp2x2 = 2 replicas, tp1x4 = 4 replicas.
+e00-base.server.log: GPU KV cache size: 9,363,500 tokens, Maximum concurrency for 262,144 tokens per request: 35.72x
+d01-tp2-combo.server.log: GPU KV cache size: 9,362,083 tokens, Maximum concurrency for 262,144 tokens per request: 35.71x
+gate-tp2-d01.server.log: GPU KV cache size: 9,363,500 tokens, Maximum concurrency for 262,144 tokens per request: 35.72x
+e06-tp1-qsa.server.log: GPU KV cache size: 1,860,513 tokens, Maximum concurrency for 262,144 tokens per request: 7.10x
+t01-tp1.server.log: GPU KV cache size: 1,860,513 tokens, Maximum concurrency for 262,144 tokens per request: 7.10x
+c02-tp1-combo-gdnfly.server.log: GPU KV cache size: 1,866,181 tokens, Maximum concurrency for 262,144 tokens per request: 7.12x
+gate-tp1-c02.server.log: GPU KV cache size: 1,866,181 tokens, Maximum concurrency for 262,144 tokens per request: 7.12x
+gate-tp1-stock.server.log: GPU KV cache size: 1,860,513 tokens, Maximum concurrency for 262,144 tokens per request: 7.10x
