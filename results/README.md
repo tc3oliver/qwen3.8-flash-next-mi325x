@@ -6,7 +6,8 @@ All runs: 2026-10-19/20, MI325X, `vllm/vllm-openai-rocm:v0.32.0` (digest in the 
 ## experiments/
 
 One engine per run, started by `tools/experiments/exp.sh` and measured by `tools/experiments/run.sh`.
-e = TP2 (+EP) on 2 GPUs, t/c = TP1 on 1 GPU, d = TP2 combination.
+e = TP2 (+EP) on 2 GPUs, t/c = TP1 on 1 GPU, d = TP2 combination. All e02-e14, t*, c* and d01 runs used the first
+overlay revision (own indexer kernel, `VLLM_QSA_GQA_PREFILL` env var), which is not shipped; d02 uses `overlay/qsa.py`.
 
 | file | content |
 |---|---|
@@ -28,11 +29,12 @@ Key runs:
 | `e02-qsa`, `e02b-qsa` | + QSA overlay (e02b = same on the other GPU pair, noise reference) |
 | `e03-qsa-qrint8`, `e11-qsa-qrint6` | + QuickReduce INT8 / INT6 |
 | `e14-qsa-qrint8-gqa32` | + sparse-GQA profile 32,1,2,1 |
-| `d01-tp2-combo` | TP2 final: overlay + GQA profile + QuickReduce INT6 + tuned MoE (ep2) |
+| `d02-tp2-combo-upstream` | TP2 final with the shipped overlay (vllm#62589 + #62590) + QuickReduce INT6 + tuned MoE (ep2) |
+| `d01-tp2-combo` | same with the first overlay revision + GQA profile env |
 | `t01-tp1`, `e06-tp1-qsa` | TP1 with overlay |
 | `t14-tp1-gqa32`, `c01-tp1-combo`, `c02-tp1-combo-gdnfly` (+ `c01r`, `c02r` repeats) | TP1: + GQA profile, + tuned MoE (tp1), + GDN FlyDSL = TP1 final |
-| `gate-tp1-stock`, `gate-tp1-c02`, `gate-tp2-d01` | accuracy gates |
-| `pr-stock-tp2`, `fin-tiled-tp2`, `fin-pr3-tp2` | stock vs vllm#62589 vs vllm#62590 `qsa.py`, used in the PR texts |
+| `gate-tp2-d02`, `gate-tp1-stock`, `gate-tp1-c02`, `gate-tp2-d01` | accuracy gates |
+| `pr-stock-tp2`, `fin2-tiled-tp2`, `fin-pr3-tp2` | stock vs vllm#62589 (final) vs vllm#62590 `qsa.py`, used in the PR texts. `fin-tiled-tp2` = first revision of #62589 |
 | `br-pr*-tp2`, `pr-v*-tp2` | earlier PR-branch candidates (the `qsa.py` mounted is in each `.config.txt`; those files are not included) |
 | `e01`, `e05`, `t15`, `t16`, `t18a` | profiling / TunableOp tuning runs: config only, profiles not included |
 | other `t*` / `e*` | single-change experiments listed under "Tried and dropped" |
@@ -58,10 +60,10 @@ Through LiteLLM v1.105.1.
 
 | file | content |
 |---|---|
-| `sim100-tp2x2.json` | 100 simulated users, 15 min, 2 × TP2 (`tools/tests/sim_users.py`). `summary` + one row per request |
+| `sim100-tp2x2.json` | 100 simulated users, 15 min, 2 × TP2, first overlay revision (`tools/tests/sim_users.py`). `summary` + one row per request |
 | `affinity-*.json` | 16 sessions × 4 turns, 24K prefix, with/without `x-session-id`, shuffle vs least-busy, staggered or not (`tools/tests/affinity_cache.py`) |
 | `failover-tp1x4*.json` | pinned replica stopped mid-session (`tools/tests/failover.py`). v1: `allowed_fails: 1`; v2-v4: `allowed_fails: 0`, aiohttp; v5: httpx transport |
-| `functional-gateway-*.json` | functional suite through the gateway |
+| `functional-gateway-*.json` | functional suite through the gateway. `tp2x2-upstream-overlay` = shipped overlay, the others the first revision |
 | `opencode-run*`, `pi-run*` | real agent task (`tools/tests/agent_real.sh`): summary `.json`, pytest output, agent transcript `.jsonl` (paths anonymized) |
 
 ## first-deploy/
