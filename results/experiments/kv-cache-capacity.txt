@@ -8,3 +8,4 @@ t01-tp1.server.log: GPU KV cache size: 1,860,513 tokens, Maximum concurrency for
 c02-tp1-combo-gdnfly.server.log: GPU KV cache size: 1,866,181 tokens, Maximum concurrency for 262,144 tokens per request: 7.12x
 gate-tp1-c02.server.log: GPU KV cache size: 1,866,181 tokens, Maximum concurrency for 262,144 tokens per request: 7.12x
 gate-tp1-stock.server.log: GPU KV cache size: 1,860,513 tokens, Maximum concurrency for 262,144 tokens per request: 7.10x
+d02-tp2-combo-upstream.server.log: GPU KV cache size: 9,362,083 tokens, Maximum concurrency for 262,144 tokens per request: 35.71x

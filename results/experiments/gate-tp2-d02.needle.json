@@ -1,0 +1,32 @@
+{
+ "summary": {
+  "tokens_target": 238000,
+  "pass": true
+ },
+ "rows": [
+  {
+   "pos": 0.05,
+   "prompt_tokens": 238056,
+   "s": 10.3,
+   "expected": "ZEPHYR-5-2927",
+   "got": "ZEPHYR-5-2927",
+   "ok": true
+  },
+  {
+   "pos": 0.5,
+   "prompt_tokens": 238059,
+   "s": 10.4,
+   "expected": "ZEPHYR-50-3620",
+   "got": "ZEPHYR-50-3620",
+   "ok": true
+  },
+  {
+   "pos": 0.95,
+   "prompt_tokens": 238058,
+   "s": 9.9,
+   "expected": "ZEPHYR-95-5042",
+   "got": "ZEPHYR-95-5042",
+   "ok": true
+  }
+ ]
+}
