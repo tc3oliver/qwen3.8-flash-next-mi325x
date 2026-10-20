@@ -1,0 +1,53 @@
+# LiteLLM gateway, layout tp2x2: two TP2 replicas (LiteLLM v1.105.1).
+#
+# Session affinity (verified against litellm/proxy/litellm_pre_call_utils.py in this image):
+#   session id resolution order: x-litellm-trace-id > x-litellm-session-id > x-<vendor>-session-id
+#   > (codex) > bare x-session-id  ->  metadata.session_id  ->  session_affinity pre-call check.
+#   - OpenCode 1.19.3 sends x-opencode-session-id (+ x-session-id)        -> recognised natively
+#   - Pi Agent 1.3.0 with compat.sessionAffinityFormat="openrouter" sends x-session-id -> recognised
+#   No header normalisation layer is needed. Clients may also send x-litellm-session-id directly.
+#
+# Affinity pins a session to a replica for deployment_affinity_ttl_seconds so its prefix cache
+# keeps hitting. It is NOT KV persistence: eviction, restart or failover still cause misses.
+
+model_list:
+  - model_name: qwen3.8-flash-next
+    litellm_params:
+      model: hosted_vllm/qwen3.8-flash-next
+      api_base: http://qwen38-vllm-a:8000/v1
+      api_key: "none"
+    model_info:
+      id: replica-a            # surfaces as x-litellm-model-id
+  - model_name: qwen3.8-flash-next
+    litellm_params:
+      model: hosted_vllm/qwen3.8-flash-next
+      api_base: http://qwen38-vllm-b:8000/v1
+      api_key: "none"
+    model_info:
+      id: replica-b
+
+router_settings:
+  routing_strategy: simple-shuffle
+  optional_pre_call_checks:
+    - session_affinity
+  deployment_affinity_ttl_seconds: 3600
+  # Failover: a failing replica is cooled down and traffic (including pinned sessions) moves to
+  # the healthy one. Those sessions start with a cold prefix cache on the new replica.
+  num_retries: 2
+  # 0 = cool a deployment down on its FIRST failure, so the in-request retries skip it; with 1 the
+  # retries of a pinned session went back to the dead replica and the client got a 500 (failover test).
+  allowed_fails: 0
+  cooldown_time: 30
+  retry_policy:
+    InternalServerErrorRetries: 2
+    TimeoutErrorRetries: 1
+
+litellm_settings:
+  # Per-deployment `timeout` is NOT set on purpose: it replaces the client's 5 s connect timeout,
+  # so a request to a just-stopped replica waited ~70 s for TCP SYN retries before failing over.
+  # request_timeout below gives the same 1800 s total budget with a 5 s connect timeout.
+  drop_params: false
+  request_timeout: 1800
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY

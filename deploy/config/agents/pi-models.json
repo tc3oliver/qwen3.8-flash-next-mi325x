@@ -1,0 +1,23 @@
+{
+  "$schema": "https://pi.dev/schemas/models.schema.json",
+  "providers": {
+    "mi325x-lab": {
+      "baseUrl": "http://LAB_HOST:4000/v1",
+      "api": "openai-completions",
+      "apiKey": "$LITELLM_API_KEY",
+      "models": [
+        {
+          "id": "qwen3.8-flash-next",
+          "name": "Qwen3.8-Flash-Next-FP8 (MI325X)",
+          "reasoning": true,
+          "contextWindow": 262144,
+          "maxTokens": 32768,
+          "compat": {
+            "sendSessionAffinityHeaders": true,
+            "sessionAffinityFormat": "openrouter"
+          }
+        }
+      ]
+    }
+  }
+}

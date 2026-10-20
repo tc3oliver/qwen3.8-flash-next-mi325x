@@ -1,0 +1,10 @@
+.env
+runtime/
+logs/
+__pycache__/
+*.pyc
+tools/benchmarks/corpus/
+tools/benchmarks/results/
+tools/experiments/results/
+tools/experiments/profiles/
+tools/tests/results/

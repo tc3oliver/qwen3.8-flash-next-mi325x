@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "mi325x-lab": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "MI325X Lab",
+      "options": {
+        "baseURL": "http://LAB_HOST:4000/v1",
+        "apiKey": "{env:LITELLM_API_KEY}"
+      },
+      "models": {
+        "qwen3.8-flash-next": {
+          "name": "Qwen3.8-Flash-Next-FP8 (MI325X)",
+          "reasoning": true,
+          "tool_call": true,
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          }
+        }
+      }
+    }
+  },
+  "model": "mi325x-lab/qwen3.8-flash-next"
+}
