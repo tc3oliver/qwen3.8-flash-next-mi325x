@@ -1,9 +1,9 @@
 # Tuning experiments — Qwen3.8-Flash-Next-FP8 on MI325X (vLLM 0.32.0)
 
 > Lab notebook kept during tuning (2026-10-19, UTC). Paths are from the original working tree:
-> `experiments/patches/qsa.py` and `patches/qsa.py` = `overlay/qsa.py`; `experiments/results/` = `results/experiments/`;
+> `experiments/patches/qsa.py` and `patches/qsa.py` = the first overlay revision (not shipped; `overlay/qsa.py` is now vllm#62589 + #62590); `experiments/results/` = `results/experiments/`;
 > `tests/results/` = `results/gateway/`; `benchmarks/results/` = `results/benchmark-grid/`;
-> `experiments/*.sh|py`, `tests/`, `benchmarks/` = `tools/`; `patches/test_qsa.py`, `patches/sweep_gqa2.py` = `tools/kernels/`.
+> `experiments/*.sh|py`, `tests/`, `benchmarks/` = `tools/`; `patches/test_qsa.py` and the sweep scripts are not included.
 > Profiles, traces and server logs are not included.
 
 Window: 2026-10-19 09:30 → ~22:30 UTC. Goal: best production config for 2 replicas on GPU0-3.

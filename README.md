@@ -8,33 +8,36 @@ with LiteLLM in front for session affinity. Everything here was measured; raw da
 One engine, same perfsuite (fixed 512-token decode, unique prompts per run). "Stock" is vLLM v0.32.0 with the
 same flags and no overlay, no tuned tables, no QuickReduce. Run-to-run noise is about ±3-5%.
 
+TP2 "tuned" is run d02: the shipped [`overlay/qsa.py`](overlay/), QuickReduce INT6 and the tuned MoE table.
+
 | | stock | tuned | raw |
 |---|---:|---:|---|
-| TP2 prefill, 8 × 32K concurrent | 11,469 tok/s | **24,615 tok/s** | [e00](results/experiments/e00-base.json) → [d01](results/experiments/d01-tp2-combo.json) |
-| TP2 32K cold TTFT, single request | 3.48 s | **1.33 s** | same |
-| TP2 decode, 64 concurrent | 2,167 tok/s | **3,203 tok/s** | same |
-| TP2 agent 32K, 16 sessions × 3 turns, wall | 63.1 s | **32.1 s** | same |
-| TP2 agent 96K, 8 sessions × 3 turns, wall | 84.9 s | **41.2 s** | same |
-| GSM8K, 1319 questions, zero-shot, TP1 | 0.9621 | **0.9666** | [stock](results/experiments/gate-tp1-stock.gsm8k1319.json), [tuned](results/experiments/gate-tp1-c02.gsm8k1319.json) |
-| GSM8K, 1319 questions, zero-shot, TP2 tuned | | 0.9651 | [gate-tp2-d01](results/experiments/gate-tp2-d01.gsm8k1319.json) |
-| 238K-token needle, 3 positions | | 3/3 on every gate | [gate-*.needle.json](results/experiments/) |
+| TP2 prefill, 8 × 32K concurrent | 11,469 tok/s | **24,266 tok/s** | [e00](results/experiments/e00-base.json) → [d02](results/experiments/d02-tp2-combo-upstream.json) |
+| TP2 32K cold TTFT, single request | 3.48 s | **1.51 s** | same |
+| TP2 decode, 64 concurrent | 2,167 tok/s | **3,208 tok/s** | same |
+| TP2 agent 32K, 16 sessions × 3 turns, wall | 63.1 s | **31.9 s** | same |
+| TP2 agent 96K, 8 sessions × 3 turns, wall | 84.9 s | **41.7 s** | same |
+| TP2 gate: GSM8K 1319 questions zero-shot / 238K needle / functional | | 0.9629 / 3/3 / 9/9 | [gate-tp2-d02](results/experiments/gate-tp2-d02.gsm8k1319.json) ([needle](results/experiments/gate-tp2-d02.needle.json), [functional](results/experiments/gate-tp2-d02.functional.json)) |
+| TP1 GSM8K 1319, stock vs previous overlay revision ¹ | 0.9621 | 0.9666 | [stock](results/experiments/gate-tp1-stock.gsm8k1319.json), [c02](results/experiments/gate-tp1-c02.gsm8k1319.json) |
+
+¹ e02-e14, d01 and all t*/c* runs used the previous overlay revision; see [History](#history).
 
 **2 × TP2 vs 4 × TP1 on the same 4 GPUs.** TP1 is faster per GPU because TP2 all-reduces over one XGMI link.
 TP2 keeps two weight copies instead of four, so it has 2.5× the KV cache.
 
-| | 2 × TP2 (d01) | 4 × TP1 (c02) | raw |
+| | 2 × TP2 (d02) | 4 × TP1 (c02 ¹) | raw |
 |---|---:|---:|---|
 | KV cache per replica | 9,362,083 tokens | 1,866,181 tokens | [kv-cache-capacity.txt](results/experiments/kv-cache-capacity.txt) |
 | KV cache total | **18.7M tokens** | 7.46M tokens | same |
 | 262K-token requests that fit in KV (vLLM "maximum concurrency") | 2 × 35.71 | 4 × 7.12 | same |
-| agent 32K, 16 sessions on 2 GPUs, wall / TTFT p95 | 32.1 s / 19.7 s | **22.3 s / 13.0 s** (8 per engine) | [d01](results/experiments/d01-tp2-combo.json), [c02](results/experiments/c02-tp1-combo-gdnfly.json) |
-| agent 96K, 8 sessions on 2 GPUs, wall | 41.2 s | **26.6 s** (4 per engine) | same |
-| idle 32K cold TTFT | **1.33 s** | 2.11 s | same |
+| agent 32K, 16 sessions on 2 GPUs, wall / TTFT p95 | 31.9 s / 19.7 s | **22.3 s / 13.0 s** (8 per engine) | [d02](results/experiments/d02-tp2-combo-upstream.json), [c02](results/experiments/c02-tp1-combo-gdnfly.json) |
+| agent 96K, 8 sessions on 2 GPUs, wall | 41.7 s | **26.6 s** (4 per engine) | same |
+| idle 32K cold TTFT | **1.51 s** | 2.11 s | same |
 
 A single TP1 engine with 16 × 128K sessions (2.1M tokens > 1.87M) preempted continuously: cache hit 0, TPOT 257 ms
 ([tp1-single-replica](results/benchmark-grid/tp1-single-replica-20261019-130321.csv)).
 
-**100 simulated users on 2 × TP2 through LiteLLM** ([sim100-tp2x2.json](results/gateway/sim100-tp2x2.json)).
+**100 simulated users on 2 × TP2 through LiteLLM**, previous overlay revision ([sim100-tp2x2.json](results/gateway/sim100-tp2x2.json)).
 Each user starts with a 20K-120K token code context that only grows (never cleared), 256 output tokens per turn,
 ~30 s mean think time, 15 minutes:
 
@@ -42,7 +45,7 @@ Each user starts with a 20K-120K token code context that only grows (never clear
 |---:|---:|---:|---:|---:|---:|---:|
 | 2,312 | 0 | **0.58 s** / 6.65 s / 49.8 s | 11.4 s / 31.1 s | **94%** | 92,965 tokens | 1,164 / 1,148 |
 
-**Production grid, 4 × TP1 through LiteLLM**, 16 concurrent agent sessions, 3 turns × 256 tokens
+**Production grid, 4 × TP1 through LiteLLM**, previous overlay revision, 16 concurrent agent sessions, 3 turns × 256 tokens
 ([tp1x4-gateway](results/benchmark-grid/tp1x4-gateway-20261019-125941.csv),
 [224K](results/benchmark-grid/tp1x4-gateway-224k-20261020-003711.csv)). The 1/4/8-session cells are in the same files.
 
@@ -78,13 +81,14 @@ The overlay replaces one file of that exact image. The tuned AITER tables are ke
 
 | optimization | how | TP2 | TP1 | measured gain | accuracy check |
 |---|---|:-:|:-:|---|---|
-| QSA indexer kernel | mount [`overlay/qsa.py`](overlay/) | yes | yes | TP2: 8×32K prefill 11,469 → 19,089 tok/s, decode c64 2,167 → 3,065 tok/s ([e00](results/experiments/e00-base.json) → [e02](results/experiments/e02-qsa.json)) | GSM8K-200 0.970 → 0.970 |
-| sparse-GQA prefill profile | `VLLM_QSA_GQA_PREFILL=32,1,2,1` (needs the overlay) | yes | yes | TP2: 21,568 → 23,555 tok/s ([e03](results/experiments/e03-qsa-qrint8.json) → [e14](results/experiments/e14-qsa-qrint8-gqa32.json)); TP1: 17,858 → 19,647 ([t01](results/experiments/t01-tp1.json) → [t14](results/experiments/t14-tp1-gqa32.json)) | GSM8K-200 0.98 / 0.98 |
-| QuickReduce INT6 all-reduce | `VLLM_ROCM_QUICK_REDUCE_QUANTIZATION=INT6`, `VLLM_ROCM_QUICK_REDUCE_CAST_BF16_TO_FP16=0` | yes | n/a | 19,089 → 22,039 tok/s ([e02](results/experiments/e02-qsa.json) → [e11](results/experiments/e11-qsa-qrint6.json)) | GSM8K-1319 0.9651 ([gate-tp2-d01](results/experiments/gate-tp2-d01.gsm8k1319.json)) |
-| tuned AITER fused-MoE tables | mount [`tuned/aiter/`](tuned/aiter/), set `AITER_CONFIG_FMOE` | `ep2` table | `tp1` table | kernel −3.7% to −13% at the tuned shapes; TP1 8×32K prefill +0.8% / +0.7% ([t14](results/experiments/t14-tp1-gqa32.json) → [c01](results/experiments/c01-tp1-combo.json), [c01r](results/experiments/c01r-tp1-combo.json)) | GSM8K-200 0.965 / 0.97 |
-| GDN FlyDSL prefill | `--additional-config={"gdn_prefill_backend":"aiter_flydsl"}` | not measured | yes | agent 96K × 4 TTFT p95 19.9 → 17.6 s ([c01](results/experiments/c01-tp1-combo.json) → [c02](results/experiments/c02-tp1-combo-gdnfly.json)); repeat 18.2 → 17.7 s ([c01r](results/experiments/c01r-tp1-combo.json) → [c02r](results/experiments/c02r-tp1-combo-gdnfly.json)) | GSM8K-200 0.975 |
+| QSA overlay: tiled indexer (vllm#62589) + sparse-GQA BLOCK_N=32 (vllm#62590) | mount [`overlay/qsa.py`](overlay/), no env vars | yes | yes ² | TP2, #62589 alone: 8×32K prefill 11,486 → 20,987 tok/s, decode c64 2,167 → 3,023 tok/s ([pr-stock](results/experiments/pr-stock-tp2.json) → [fin2-tiled](results/experiments/fin2-tiled-tp2.json)); #62590 alone: 11,486 → 12,272 tok/s ([fin-pr3](results/experiments/fin-pr3-tp2.json)) | TP2 combination (d02): GSM8K-1319 0.9629, needle 3/3, functional 9/9 |
+| QuickReduce INT6 all-reduce ¹ | `VLLM_ROCM_QUICK_REDUCE_QUANTIZATION=INT6`, `VLLM_ROCM_QUICK_REDUCE_CAST_BF16_TO_FP16=0` | yes | n/a | 19,089 → 22,039 tok/s ([e02](results/experiments/e02-qsa.json) → [e11](results/experiments/e11-qsa-qrint6.json)) | GSM8K-1319 0.9629 (d02), 0.9651 (d01) |
+| tuned AITER fused-MoE tables ¹ | mount [`tuned/aiter/`](tuned/aiter/), set `AITER_CONFIG_FMOE` | `ep2` table | `tp1` table | kernel −3.7% to −13% at the tuned shapes; TP1 8×32K prefill +0.8% / +0.7% ([t14](results/experiments/t14-tp1-gqa32.json) → [c01](results/experiments/c01-tp1-combo.json), [c01r](results/experiments/c01r-tp1-combo.json)) | GSM8K-200 0.965 / 0.97 |
+| GDN FlyDSL prefill ¹ | `--additional-config={"gdn_prefill_backend":"aiter_flydsl"}` | not measured | yes | agent 96K × 4 TTFT p95 19.9 → 17.6 s ([c01](results/experiments/c01-tp1-combo.json) → [c02](results/experiments/c02-tp1-combo-gdnfly.json)); repeat 18.2 → 17.7 s ([c01r](results/experiments/c01r-tp1-combo.json) → [c02r](results/experiments/c02r-tp1-combo-gdnfly.json)) | GSM8K-200 0.975 |
 
 GSM8K-200 has a standard error of about 1.2 points; the full 1319-question runs are the accuracy gate.
+¹ measured on top of the previous overlay revision; d02 re-validates the full TP2 combination with the shipped overlay.
+² both PRs cover the TP1 shapes in their microbenchmarks; the shipped overlay was not run end to end on TP1.
 
 These are not optimizations, but this model on this image needs them:
 
@@ -117,7 +121,6 @@ docker run -d --name qwen38-tp2 --ipc host --shm-size 32g \
   -v "$PWD/overlay/qsa.py":$VLLM_PKG/vllm/models/qwen4_exp/amd/ops/qsa.py:ro \
   -v "$PWD/tuned/aiter":/aiter-tuned:ro \
   -e HIP_VISIBLE_DEVICES=0,1 \
-  -e VLLM_QSA_GQA_PREFILL=32,1,2,1 \
   -e AITER_CONFIG_FMOE=$VLLM_PKG/aiter/configs/tuned_fmoe.csv:/aiter-tuned/tuned_fmoe_qwen38_ep2.csv \
   -e VLLM_ROCM_QUICK_REDUCE_QUANTIZATION=INT6 -e VLLM_ROCM_QUICK_REDUCE_CAST_BF16_TO_FP16=0 \
   -e VLLM_ROCM_USE_AITER=1 -e VLLM_ROCM_USE_AITER_MOE=1 -e VLLM_ROCM_USE_AITER_CUSTOM_AR=0 \
@@ -190,7 +193,9 @@ Header support: OpenCode 1.19.3 sends `x-opencode-session-id`, recognised as is.
 `compat.sessionAffinityFormat: "openrouter"` to send `x-session-id`. Any client can send `x-litellm-session-id`.
 LiteLLM pins are claim-once: after failover the session returns to its original replica, cold, once that is back.
 
-Gateway checks: functional suite 9/9 on tp1x4 ([file](results/gateway/functional-gateway-tp1x4.json)), 8/9 on tp2x2
+Gateway checks: functional suite 9/9 on tp2x2 with the shipped overlay
+([file](results/gateway/functional-gateway-tp2x2-upstream-overlay.json)). With the previous overlay: 9/9 on tp1x4
+([file](results/gateway/functional-gateway-tp1x4.json)), 8/9 on tp2x2
 ([file](results/gateway/functional-gateway-tp2x2.json); the short-prompt determinism check returned two variants for
 1 of 4 prompts). Real agent tasks (fix 4 bugs until pytest passes): OpenCode 2/2, Pi Agent 2/2, tests untouched,
 each session on one replica ([results/gateway/](results/gateway/)).
@@ -199,29 +204,29 @@ each session on one replica ([results/gateway/](results/gateway/)).
 
 | PR | change | evidence | replaces here |
 |---|---|---|---|
-| [vllm-project/vllm#62589](https://github.com/vllm-project/vllm/pull/62589) | tiled QSA indexer scoring, skip invisible columns. TP2 8×32K prefill 11,486 → 19,355 tok/s (+69%), decode c64 2,167 → 2,997 tok/s (+38%) | [upstream/vllm-62589-qsa-indexer-tiled](upstream/vllm-62589-qsa-indexer-tiled/) | indexer part of `overlay/qsa.py` |
-| [vllm-project/vllm#62590](https://github.com/vllm-project/vllm/pull/62590) | sparse GQA prefill BLOCK_N=32 on gfx942. TP2 8×32K prefill 11,486 → 12,272 tok/s (+6.8%) | [upstream/vllm-62590-sparse-gqa-gfx942](upstream/vllm-62590-sparse-gqa-gfx942/) | `VLLM_QSA_GQA_PREFILL` |
+| [vllm-project/vllm#62589](https://github.com/vllm-project/vllm/pull/62589) | tiled QSA indexer scoring, per-request skip of invisible columns. TP2 8×32K prefill 11,486 → 20,987 tok/s (+83%), decode c64 2,167 → 3,023 tok/s (+39%) | [upstream/vllm-62589-qsa-indexer-tiled](upstream/vllm-62589-qsa-indexer-tiled/) | indexer part of `overlay/qsa.py` |
+| [vllm-project/vllm#62590](https://github.com/vllm-project/vllm/pull/62590) | sparse GQA prefill BLOCK_N=32 on gfx942. TP2 8×32K prefill 11,486 → 12,272 tok/s (+6.8%) | [upstream/vllm-62590-sparse-gqa-gfx942](upstream/vllm-62590-sparse-gqa-gfx942/) | sparse-GQA part of `overlay/qsa.py` |
 | [ROCm/aiter#6692](https://github.com/ROCm/aiter/pull/6692) | fused-MoE tuner uses all sources for shapes FlyDSL v2 cannot tune (with `TUNE_ONLY` unset it found 0 candidates) | [upstream/aiter-6692-moe-tuner-fallback](upstream/aiter-6692-moe-tuner-fallback/) | the `TUNE_ONLY=` workaround when re-tuning |
 | [ROCm/aiter#6693](https://github.com/ROCm/aiter/pull/6693) | gfx942 / 304-CU fused-MoE configs for this model | [upstream/aiter-6693-gfx942-moe-configs](upstream/aiter-6693-gfx942-moe-configs/) | `tuned/aiter/` and `AITER_CONFIG_FMOE` |
 
-The PR end-to-end numbers were measured against a separate stock run
-([pr-stock-tp2](results/experiments/pr-stock-tp2.json), [fin-tiled-tp2](results/experiments/fin-tiled-tp2.json),
-[fin-pr3-tp2](results/experiments/fin-pr3-tp2.json)) with the PR's own `qsa.py`, so they differ slightly from the
-overlay numbers above. When #62589 and #62590 are in a released vLLM ROCm image, drop the overlay mount and
-`VLLM_QSA_GQA_PREFILL`. When an image ships an aiter with #6693, drop `AITER_CONFIG_FMOE`.
+The PR end-to-end numbers compare each PR's `qsa.py` alone against a stock run
+([pr-stock-tp2](results/experiments/pr-stock-tp2.json), [fin2-tiled-tp2](results/experiments/fin2-tiled-tp2.json),
+[fin-pr3-tp2](results/experiments/fin-pr3-tp2.json)), with no QuickReduce or tuned tables. `overlay/qsa.py` is the
+v0.32.0 file with both PRs applied. When both are in a released vLLM ROCm image, drop the overlay mount.
+When an image ships an aiter with #6693, drop `AITER_CONFIG_FMOE`.
 
 ## What was tuned and why
 
 Profiling a 32K prefill on stock TP2 ([lab notebook](docs/lab-notebook.md), e01): the QSA indexer kernel took 43%
 of GPU time, the TP all-reduce 15%, BF16 GEMM 10%, AITER FP8 MoE 10%, sparse GQA 7.5%.
 
-- **QSA indexer.** The stock scorer sizes its work to max_model_len: 65,536 columns per query row, 94% of them
-  masked for a 32K prompt, one row per program, no MFMA. The overlay scores 16 rows × 64 keys per program with
-  `tl.dot` and exits past each block's visible range: 4.6-20× faster kernel, logits within 5e-7, top-k differs only
-  at exact score ties.
-- **Sparse-GQA prefill profile.** The >512-program launch profile was tuned on GB300. On gfx942,
-  (BLOCK_N 32, 1 split, 2 warps, 1 stage) runs the kernel 2.0× faster ([sweep](results/experiments/sweep_gqa2.txt)).
-  (64,1,4,1) and (128,1,4,1) fault the GPU.
+- **QSA indexer (vllm#62589).** The stock scorer sizes its work to max_model_len: 65,600 columns per query row,
+  most of them masked for a 32K prompt, one row per program, no MFMA. The overlay scores 16 rows × 64 keys per
+  program with `tl.dot` and skips column blocks past each request's visible range. `qsa_select_paged_tokens`:
+  32K prefill 90.7 → 4.58 ms, decode 64 × 4 0.925 → 0.261 ms; selection differs from main only at exact score ties.
+- **Sparse-GQA prefill (vllm#62590).** The >512-program launch profile was tuned on GB300. On gfx942,
+  BLOCK_N 32 instead of 64 runs the kernel 1.5-2.3× faster for the TP1 and TP2 shapes
+  ([sweep](results/experiments/sweep_gqa2.txt)). (64,1,4,1) and (128,1,4,1) fault the GPU.
 - **QuickReduce INT6.** After the indexer fix, the TP2 all-reduce (~156 MB per 30K-token chunk per layer over one XGMI
   link) was the largest cost. INT8 gave +13% prefill, INT6 about the same or slightly better, FP gave nothing (link-bound).
   INT6 passed full GSM8K.
@@ -255,15 +260,27 @@ Online TunableOp was stopped: about 1 minute per shape across hundreds of shapes
 ## Verify or re-tune
 
 - [`tools/`](tools/): experiment harness (`exp.sh`, `run.sh`, `perfsuite.py`, `compare.py`, `gate.sh`,
-  `queue.sh`, `profile.py`), kernel checks, tests and the agent benchmark. See [tools/README.md](tools/README.md).
+  `queue.sh`, `profile.py`), tests and the agent benchmark. See [tools/README.md](tools/README.md).
 - [`docs/lab-notebook.md`](docs/lab-notebook.md): the full log of experiments and decisions.
 - [`results/README.md`](results/README.md): what each raw file is.
 
 Reproduce a table from the shipped data:
 
 ```bash
-python3 tools/experiments/compare.py e00-base e02-qsa d01-tp2-combo c02-tp1-combo-gdnfly
+python3 tools/experiments/compare.py e00-base d01-tp2-combo d02-tp2-combo-upstream
 ```
+
+## History
+
+The first overlay revision (not shipped) had its own indexer kernel and a `VLLM_QSA_GQA_PREFILL` env var for the
+sparse-GQA launch profile; the lab notebook describes it. Most experiments ran on it, including the TP2 final d01:
+8×32K prefill 24,615 tok/s, decode c64 3,203 tok/s, agent 32K wall 32.1 s, GSM8K-1319 0.9651
+([d01](results/experiments/d01-tp2-combo.json), [gate](results/experiments/gate-tp2-d01.gsm8k1319.json)).
+d02 with the shipped overlay is within 4% of d01 on prefill and decode throughput and agent wall time; its
+single-request 32K cold TTFT is 1.51 s vs 1.33 s.
+The TP1 runs, the 4 × TP1 grid, sim100 and the gateway tests except
+[functional-gateway-tp2x2-upstream-overlay.json](results/gateway/functional-gateway-tp2x2-upstream-overlay.json)
+(9/9) used the first revision.
 
 ## License
 
