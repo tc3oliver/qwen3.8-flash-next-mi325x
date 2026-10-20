@@ -1,0 +1,19 @@
+arch gfx942:sramecc+:xnack-
+fp32       main     max abs err 7.97e-07  max rel err 7.48e-05  (|ref| max 7.5)
+fp32       branch   max abs err 2.09e-02  max rel err 1.00e+00  (|ref| max 7.5)
+fp32       variant  max abs err 2.13e-06  max rel err 1.98e-04  (|ref| max 7.5)
+fp16       main     max abs err 9.33e-07  max rel err 1.10e-04  (|ref| max 7.5)
+fp16       branch   max abs err 1.66e-02  max rel err 2.67e+00  (|ref| max 7.5)
+fp16       variant  max abs err 1.02e-06  max rel err 7.40e-05  (|ref| max 7.5)
+bf16       main     max abs err 8.06e-07  max rel err 3.92e-05  (|ref| max 7.5)
+bf16       branch   max abs err 9.15e-07  max rel err 2.40e-05  (|ref| max 7.5)
+bf16       variant  max abs err 9.15e-07  max rel err 2.40e-05  (|ref| max 7.5)
+fp8e4m3fn  main     max abs err 6.57e-07  max rel err 1.16e-07  (|ref| max 7.5)
+fp8e4m3fn  branch   max abs err 6.57e-07  max rel err 1.16e-07  (|ref| max 7.5)
+fp8e4m3fn  variant  max abs err 6.57e-07  max rel err 1.16e-07  (|ref| max 7.5)
+bf16 speed prefill 32K rep0: branch 4.485 ms | variant 4.476 ms
+bf16 speed prefill 32K rep1: branch 4.447 ms | variant 4.449 ms
+bf16 speed prefill 32K rep2: branch 4.446 ms | variant 4.449 ms
+bf16 speed decode 64x4 rep0: branch 0.313 ms | variant 0.310 ms
+bf16 speed decode 64x4 rep1: branch 0.291 ms | variant 0.289 ms
+bf16 speed decode 64x4 rep2: branch 0.289 ms | variant 0.289 ms

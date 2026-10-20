@@ -48,6 +48,7 @@ def _qsa_mqa_paged_kernel(
     BLOCK_N: tl.constexpr,
     BLOCK_D: tl.constexpr,
     COMPRESS_RATIO: tl.constexpr,
+    DOT_DTYPE: tl.constexpr,
 ) -> None:
     rows = tl.program_id(0) * BLOCK_M + tl.arange(0, BLOCK_M)
     row_valid = rows < num_rows
@@ -81,45 +82,49 @@ def _qsa_mqa_paged_kernel(
     request = tl.min(tl.where(request_valid, safe_requests, num_requests), axis=0)
     while request < num_requests:
         in_request = request_valid & (safe_requests == request)
-        physical_page = tl.load(
-            page_table_ptr
-            + request * stride_table_req
-            + safe_logical_page * stride_table_page,
-            mask=column_valid,
-            other=-1,
-        )
-        key_valid = column_valid & (physical_page >= 0) & (physical_page < num_pages)
-        # physical_page * block stride can overflow int32 for large caches.
-        safe_physical_page = tl.maximum(physical_page, 0).to(tl.int64)
-        keys = tl.load(
-            k_cache_ptr
-            + safe_physical_page[:, None] * stride_cache_block
-            + page_offset[:, None] * stride_cache_token
-            + dims[None, :] * stride_cache_dim,
-            mask=key_valid[:, None] & (dims[None, :] < HEAD_DIM),
-            other=0.0,
-        )
-        # tl.dot needs matching operands; bf16 is exact for bf16 and fp8 inputs.
-        keys = tl.trans(keys).to(tl.bfloat16)
-        request_score = tl.zeros((BLOCK_M, BLOCK_N), dtype=tl.float32)
-        for head in tl.static_range(0, NUM_HEADS):
-            query = tl.load(
-                q_ptr
-                + rows[:, None] * stride_q_row
-                + head * stride_q_head
-                + dims[None, :] * stride_q_dim,
-                mask=in_request[:, None] & (dims[None, :] < HEAD_DIM),
+        request_visible = tl.max(tl.where(in_request, visible, 0), axis=0)
+        if tl.program_id(1) * BLOCK_N < request_visible:
+            physical_page = tl.load(
+                page_table_ptr
+                + request * stride_table_req
+                + safe_logical_page * stride_table_page,
+                mask=column_valid,
+                other=-1,
+            )
+            key_valid = (
+                column_valid & (physical_page >= 0) & (physical_page < num_pages)
+            )
+            # physical_page * block stride can overflow int32 for large caches.
+            safe_physical_page = tl.maximum(physical_page, 0).to(tl.int64)
+            keys = tl.load(
+                k_cache_ptr
+                + safe_physical_page[:, None] * stride_cache_block
+                + page_offset[:, None] * stride_cache_token
+                + dims[None, :] * stride_cache_dim,
+                mask=key_valid[:, None] & (dims[None, :] < HEAD_DIM),
                 other=0.0,
-            ).to(tl.bfloat16)
-            dot = tl.dot(query, keys, out_dtype=tl.float32)
-            request_score += tl.maximum(dot, 0.0)
-        request_valid_2d = (
-            in_request[:, None]
-            & key_valid[None, :]
-            & (columns[None, :] < visible[:, None])
-        )
-        score = tl.where(request_valid_2d, request_score, score)
-        valid |= request_valid_2d
+            )
+            # tl.dot needs matching operands; bf16 is exact for fp8 inputs.
+            keys = tl.trans(keys).to(DOT_DTYPE)
+            request_score = tl.zeros((BLOCK_M, BLOCK_N), dtype=tl.float32)
+            for head in tl.static_range(0, NUM_HEADS):
+                query = tl.load(
+                    q_ptr
+                    + rows[:, None] * stride_q_row
+                    + head * stride_q_head
+                    + dims[None, :] * stride_q_dim,
+                    mask=in_request[:, None] & (dims[None, :] < HEAD_DIM),
+                    other=0.0,
+                ).to(DOT_DTYPE)
+                dot = tl.dot(query, keys, out_dtype=tl.float32)
+                request_score += tl.maximum(dot, 0.0)
+            request_valid_2d = (
+                in_request[:, None]
+                & key_valid[None, :]
+                & (columns[None, :] < visible[:, None])
+            )
+            score = tl.where(request_valid_2d, request_score, score)
+            valid |= request_valid_2d
         request = tl.min(
             tl.where(
                 request_valid & (safe_requests > request), safe_requests, num_requests
@@ -693,6 +698,7 @@ def qsa_mqa_paged(
         # tl.dot needs K >= 16.
         BLOCK_D=max(16, triton.next_power_of_2(q.shape[2])),
         COMPRESS_RATIO=compress_ratio,
+        DOT_DTYPE=tl.float16 if q.dtype == torch.float16 else tl.bfloat16,
         num_warps=4,
     )
     return logits, visible_blocks
