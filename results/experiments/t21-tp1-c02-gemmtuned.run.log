@@ -1,0 +1,14 @@
+[t21-tp1-c02-gemmtuned] slot=g1 HIP=3 port=8021
+[t21-tp1-c02-gemmtuned] healthy after 211s at http://127.0.0.1:8021
+GSM8K zero-shot subset n=200 accuracy=0.9800
+prefill_1 {"ttft_s": 2.2389, "prefill_tok_s": 15769, "elapsed_s": 5.6}
+prefill_8 {"n": 8, "ttft_p50": 11.5981, "ttft_max": 14.177, "prefill_tok_s": 19813, "uncached_tokens": 281162, "elapsed_s": 14.2}
+decode_c1 {"conc": 1, "tpot_p50_ms": 4.2, "tpot_p95_ms": 4.2, "ttft_p50": 0.1017, "out_tok_s": 227.9, "per_seq_tok_s": 238.1, "elapsed_s": 2.2}
+decode_c16 {"conc": 16, "tpot_p50_ms": 9.1, "tpot_p95_ms": 9.7, "ttft_p50": 1.9014, "out_tok_s": 1194.0, "per_seq_tok_s": 109.9, "elapsed_s": 6.9}
+decode_c64 {"conc": 64, "tpot_p50_ms": 17.7, "tpot_p95_ms": 20.9, "ttft_p50": 2.9977, "out_tok_s": 2617.2, "per_seq_tok_s": 56.5, "elapsed_s": 12.5}
+agent_32k_c16 {"sessions": 16, "ctx": 32768, "wall_s": 40.9, "ttft_cold_p50": 17.6302, "ttft_cold_p95": 26.8432, "ttft_warm_p50": 0.6854, "ttft_warm_p95": 1.2248, "ttft_p95": 25.3681, "tpot_p50_ms": 17.9, "out_tok_s": 300.8, "cache_hit": 0.6144, "elapsed_s": 40.9}
+agent_96k_c8 {"sessions": 8, "ctx": 98304, "wall_s": 52.1, "ttft_cold_p50": 29.0568, "ttft_cold_p95": 43.0353, "ttft_warm_p50": 0.6353, "ttft_warm_p95": 0.9567, "ttft_p95": 40.1037, "tpot_p50_ms": 11.4, "out_tok_s": 118.0, "cache_hit": 0.6501, "elapsed_s": 52.1}
+agent_32k_c8 {"sessions": 8, "ctx": 32768, "wall_s": 22.5, "ttft_cold_p50": 11.1084, "ttft_cold_p95": 13.6257, "ttft_warm_p50": 0.4816, "ttft_warm_p95": 0.6062, "ttft_p95": 13.5573, "tpot_p50_ms": 11.3, "out_tok_s": 272.7, "cache_hit": 0.6119, "elapsed_s": 22.5}
+agent_96k_c4 {"sessions": 4, "ctx": 98304, "wall_s": 27.9, "ttft_cold_p50": 17.6677, "ttft_cold_p95": 21.1711, "ttft_warm_p50": 0.5154, "ttft_warm_p95": 0.6474, "ttft_p95": 17.6677, "tpot_p50_ms": 7.1, "out_tok_s": 109.9, "cache_hit": 0.6499, "elapsed_s": 27.9}
+mtp {"acceptance": 0.7108, "mean_accepted_len": 3.133}
+[t21-tp1-c02-gemmtuned] done

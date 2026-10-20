@@ -1,0 +1,113 @@
+{
+  "base": "http://127.0.0.1:8011",
+  "time": "2026-10-19T11:45:35",
+  "passed": 9,
+  "total": 9,
+  "results": [
+    {
+      "test": "health",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "test": "v1_models",
+      "pass": true,
+      "ids": [
+        "qwen3.8-flash-next"
+      ]
+    },
+    {
+      "test": "chat_completion",
+      "pass": true,
+      "content": "391",
+      "usage": {
+        "prompt_tokens": 27,
+        "total_tokens": 31,
+        "completion_tokens": 4,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "model_id": null
+    },
+    {
+      "test": "streaming",
+      "pass": true,
+      "chunks": 10,
+      "ttft_s": 0.12,
+      "text": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
+      "usage": {
+        "prompt_tokens": 24,
+        "total_tokens": 54,
+        "completion_tokens": 30,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "test": "reasoning_content",
+      "pass": true,
+      "reasoning_chars": 239,
+      "content": "No."
+    },
+    {
+      "test": "tool_call_parse",
+      "pass": true,
+      "finish": "tool_calls",
+      "calls": [
+        {
+          "id": "chatcmpl-tool-9b6de6dffb30acd4",
+          "type": "function",
+          "function": {
+            "name": "run_tests",
+            "arguments": "{\"path\": \"tests/test_math.py\", \"verbose\": true}"
+          }
+        }
+      ],
+      "content_leak": false
+    },
+    {
+      "test": "tool_result_loop",
+      "pass": true,
+      "finish": "stop",
+      "next_calls": [],
+      "content": "\n\nRan `tests/test_math.py` with verbose output — here's the result:\n\n```\nFAILED tests/test_math.py::test_add - assert add(2, 2) == 5\n1 failed, 3 passed\n```\n\n**S"
+    },
+    {
+      "test": "multi_turn",
+      "pass": true,
+      "answer": "ORCHID-7",
+      "model_ids": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "test": "short_prompt_determinism",
+      "pass": true,
+      "variants": {
+        "Capital of France?": 1,
+        "2+3=?": 1,
+        "Opposite of hot?": 1,
+        "Color of the sky?": 1
+      },
+      "sample": {
+        "Capital of France?": "The capital of France is **Paris**.",
+        "2+3=?": "2 + 3 = 5",
+        "Opposite of hot?": "The most common opposite of **hot** is *",
+        "Color of the sky?": "The color of the sky is primarily **blue"
+      }
+    }
+  ]
+}
