@@ -1,0 +1,356 @@
+[aiter] import [module_aiter_core] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_aiter_core.so
+Not exist tuned file: /tuning/tuned_fmoe_qwen38_ep2.csv
+    token  model_dim  inter_dim  ...  doweight_stage1     gfx cu_num
+0       1       2560        640  ...                0  gfx942    304
+1       2       2560        640  ...                0  gfx942    304
+2       4       2560        640  ...                0  gfx942    304
+3       8       2560        640  ...                0  gfx942    304
+4      16       2560        640  ...                0  gfx942    304
+5      32       2560        640  ...                0  gfx942    304
+6      64       2560        640  ...                0  gfx942    304
+7     128       2560        640  ...                0  gfx942    304
+8     256       2560        640  ...                0  gfx942    304
+9     512       2560        640  ...                0  gfx942    304
+10   1024       2560        640  ...                0  gfx942    304
+11   2048       2560        640  ...                0  gfx942    304
+12   4096       2560        640  ...                0  gfx942    304
+13   8192       2560        640  ...                0  gfx942    304
+14  16384       2560        640  ...                0  gfx942    304
+15  32768       2560        640  ...                0  gfx942    304
+
+[16 rows x 14 columns]
+Compare candidate CSV will be written to /tmp/aiter_compare/tuned_fmoe_qwen38_ep2.7.candidate.csv
+=== Running pre-tune benchmark (batch 1/1) ===
+[aiter] import [module_moe_asm] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_asm.so
+[aiter] merge tuned file under model_configs/ and configs/ /usr/local/lib/python3.12/dist-packages/aiter/configs/tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/a8w8_blockscale_tuned_fmoe_ds_v3.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/a8w8_blockscale_tuned_fmoe_glm5.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/a8w8_blockscale_tuned_fmoe_glm5_1.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/a8w8_blockscale_tuned_fmoe_glm5_3_flash_gfx950.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/a8w8_blockscale_tuned_fmoe_glm5_3_flash_shared_gfx950.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/a8w8_blockscale_tuned_fmoe_minimax-m2_5.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/a8w8_blockscale_tuned_fmoe_qwen3_235b.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/a8w8_blockscale_tuned_fmoe_qwen3_5_397b.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/dsv3_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/dsv41_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/dsv4_fp8fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/glm47_fp8_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/glm5_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/glm5_mxfp8_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/glm5_ptpc_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/gptoss_a16w4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/gptoss_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/gptoss_fp8fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/hunyuan3_fp8_per_tensor_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/k2_horizon_375b_bf16_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/kimik2_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/kimik2_fp8fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/kimik2_i4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/kimik3_a16w4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/kimik3_a4w4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/kimik3_a8w4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/kimik3_i4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/mimo_v2_5_pro_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/minimax_m25_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/minimax_m3_a16w4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/minimax_m3_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/minimax_m3_fp8_ptpc_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/minimax_m3_mxfp8_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_235b_bf16_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_5_35b_fp8_ptpc_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_5_397b_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_5_397b_fp8_ptpc_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_6_35b_a3b_bf16_tuned_fmoe_gfx1201.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_6_35b_a3b_fp8_tuned_fmoe_gfx1201.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_8_2400b_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_vl_fp4_tuned_fmoe.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3next_80b_fp8_tuned_fmoe.csv
+[aiter] [fused_moe] duplicate tuned rows after disabling act_type in /tmp/aiter_configs/tuned_fmoe.csv; keeping first match for 85 rows
+[aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_sorting_opus] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_sorting_opus.so
+[aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_quant] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_quant.so
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk.so
+[aiter] type hints mismatch, override to --> ck_moe_stage1(hidden_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w1_scale: Optional[torch.Tensor] = None, a1_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+[aiter] import [module_activation] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_activation.so
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2.so
+[aiter] type hints mismatch, override to --> ck_moe_stage2(inter_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w2_scale: Optional[torch.Tensor] = None, a2_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+USDT:2026-10-19 09:11:41 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:41 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (1, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([1, 2560])
+           tensor([-2.9062, -1.0234, -0.5469,  0.4629,  0.4023, -0.0859,  0.2715,  0.0117],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([1, 2560])
+           tensor([-2.9531e+00, -1.0000e+00, -5.7422e-01,  4.7852e-01,  4.3359e-01,
+        -7.1777e-02,  3.2227e-01, -8.4305e-04], device='cuda:0',
+       dtype=torch.bfloat16)
+    delta:
+           tensor([0.0469, 0.0234, 0.0273, 0.0156, 0.0312, 0.0142, 0.0508, 0.0126],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:0.0625, delta details: 24.0% (614 of 2560) elements
+[aiter] run_1stage = False, xbf16 = False, ksplit = 2 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 2, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 2 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 2, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:44 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:44 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (2, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([2, 2560])
+           tensor([-2.9062, -1.0234,  0.4883,  0.0300,  0.6094,  0.3867, -0.6562,  0.2617],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([2, 2560])
+           tensor([-2.9531, -1.0000,  0.4688,  0.0427,  0.5859,  0.4336, -0.6758,  0.3223],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0469, 0.0234, 0.0195, 0.0127, 0.0234, 0.0469, 0.0195, 0.0605],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:0.0703125, delta details: 30.1% (1540 of 5120) elements
+[aiter] run_1stage = False, xbf16 = False, ksplit = 2 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 4, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 2 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 4, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:44 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:44 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (4, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([4, 2560])
+           tensor([-2.9062, -1.0312,  0.4883,  0.0283,  0.6172,  0.3906, -0.6523,  0.2656],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([4, 2560])
+           tensor([-2.9531, -1.0000,  0.4688,  0.0427,  0.5859,  0.4336, -0.6758,  0.3223],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0469, 0.0312, 0.0195, 0.0144, 0.0312, 0.0430, 0.0234, 0.0566],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:0.091796875, delta details: 30.0% (3074 of 10240) elements
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:44 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:44 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (8, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [33mwarning![0m] a and b results are not all close
+[aiter] -->max abs delta:0.0625, delta details: 0.2% (46 of 20480) elements
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:45 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:45 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (16, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [33mwarning![0m] a and b results are not all close
+[aiter] -->max abs delta:0.0625, delta details: 0.2% (76 of 40960) elements
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:45 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:45 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (32, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [33mwarning![0m] a and b results are not all close
+[aiter] -->max abs delta:0.0625, delta details: 1.0% (800 of 81920) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 2
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 64, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] LoadKernel: _ZN5aiter50fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128.co
+USDT:2026-10-19 09:11:45 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:45 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (64, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([64, 2560])
+           tensor([ 2.7031,  0.2363, -0.7891,  0.4863, -2.6094, -0.6094, -0.5469, -3.3438],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([64, 2560])
+           tensor([ 2.6562,  0.2217, -0.8242,  0.4688, -2.6719, -0.5898, -0.5742, -3.2969],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0469, 0.0146, 0.0352, 0.0176, 0.0625, 0.0195, 0.0273, 0.0469],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:3.078125, delta details: 31.9% (52341 of 163840) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 5
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 128, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:45 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:45 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (128, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([128, 2560])
+           tensor([ 2.7031,  0.2344, -0.7891,  0.4863, -0.5508, -1.2812, -0.4492,  0.0374],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([128, 2560])
+           tensor([ 2.6562,  0.2217, -0.8242,  0.4688, -0.5742, -1.3047, -0.4336,  0.0066],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0469, 0.0127, 0.0352, 0.0176, 0.0234, 0.0234, 0.0156, 0.0308],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:2.28125, delta details: 36.4% (119211 of 327680) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 10
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 256, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:46 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:46 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (256, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([256, 2560])
+           tensor([-1.6484, -0.8008,  0.4844, -0.4551,  0.0303,  0.3984,  0.2773,  0.0182],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([256, 2560])
+           tensor([-1.6172e+00, -8.2422e-01,  4.6875e-01, -4.3359e-01,  6.5613e-03,
+         4.3359e-01,  3.2227e-01, -8.4305e-04], device='cuda:0',
+       dtype=torch.bfloat16)
+    delta:
+           tensor([0.0312, 0.0234, 0.0156, 0.0215, 0.0237, 0.0352, 0.0449, 0.0190],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:2.25, delta details: 35.8% (234907 of 655360) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 20
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 512, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:47 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:47 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (512, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([512, 2560])
+           tensor([-1.6484,  2.7031,  0.2354, -0.7969,  0.4902, -0.5469, -0.4492,  0.0254],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([512, 2560])
+           tensor([-1.6172,  2.6562,  0.2217, -0.8242,  0.4688, -0.5742, -0.4336,  0.0066],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0312, 0.0469, 0.0137, 0.0273, 0.0215, 0.0273, 0.0156, 0.0188],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:2.53125, delta details: 37.4% (490457 of 1310720) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 40
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 1024, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:48 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:48 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (1024, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([1024, 2560])
+           tensor([-0.9453, -0.6836,  1.9609,  0.2061,  0.8359, -0.3086, -1.1328,  0.0059],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([1024, 2560])
+           tensor([-0.9141, -0.7188,  2.0000,  0.2275,  0.8711, -0.3223, -1.0938,  0.0182],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0312, 0.0352, 0.0391, 0.0215, 0.0352, 0.0137, 0.0391, 0.0123],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:4.28125, delta details: 38.8% (1018194 of 2621440) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 80
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 2048, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:49 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:49 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (2048, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([2048, 2560])
+           tensor([ 0.4492, -0.2207,  0.3008, -0.5039, -1.3750,  0.5898, -0.1406, -1.7266],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([2048, 2560])
+           tensor([ 0.4141, -0.2461,  0.3223, -0.4883, -1.4062,  0.6133, -0.1289, -1.6953],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0352, 0.0254, 0.0215, 0.0156, 0.0312, 0.0234, 0.0117, 0.0312],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:4.03125, delta details: 37.5% (1964905 of 5242880) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 160
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 4096, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:50 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:50 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (4096, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([4096, 2560])
+           tensor([ 2.0938, -2.4375, -1.7969, -0.5703,  0.5586,  0.6797, -2.3594, -0.3984],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([4096, 2560])
+           tensor([ 1.9688, -1.9297, -1.4375, -0.8398,  0.2695,  0.4473, -2.2969, -0.1836],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.1250, 0.5078, 0.3594, 0.2695, 0.2891, 0.2324, 0.0625, 0.2148],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:5.5625, delta details: 37.8% (3965382 of 10485760) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 320
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 8192, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:51 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:51 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (8192, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([8192, 2560])
+           tensor([-0.0029, -1.8672, -0.4766,  1.3906, -1.2031, -0.2773,  0.5938,  1.6719],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([8192, 2560])
+           tensor([ 0.0117, -1.8125, -0.5039,  1.3516, -1.1797, -0.2617,  0.5703,  1.7109],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0146, 0.0547, 0.0273, 0.0391, 0.0234, 0.0156, 0.0234, 0.0391],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:3.9375, delta details: 37.0% (7760787 of 20971520) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 640
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 16384, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:52 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:52 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (16384, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([16384, 2560])
+           tensor([-0.9648, -0.2344,  0.7188, -0.5703, -1.9141,  0.3242,  0.0459, -0.1123],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([16384, 2560])
+           tensor([-0.9922, -0.2471,  0.6875, -0.5547, -1.8828,  0.3633,  0.0295, -0.1011],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0273, 0.0127, 0.0312, 0.0156, 0.0312, 0.0391, 0.0164, 0.0112],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:6.84375, delta details: 37.0% (15526805 of 41943040) elements
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 1280
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 32768, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+USDT:2026-10-19 09:11:53 7:7 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-19 09:11:54 7:7 SyncActivityProfilerHandler.cpp:59] profiler_stop
+[aiter] run_config (32768, 2560, 640, E=256, topk=10, ActivationType.Silu, torch.bfloat16, torch.float8_e4m3fnuz, torch.float8_e4m3fnuz, QuantType.per_1x128, g1u1=True, dw_s1=False)[checkAllclose atol=0.01 rtol=0.01 [31mfailed![0m]
+    a    : torch.Size([32768, 2560])
+           tensor([ 0.0059,  1.2812, -0.1348, -0.8672, -0.2285,  0.2246,  0.5586, -0.2021],
+       device='cuda:0', dtype=torch.bfloat16)
+    b    : torch.Size([32768, 2560])
+           tensor([ 0.0211,  1.2578, -0.1475, -0.8867, -0.2480,  0.2109,  0.5781, -0.2188],
+       device='cuda:0', dtype=torch.bfloat16)
+    delta:
+           tensor([0.0153, 0.0234, 0.0127, 0.0195, 0.0195, 0.0137, 0.0195, 0.0166],
+       device='cuda:0', dtype=torch.bfloat16)
+[aiter] -->max abs delta:6.84375, delta details: 37.3% (31288171 of 83886080) elements
+[aiter] tune result is none or all shape is tuned in /tuning/tuned_fmoe_qwen38_ep2.csv!
+[aiter] ============= Tuning results Summary: ==============
+[aiter] Tuning Finished. tune 0 shapes, total tuning time is 13.8779 seconds
+[aiter] Successfully tuned shapes:
+[aiter] Failed shapes:
+
+Start tuning ['gfx942' 304 1 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 2 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 4 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 8 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 16 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 32 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 64 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 128 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 256 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 512 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 1024 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 2048 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 4096 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 8192 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 16384 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+
+Start tuning ['gfx942' 304 32768 2560 640 256 10 'ActivationType.Silu' 'torch.bfloat16'
+ 'torch.float8_e4m3fnuz' 'torch.float8_e4m3fnuz' 'QuantType.per_1x128' 1 0]
+stage1 asm tasks is 0, tasks_ck is 0, task_1stage is 0
+no shape to tune or no solution found
+Empty DataFrame
+Columns: [gfx, cu_num, token, model_dim, inter_dim, expert, topk, act_type, dtype, q_dtype_a, q_dtype_w, q_type, use_g1u1, doweight_stage1, block_m, ksplit, us1, kernelName1, err1, us2, kernelName2, err2, us, run_1stage, xbf16, flat, tflops, bw, nt]
+Index: []
+[aiter] untuned shapes:
+[aiter] [91m[Tuning not Finished][0m some shapes are not tuned or all failed, please check the result file or tune with --profile_file to get more details
+    token  model_dim  inter_dim  ...  doweight_stage1     gfx cu_num
+0       1       2560        640  ...                0  gfx942    304
+1       2       2560        640  ...                0  gfx942    304
+2       4       2560        640  ...                0  gfx942    304
+3       8       2560        640  ...                0  gfx942    304
+4      16       2560        640  ...                0  gfx942    304
+5      32       2560        640  ...                0  gfx942    304
+6      64       2560        640  ...                0  gfx942    304
+7     128       2560        640  ...                0  gfx942    304
+8     256       2560        640  ...                0  gfx942    304
+9     512       2560        640  ...                0  gfx942    304
+10   1024       2560        640  ...                0  gfx942    304
+11   2048       2560        640  ...                0  gfx942    304
+12   4096       2560        640  ...                0  gfx942    304
+13   8192       2560        640  ...                0  gfx942    304
+14  16384       2560        640  ...                0  gfx942    304
+15  32768       2560        640  ...                0  gfx942    304
+
+[16 rows x 14 columns]
+EXIT=1

@@ -1,0 +1,34 @@
+/usr/local/lib/python3.12/dist-packages/vllm/__init__.py gfx942:sramecc+:xnack-
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.7.0 -- /usr/bin/python3
+rootdir: /work
+configfile: pyproject.toml
+plugins: asyncio-1.4.0, anyio-4.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 17 items
+
+tests/models/qwen4_exp/test_qsa_amd.py::test_ple_ngram_embedding_custom_op_uses_resident_weight PASSED [  5%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_rope_uses_platform_dispatch PASSED [ 11%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_rmsnorm_uses_portable_implementation PASSED [ 17%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_fused_prepare_replaces_the_unfused_chain PASSED [ 23%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_unsupported_config_keeps_the_unfused_chain PASSED [ 29%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_fused_pre_indexer_gate_is_config_shaped[qwen3_8_flash_next] PASSED [ 35%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_fused_pre_indexer_gate_is_config_shaped[not-neox] PASSED [ 41%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_fused_pre_indexer_gate_is_config_shaped[rotary-dim] PASSED [ 47%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_fused_pre_indexer_gate_is_config_shaped[mrope-not-interleaved] PASSED [ 52%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_fused_pre_indexer_gate_is_config_shaped[mrope-section-len] PASSED [ 58%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_selection_uses_portable_topk_on_rocm PASSED [ 64%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_sparse_paged_attention_matches_reference[tp1_split64] PASSED [ 70%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_sparse_paged_attention_matches_reference[tp2_split32] PASSED [ 76%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_sparse_paged_attention_matches_reference[tp2_split1] PASSED [ 82%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_sparse_paged_attention_matches_reference[tp4_split8] PASSED [ 88%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_sparse_paged_attention_matches_reference[tp4_split4] PASSED [ 94%]
+tests/models/qwen4_exp/test_qsa_amd.py::test_qsa_sparse_paged_attention_matches_reference[tp4_split1] PASSED [100%]
+
+=============================== warnings summary ===============================
+../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: 14 warnings
+  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 17 passed, 14 warnings in 16.90s =======================

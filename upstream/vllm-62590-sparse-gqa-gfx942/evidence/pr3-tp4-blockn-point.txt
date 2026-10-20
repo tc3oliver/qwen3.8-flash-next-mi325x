@@ -1,0 +1,7 @@
+arch gfx942:sramecc+:xnack-
+TP4 6q/1kv rows 520 rep 0: main (BLOCK_N 64) 0.358 ms (diff 0.0e+00) | ungated (BLOCK_N 32) 1.590 ms (diff 4.9e-04) | branch (gated) 0.354 ms (diff 0.0e+00)
+TP4 6q/1kv rows 520 rep 1: main (BLOCK_N 64) 0.352 ms (diff 0.0e+00) | ungated (BLOCK_N 32) 1.580 ms (diff 4.9e-04) | branch (gated) 0.353 ms (diff 0.0e+00)
+TP4 6q/1kv rows 520 rep 2: main (BLOCK_N 64) 0.353 ms (diff 0.0e+00) | ungated (BLOCK_N 32) 1.584 ms (diff 4.9e-04) | branch (gated) 0.353 ms (diff 0.0e+00)
+TP4 6q/1kv rows 4096 rep 0: main (BLOCK_N 64) 2.181 ms (diff 0.0e+00) | ungated (BLOCK_N 32) 10.657 ms (diff 4.9e-04) | branch (gated) 2.177 ms (diff 0.0e+00)
+TP4 6q/1kv rows 4096 rep 1: main (BLOCK_N 64) 2.177 ms (diff 0.0e+00) | ungated (BLOCK_N 32) 10.657 ms (diff 4.9e-04) | branch (gated) 2.166 ms (diff 0.0e+00)
+TP4 6q/1kv rows 4096 rep 2: main (BLOCK_N 64) 2.169 ms (diff 0.0e+00) | ungated (BLOCK_N 32) 10.656 ms (diff 4.9e-04) | branch (gated) 2.173 ms (diff 0.0e+00)
