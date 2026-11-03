@@ -1,0 +1,1 @@
+torch 2.13.0+git733fca1 hip 7.2.53211 vllm 0.33.0+rocm72 aiter 0.1.26

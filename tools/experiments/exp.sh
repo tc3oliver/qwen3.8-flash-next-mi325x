@@ -37,7 +37,8 @@ while (($#)); do
     --) shift; EXTRA=("$@"); break;;
     BASE_*=*) k=${1%%=*}; k=${k#BASE_}; v=${1#*=}; if [[ -z $v && $k != enable-* && $k != async-scheduling ]]; then unset "BASE[$k]"; else BASE[$k]=$v; fi;;
     BASEDEL_*) k=${1#BASEDEL_}; unset "BASE[$k]";;
-    PATCH_QSA=1) MOUNTS+=(-v "$REPO/overlay/qsa.py:/usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/ops/qsa.py:ro");;
+    PATCH_QSA=1) QP=/usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd
+      MOUNTS+=(-v "$REPO/overlay/qsa.py:$QP/ops/qsa.py:ro" -v "$REPO/overlay/indexer_qsa.py:$QP/indexer_qsa.py:ro");;
     MOUNT=*) MOUNTS+=(-v "${1#MOUNT=}");;
     HIP=*) HIP=${1#HIP=};;
     *=*) ENV[${1%%=*}]=${1#*=};;

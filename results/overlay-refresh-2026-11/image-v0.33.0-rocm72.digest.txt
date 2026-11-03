@@ -1,0 +1,1 @@
+vllm/vllm-openai-rocm@sha256:4fe7bc121cbe2f0791ebc38dcc2f0d615612233b4bfc0c1f4b9daeab05aba182

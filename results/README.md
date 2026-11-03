@@ -1,6 +1,6 @@
 # Raw results
 
-All runs: 2026-10-19/20, MI325X, `vllm/vllm-openai-rocm:v0.32.0` (digest in the top-level README), model revision
+`overlay-refresh-2026-11/` is the newest set (2026-11-03, see its README). All other runs: 2026-10-19/20, MI325X, `vllm/vllm-openai-rocm:v0.32.0` (digest in [docs/full-report.md](../docs/full-report.md)), model revision
 `236dfdf2…`. Run ids (e00, d01, c02, ...) match `docs/lab-notebook.md`.
 
 ## experiments/
