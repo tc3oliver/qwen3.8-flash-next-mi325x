@@ -1,0 +1,20 @@
+run1 load average: 18.16, 17.92, 16.40
+FP tiled_row2=[620, 1388] rows_row2=[620, 1388] graph_row2=[1388, 620] equal(graph,tiled)=0 equal(eager_rows,tiled)=1
+run2 load average: 17.61, 17.87, 16.43
+FP tiled_row2=[1388, 620] rows_row2=[1388, 620] graph_row2=[620, 1388] equal(graph,tiled)=0 equal(eager_rows,tiled)=1
+run3 load average: 16.52, 17.63, 16.37
+FP tiled_row2=[1388, 620] rows_row2=[620, 1388] graph_row2=[620, 1388] equal(graph,tiled)=0 equal(eager_rows,tiled)=0
+run4 load average: 16.00, 17.50, 16.33
+FP tiled_row2=[620, 1388] rows_row2=[1388, 620] graph_row2=[1388, 620] equal(graph,tiled)=0 equal(eager_rows,tiled)=0
+run5 load average: 15.38, 17.32, 16.28
+FP tiled_row2=[1388, 620] rows_row2=[1388, 620] graph_row2=[1388, 620] equal(graph,tiled)=1 equal(eager_rows,tiled)=1
+run6 load average: 14.63, 17.10, 16.22
+FP tiled_row2=[1388, 620] rows_row2=[1388, 620] graph_row2=[620, 1388] equal(graph,tiled)=0 equal(eager_rows,tiled)=1
+run7 load average: 14.15, 16.91, 16.17
+FP tiled_row2=[620, 1388] rows_row2=[620, 1388] graph_row2=[620, 1388] equal(graph,tiled)=1 equal(eager_rows,tiled)=1
+run8 load average: 14.78, 17.00, 16.20
+FP tiled_row2=[1388, 620] rows_row2=[620, 1388] graph_row2=[1388, 620] equal(graph,tiled)=1 equal(eager_rows,tiled)=0
+run9 load average: 18.06, 17.66, 16.43
+FP tiled_row2=[1388, 620] rows_row2=[1388, 620] graph_row2=[1388, 620] equal(graph,tiled)=1 equal(eager_rows,tiled)=1
+run10 load average: 16.05, 17.24, 16.31
+FP tiled_row2=[1388, 620] rows_row2=[1388, 620] graph_row2=[620, 1388] equal(graph,tiled)=0 equal(eager_rows,tiled)=1

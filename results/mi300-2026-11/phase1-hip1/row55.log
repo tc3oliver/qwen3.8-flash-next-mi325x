@@ -1,0 +1,13 @@
+visible 24576 24576 selected 512 512 k= 512
+logits row bitwise equal over visible: False max abs diff 3.5762786865234375e-07 n differing cols 9551
+only stock: [21072] only PR: [11651]
+  diff blk 11651: stock 1.0951963663101196 (0x1.185eca0000000p+0 bits 0x3f8c2f65) PR 1.0951964855194092 (bits 0x3f8c2f66) ulp_apart 1
+  diff blk 21072: stock 1.0951964855194092 (0x1.185ecc0000000p+0 bits 0x3f8c2f66) PR 1.0951964855194092 (bits 0x3f8c2f66) ulp_apart 0
+stock rank k-3..k+3 (0-based) value/block: [(509, 1.0958757400512695, 8612), (510, 1.0953483581542969, 23952), (511, 1.0951964855194092, 21072), (512, 1.0951963663101196, 11651), (513, 1.0951710939407349, 7276), (514, 1.094515085220337, 5282)]
+stock count of columns with value == kth value: 1 kth value 1.0951964855194092 k+1th 1.0951963663101196
+stock own selection == own top-k set? True (ties may break either way)
+PR rank k-3..k+3 (0-based) value/block: [(509, 1.095875859260559, 8612), (510, 1.0953481197357178, 23952), (511, 1.0951964855194092, 11651), (512, 1.0951964855194092, 21072), (513, 1.0951712131500244, 7276), (514, 1.094515085220337, 5282)]
+PR count of columns with value == kth value: 2 kth value 1.0951964855194092 k+1th 1.0951964855194092
+PR own selection == own top-k set? True (ties may break either way)
+selected-by-stock ranks in stock sort of diff blocks: {11651: 512, 21072: 511}
+selected-by-PR   ranks in PR sort of diff blocks: {11651: 511, 21072: 511}

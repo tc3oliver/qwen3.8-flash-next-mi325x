@@ -1,0 +1,3 @@
+graph_replay(rows kernel): exact_equal=2/500 sorted_equal=500/500 distinct_row2_orders=2
+eager rows kernel: exact_equal=0/500 sorted_equal=500/500 distinct_row2_orders=1
+eager tiled kernel: exact_equal=4/500 sorted_equal=500/500 distinct_row2_orders=2

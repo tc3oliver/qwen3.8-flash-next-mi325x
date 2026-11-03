@@ -1,0 +1,20 @@
+--- proc 1
+BIAS pid=8 tiled=19/200 rows=2/200 graph=0/200
+--- proc 2
+BIAS pid=404 tiled=3/200 rows=1/200 graph=0/200
+--- proc 3
+BIAS pid=636 tiled=3/200 rows=1/200 graph=0/200
+--- proc 4
+BIAS pid=868 tiled=2/200 rows=1/200 graph=0/200
+--- proc 5
+BIAS pid=1100 tiled=1/200 rows=0/200 graph=0/200
+--- proc 6
+BIAS pid=1332 tiled=6/200 rows=2/200 graph=0/200
+--- proc 7
+BIAS pid=1564 tiled=4/200 rows=0/200 graph=0/200
+--- proc 8
+BIAS pid=1796 tiled=3/200 rows=0/200 graph=0/200
+--- proc 9
+BIAS pid=2028 tiled=8/200 rows=3/200 graph=0/200
+--- proc 10
+BIAS pid=2260 tiled=4/200 rows=1/200 graph=0/200

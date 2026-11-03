@@ -1,0 +1,2 @@
+overlay /usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/ops/qsa.py f59670bf046ad58b051b74d80ba23883477b845824278704eff6ee67116ac524 OK
+overlay /usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/indexer_qsa.py dbb72baa9b578553ecb58e0cb334e6f9f96d172f216d0ed4267e0ce536caa46a OK

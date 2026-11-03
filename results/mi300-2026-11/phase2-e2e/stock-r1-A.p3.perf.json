@@ -1,0 +1,40 @@
+{
+ "label": "stock-r1-A.p3",
+ "time": "2026-11-03 07:51:58",
+ "base": "http://127.0.0.1:8011",
+ "prefill_8": {
+  "n": 8,
+  "ttft_p50": 19.081,
+  "ttft_max": 25.173,
+  "prefill_tok_s": 11338,
+  "uncached_tokens": 285609,
+  "elapsed_s": 25.2
+ },
+ "decode_c64": {
+  "conc": 64,
+  "tpot_p50_ms": 22.5,
+  "tpot_p95_ms": 27.5,
+  "ttft_p50": 5.3065,
+  "out_tok_s": 1935.2,
+  "per_seq_tok_s": 44.4,
+  "elapsed_s": 16.9
+ },
+ "agent_32k_c16": {
+  "sessions": 16,
+  "ctx": 32768,
+  "wall_s": 58.3,
+  "ttft_cold_p50": 29.7758,
+  "ttft_cold_p95": 44.1481,
+  "ttft_warm_p50": 0.5406,
+  "ttft_warm_p95": 0.7903,
+  "ttft_p95": 43.3337,
+  "tpot_p50_ms": 19.9,
+  "out_tok_s": 210.7,
+  "cache_hit": 0.645,
+  "elapsed_s": 58.3
+ },
+ "mtp": {
+  "acceptance": 0.7236,
+  "mean_accepted_len": 3.171
+ }
+}

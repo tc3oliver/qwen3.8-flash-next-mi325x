@@ -1,0 +1,3 @@
+=========================== short test summary info ============================
+FAILED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_replays_in_cuda_graph
+1 failed, 18 deselected in 6.28s

@@ -1,0 +1,21 @@
+--- proc 1
+COLD pid=8 tiled back-to-back: a(620 first)=4/40
+COLD pid=8 tiled after 2GiB evict: a(620 first)=1/40
+COLD pid=8 tiled after matmul: a(620 first)=5/40
+COLD pid=8 graph back-to-back: a(620 first)=0/40
+COLD pid=8 graph after 2GiB evict: a(620 first)=0/40
+COLD pid=8 graph after matmul: a(620 first)=3/40
+--- proc 2
+COLD pid=404 tiled back-to-back: a(620 first)=5/40
+COLD pid=404 tiled after 2GiB evict: a(620 first)=3/40
+COLD pid=404 tiled after matmul: a(620 first)=4/40
+COLD pid=404 graph back-to-back: a(620 first)=0/40
+COLD pid=404 graph after 2GiB evict: a(620 first)=0/40
+COLD pid=404 graph after matmul: a(620 first)=7/40
+--- proc 3
+COLD pid=636 tiled back-to-back: a(620 first)=9/40
+COLD pid=636 tiled after 2GiB evict: a(620 first)=2/40
+COLD pid=636 tiled after matmul: a(620 first)=3/40
+COLD pid=636 graph back-to-back: a(620 first)=0/40
+COLD pid=636 graph after 2GiB evict: a(620 first)=0/40
+COLD pid=636 graph after matmul: a(620 first)=5/40

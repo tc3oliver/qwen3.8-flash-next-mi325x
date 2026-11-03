@@ -1,0 +1,18 @@
+[stock-r3-A] slot=a HIP=6,7 port=8011
+[stock-r3-A] healthy after 244s at http://127.0.0.1:8011
+stock /usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/ops/qsa.py 7a7c8501e0b92a4236e382c6ef494670d684ee1dfeb2d673f942a4f38fccf69b OK
+stock /usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/indexer_qsa.py ca8ede9f27c933b85a3a3e45e8e1b4f7693c8f0271ff3cab3fa6fb64de8c2476 OK
+0 0000:e6:00.0
+1 0000:96:00.0
+prefill_8 {"n": 8, "ttft_p50": 24.4097, "ttft_max": 30.851, "prefill_tok_s": 9415, "uncached_tokens": 290540, "elapsed_s": 30.9}
+decode_c64 {"conc": 64, "tpot_p50_ms": 25.3, "tpot_p95_ms": 30.3, "ttft_p50": 8.0672, "out_tok_s": 1544.5, "per_seq_tok_s": 39.5, "elapsed_s": 21.2}
+agent_32k_c16 {"sessions": 16, "ctx": 32768, "wall_s": 65.6, "ttft_cold_p50": 29.8467, "ttft_cold_p95": 45.9275, "ttft_warm_p50": 0.7559, "ttft_warm_p95": 2.1416, "ttft_p95": 43.2616, "tpot_p50_ms": 28.4, "out_tok_s": 187.3, "cache_hit": 0.6435, "elapsed_s": 65.6}
+mtp {"acceptance": 0.7235, "mean_accepted_len": 3.171}
+prefill_8 {"n": 8, "ttft_p50": 19.2299, "ttft_max": 25.592, "prefill_tok_s": 11368, "uncached_tokens": 291062, "elapsed_s": 25.6}
+decode_c64 {"conc": 64, "tpot_p50_ms": 22.0, "tpot_p95_ms": 27.5, "ttft_p50": 5.3318, "out_tok_s": 1938.8, "per_seq_tok_s": 45.5, "elapsed_s": 16.9}
+agent_32k_c16 {"sessions": 16, "ctx": 32768, "wall_s": 59.7, "ttft_cold_p50": 29.8677, "ttft_cold_p95": 45.342, "ttft_warm_p50": 0.6964, "ttft_warm_p95": 1.0446, "ttft_p95": 43.3198, "tpot_p50_ms": 18.8, "out_tok_s": 205.9, "cache_hit": 0.6443, "elapsed_s": 59.7}
+mtp {"acceptance": 0.7223, "mean_accepted_len": 3.167}
+prefill_8 {"n": 8, "ttft_p50": 19.4448, "ttft_max": 25.379, "prefill_tok_s": 11847, "uncached_tokens": 300826, "elapsed_s": 25.4}
+decode_c64 {"conc": 64, "tpot_p50_ms": 22.1, "tpot_p95_ms": 27.3, "ttft_p50": 5.2922, "out_tok_s": 1943.7, "per_seq_tok_s": 45.2, "elapsed_s": 16.9}
+agent_32k_c16 {"sessions": 16, "ctx": 32768, "wall_s": 59.4, "ttft_cold_p50": 29.6282, "ttft_cold_p95": 44.8526, "ttft_warm_p50": 0.5712, "ttft_warm_p95": 1.2139, "ttft_p95": 43.0638, "tpot_p50_ms": 19.7, "out_tok_s": 207.0, "cache_hit": 0.6453, "elapsed_s": 59.4}
+mtp {"acceptance": 0.7102, "mean_accepted_len": 3.131}

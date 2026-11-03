@@ -1,0 +1,3 @@
+lengths [751, 911, 1411, 1159, 1403, 817, 569, 516] visible_blocks [187, 227, 352, 289, 350, 204, 142, 129]
+eager_vs_tiled mismatches: 0
+graph replays: 200 with mismatch: 5 counts: [0, 8]

@@ -1,0 +1,40 @@
+Attribution limit: the overlay = #62589 + #62590 + the indexer_qsa backport, so the delta cannot be attributed to a single PR.
+
+runs: {'stock': [1, 2, 3], 'overlay': [1, 2, 3]} passes: {'stock': 9, 'overlay': 9}
+pairs: {'overlay-r1': 'B', 'overlay-r2': 'A', 'overlay-r3': 'B', 'stock-r1': 'A', 'stock-r2': 'B', 'stock-r3': 'A'}
+
+=== all passes ===
+prefill 8x32K tok/s    pooled (pair-biased) stock 1.137e+04 [9162-1.193e+04] | overlay 2.2e+04 [1.568e+04-2.465e+04]
+                       per-round overlay vs stock: R1 +94.0%, R2 +87.6%, R3 +115.9%
+                       pair-bias estimate (R2 swapped vs mean R1,R3): -8.5%
+                       verdict: separated: every round better by >5%
+decode c64 tok/s       pooled (pair-biased) stock 1924 [1544-1944] | overlay 2786 [2133-2851]
+                       per-round overlay vs stock: R1 +47.7%, R2 +44.8%, R3 +43.0%
+                       pair-bias estimate (R2 swapped vs mean R1,R3): -0.3%
+                       verdict: separated: every round better by >5%
+decode c64 TPOT ms     pooled (pair-biased) stock 22.5 [22-25.3] | overlay 17.4 [17.2-20.7]
+                       per-round overlay vs stock: R1 -23.3%, R2 -21.9%, R3 -21.3%
+                       pair-bias estimate (R2 swapped vs mean R1,R3): +0.6%
+                       verdict: separated: every round better by >5%
+agent 32K c16 wall s   pooled (pair-biased) stock 60.7 [58.3-66.8] | overlay 35.3 [33.6-39.1]
+                       per-round overlay vs stock: R1 -43.4%, R2 -41.2%, R3 -40.9%
+                       pair-bias estimate (R2 swapped vs mean R1,R3): +1.6%
+                       verdict: separated: every round better by >5%
+
+=== passes 2-3 only (p1 = cold warm-up dropped) ===
+prefill 8x32K tok/s    pooled (pair-biased) stock 1.179e+04 [1.134e+04-1.193e+04] | overlay 2.451e+04 [2.199e+04-2.465e+04]
+                       per-round overlay vs stock: R1 +100.5%, R2 +96.5%, R3 +111.9%
+                       pair-bias estimate (R2 swapped vs mean R1,R3): -4.7%
+                       verdict: separated: every round better by >5%
+decode c64 tok/s       pooled (pair-biased) stock 1930 [1894-1944] | overlay 2794 [2772-2851]
+                       per-round overlay vs stock: R1 +47.5%, R2 +45.8%, R3 +43.3%
+                       pair-bias estimate (R2 swapped vs mean R1,R3): +0.3%
+                       verdict: separated: every round better by >5%
+decode c64 TPOT ms     pooled (pair-biased) stock 22.25 [22-22.7] | overlay 17.35 [17.2-17.5]
+                       per-round overlay vs stock: R1 -23.5%, R2 -21.8%, R3 -21.5%
+                       pair-bias estimate (R2 swapped vs mean R1,R3): +0.9%
+                       verdict: separated: every round better by >5%
+agent 32K c16 wall s   pooled (pair-biased) stock 60.1 [58.3-62] | overlay 34.4 [33.6-35.7]
+                       per-round overlay vs stock: R1 -42.9%, R2 -42.7%, R3 -42.1%
+                       pair-bias estimate (R2 swapped vs mean R1,R3): -0.5%
+                       verdict: separated: every round better by >5%

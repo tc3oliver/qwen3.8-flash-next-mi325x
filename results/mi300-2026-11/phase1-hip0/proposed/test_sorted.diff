@@ -1,0 +1,14 @@
+# repo-local only: paths are overlay/ of this repo; NOT for upstream (use test_qsa_amd_sorted.diff)
+--- a/overlay/test_qsa_kernels.py
++++ b/overlay/test_qsa_kernels.py
+@@ -254,5 +254,9 @@
+     )
+     # Warmup and capture launched it; the replay does not go through Python.
+     assert spy.launches == 2
+-    torch.testing.assert_close(captured, expected, rtol=0, atol=0)
++    # top-k emits the selected blocks in unspecified order (differs between identical
++    # launches), so compare the selection as a set per row.
++    torch.testing.assert_close(
++        captured.sort(dim=1).values, expected.sort(dim=1).values, rtol=0, atol=0
++    )
+ 
