@@ -8,7 +8,7 @@ experiments/exp.sh "$@" || { echo "{\"label\":\"$name\",\"error\":\"start failed
 B=http://127.0.0.1:$PORT
 uv run -q --with httpx,datasets tests/gsm8k_quick.py --base $B --n 200 --concurrency 32 --out $R/$name.gsm8k.json 2>&1 | grep -v Warning
 uv run -q --with httpx experiments/perfsuite.py --base $B --label "$name" ${PERF_ONLY:+--only $PERF_ONLY} --out $R/$name.json
-docker logs qwen38-exp-$slot > $R/$name.server.log 2>&1
+docker logs ${EXP_PREFIX:-qwen38-exp}-$slot > $R/$name.server.log 2>&1
 python3 - "$R/$name.json" "$R/$name.gsm8k.json" <<'PY'
 import json,sys; d=json.load(open(sys.argv[1])); g=json.load(open(sys.argv[2])); d["gsm8k200"]=g["accuracy"]; json.dump(d,open(sys.argv[1],"w"),indent=1)
 PY
