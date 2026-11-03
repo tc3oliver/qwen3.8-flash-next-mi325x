@@ -1,0 +1,23 @@
+# kernel test repeats (overlay/test_qsa_kernels.py), 2026-11-03, one MI325X per image
+## full file x5 (19 tests): all passed
+v0.32.0 run1: 19 passed in 6.76s 
+v0.32.0 run2: 19 passed in 6.79s 
+v0.32.0 run3: 19 passed in 6.81s 
+v0.32.0 run4: 19 passed in 6.73s 
+v0.32.0 run5: 19 passed in 6.77s 
+v0.33.0 run1: 19 passed in 8.96s 
+v0.33.0 run2: 19 passed in 8.45s 
+v0.33.0 run3: 19 passed in 8.80s 
+v0.33.0 run4: 19 passed in 8.46s 
+v0.33.0 run5: 19 passed in 8.43s 
+v0.33.0-rocm72 run1: 19 passed in 9.37s 
+v0.33.0-rocm72 run2: 19 passed in 9.01s 
+v0.33.0-rocm72 run3: 19 passed in 8.85s 
+v0.33.0-rocm72 run4: 19 passed in 9.04s 
+v0.33.0-rocm72 run5: 19 passed in 8.81s 
+## test_qsa_select_decode_rows_replays_in_cuda_graph x40 per image (exact equality of selected indices, per-row kernel replayed in a CUDA graph vs tiled kernel)
+v0.32.0: RESULT pass=36 fail=4
+v0.33.0: RESULT pass=38 fail=2
+v0.33.0-rocm72: RESULT pass=39 fail=1
+Every failure had the same signature: Mismatched elements 8 / 152, greatest absolute difference 768 at index (2, 4).
+The first run on rocm72 (earlier, with -x) also failed once: 18 passed, 1 failed.

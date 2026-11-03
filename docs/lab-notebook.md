@@ -204,3 +204,89 @@ tp1x4 via LiteLLM, 8K–128K × 1/4/8/16: 0 errors, sessions spread evenly (0.25
 undershoots on some code); rerun at 229376: c1/c4 0 errors, c8 7/24 and c16 3/48 still 400 for the same
 reason (largest successful prompt 261.7K) — client-side context overflow, not a server failure.
 Single TP1 replica 128K × 16: KV exhausted (16 × 131K > 1.86M tokens) → preemption, hit 0, TPOT 257 ms.
+
+
+---
+
+## 2026-11-03: overlay refresh for v0.32.0 / v0.33.0
+
+Working log of the refresh (findings first, then benchmark rounds). Raw data: `results/overlay-refresh-2026-11/`. Numbers in this section are
+from that folder; the README has the summary.
+
+### Confirmed before benchmarking
+1. **Public repo was stale.** Last push 2026-10-20; `overlay/qsa.py` = first revision of #62589 + #62590 and is byte-identical to the
+   production file. #62589 has since gained a rebase onto main and a second commit (per-row decode on gfx942, 2026-10-30).
+2. **AMD `ops/qsa.py` is the same file in v0.32.0 and v0.33.0** (sha256 7a7c8501...). `indexer_qsa.py` (the AMD indexer module in both tags)
+   is also identical between them (sha256 ca8ede9f...). One overlay therefore serves both tags.
+3. **`qsa_indexer.py` does not exist in either release.** The PR's 3-line change (`single_row_decode=...`) is against the newer file name on main.
+   In v0.32.0/v0.33.0 the caller is `indexer_qsa.py::_select`. Replacing only `ops/qsa.py` leaves `single_row_decode=False`, so the per-row decode
+   kernel would never run. The new overlay therefore ships two files: `ops/qsa.py` and a patched `indexer_qsa.py` (same 3 lines).
+   This `indexer_qsa.py` change is a backport by hand; the PR does not contain or test it.
+4. **The PR's test file cannot run on the releases** (imports `qsa_indexer`, `qsa_prepare`, absent). The 4 kernel-vs-reference tests that only
+   need `ops/qsa.py` were extracted unchanged (19 cases: bf16/fp16/fp8 x visible columns, decode rows 1/5/32/33, unwritten logits, CUDA-graph replay).
+   They pass on v0.32.0 + new overlay and on v0.33.0 + new overlay (HIP 4 and HIP 5, 19 passed each).
+5. **Per-row decode is not used by the shipped config.** The flag is `num_prefills == 0 and decode_query_len == 1`. The deployment runs MTP with
+   3 speculative tokens, so decode_query_len is 4 and the old tiled kernel is still used. The per-row kernel only applies with MTP off.
+6. **C1 (vllm#64662) does not apply to the shipped deployment.** The compose uses AITER FP8 MoE with expert parallel at TP2 (local E=256) and
+   AITER at TP1 (E=512, N=640). The new JSONs are for E=512, N=320/160 under pure TP with the Triton FP8 MoE backend. They matter to people who
+   run without AITER MoE (vLLM default) at TP2/TP4, not to this compose.
+7. **`tools/experiments/exp.sh` violates the GPU isolation rule** for shared hosts: it passes `--device /dev/dri` (every render node) and relies on
+   `HIP_VISIBLE_DEVICES`. On a machine where some GPUs serve production, that can land on the wrong GPU. The benchmark here uses its own launcher
+   (`up.sh`) with `--device /dev/dri/renderD<own>` only. Worth fixing in the repo's tools too.
+8. v0.33.0 was released 2026-10-27; the ROCm image `vllm/vllm-openai-rocm:v0.33.0` (18 GB compressed) and `v0.33.0-rocm100` share the same size. The tag was
+   last updated 2026-11-02, so pin by digest in the repo, not by tag.
+
+## Benchmark plan (3 rounds, 2 TP2 pairs at a time, pairs swapped)
+
+Arms: `s32` = v0.32.0 stock, `o32` = v0.32.0 + new overlay, `u33` = v0.33.0 + new overlay.
+Rounds (revised, see "During the run"): r1 s32@A o32@B, r2 u33@A u33@B. Each arm boots once; u33 runs on both pairs as the pair-difference check.
+Per boot: GSM8K-200, then 3 passes of prefill_1, prefill_8, decode_c1/c16/c64, agent_32k_c16, agent_96k_c8.
+Settings = production TP2: EP2, MTP 3, AITER MoE, QuickReduce INT6, tuned fMoE table for E=256, FULL_DECODE_ONLY.
+
+## During the run
+
+(append below)
+
+- 2026-11-03 05:30 plan changed (user): one boot per arm instead of two. r1 = s32@A + o32@B (running). r2 = u33 on A and again on B
+  (B would otherwise be idle). The u33 A-vs-B pair also serves as the pair-difference check; the comparisons s32 vs o32 vs u33 are cross-pair, so a
+  large A/B gap in u33 would mean the earlier numbers need a swapped re-run.
+
+## r1 results (2026-11-03 05:20-05:36, s32@A vs o32@B, 3 passes each, median [min-max]; GPU pci ids verified in-container)
+- Boot 281 s for both (warm model cache). GSM8K-200: s32 0.975, o32 0.980.
+- prefill 8x32K 12,970 -> 25,920 tok/s (2.0x); 32K cold TTFT 2.95 -> 1.54 s; decode c64 2,262 -> 3,292 tok/s (+46%), TPOT 18.6 -> 15.1 ms;
+  agent 32K c16 wall 56.5 -> 32.1 s; agent 96K c8 77.4 -> 42.4 s; decode c1 220 -> 235 tok/s (+7%; the min-max ranges barely overlap, not tested further).
+- Same direction and similar ratio as the October README (prefill 8x32K stock 11,469 -> overlay 24,266 = 2.1x; now 2.0x), but the absolute numbers are
+  not identical: stock is 13% higher now (12,970 vs 11,469), overlay 7% higher (25,920 vs 24,266). Not explained yet (different day, host load, caches).
+  Caveat: s32 and o32 ran on different pairs; the r2 u33 A-vs-B comparison is the pair-difference check.
+- Observation: the whole r1 (boot + GSM8K + 3 perf passes) took 15 min, much faster than the 2400 s boot timeout assumed.
+
+## r2 results (2026-11-03 05:35-05:45): u33 = v0.33.0 + new overlay, on pair A and again on pair B (same settings), 3 passes each
+- Boot 221 s (v0.32.0: 281 s). GSM8K-200: u33@A 0.965, u33@B 0.970 (s32 0.975, o32 0.980). Differences are 1-3 questions of 200 (SE about 1.2 points);
+  both v0.33.0 values are the lowest of the four runs, so this is a flag for a full 1319-question run, not a conclusion.
+- Pair check (u33 A vs B): within 1-3% on prefill 8x32K (27.3k/27.0k), decode c64 (3,552/3,487), TPOT (13.1/13.3), agent 32K (29.1/28.8), agent 96K (39.1/39.6).
+  Not within noise: decode c1 (264 [253-319] vs 316 [298-327]) and decode c16 (1,974 vs 1,874, ranges overlap). Single-stream decode and low concurrency
+  are noisy here; treat c1/c16 as indicative only.
+- v0.33.0 + overlay vs v0.32.0 + overlay (o32, other pair): prefill 8x32K +5%, decode c64 +6% (3,520 avg vs 3,292), TPOT 13.2 vs 15.1 ms,
+  agent 32K wall 29 vs 32 s (-10%), agent 96K 39 vs 42 s (-8%), 32K cold TTFT 1.47 vs 1.54 s. c1/c16 higher but noisy. o32 only ran on pair B.
+- Same MoE backend in both (AITER FP8 MoE), same KV capacity (9.34M vs 9.36M tokens per replica). No new errors or warnings in the v0.33.0 server log
+  beyond the torch FutureWarning and aiter hipcc notice that v0.32.0 also prints.
+- Not measured: functional/tool-call gate, 238K needle, full GSM8K 1319, gateway behavior, multi-hour stability on v0.33.0; no-MTP per-row decode A/B.
+
+## Found while updating the repo (2026-11-03)
+- **The v0.33.0 ROCm image is a different ROCm major.** `vllm/vllm-openai-rocm:v0.33.0` (digest 4fcd39b7..., built 2026-11-01) reports
+  torch 2.13.0+rocm10.0.0, HIP 7.15.26333, vllm 0.33.0+rocm100, aiter 0.1.26. v0.32.0 is ROCm 7.2.3 (HIP 7.2.53211), aiter 0.1.24.post1.
+  So the r2 difference vs o32 (prefill +5%, decode c64 +6%, agent -8..-10%) is vLLM + ROCm + aiter together; it cannot be credited to vLLM alone.
+  It ran fine on the host's amdgpu 6.16.13 driver, but a ROCm 10 userspace on that driver was not otherwise checked.
+
+### v0.33.0-rocm72 (round r3, 2026-11-03 06:00-06:19)
+`vllm/vllm-openai-rocm:v0.33.0-rocm72`: torch 2.13.0+git733fca1, HIP 7.2.53211, vllm 0.33.0+rocm72, aiter 0.1.26, digest 4fe7bc12…. Same settings, overlay as in r2,
+on pair A and pair B. Boot 231 s. Medians of 3 passes (A / B): prefill 8x32K 26,540 / 26,962 tok/s, decode c64 3,417 / 3,365, TPOT 14.2 / 13.9 ms, agent 32K
+30.8 / 29.9 s, agent 96K 39.4 / 40.6 s, GSM8K-200 0.975 / 0.960. Against v0.32.0 + overlay (other pair): prefill +2..4%, decode c64 +2..4%, agent -4..7%.
+The ROCm 10.0 build (u33) is another 2-4% on prefill and decode c64. GSM8K-200 over the four v0.33.0 runs: 0.965, 0.970, 0.975, 0.960 vs 0.975, 0.980 on v0.32.0
+(difference about 1 point, inside the standard error of 1.2; not tested further, no 1319 run).
+The aiter in these images has 0 rows for this model on 304 CUs (checked in the three image CSVs), so `AITER_CONFIG_FMOE` is still needed although aiter #6693 is merged.
+
+### Flaky test in the #62589 kernel tests (2026-11-03)
+`test_qsa_select_decode_rows_replays_in_cuda_graph`: one failure in the first rocm72 run (18 passed, 1 failed). Reruns: full file 5/5 passes on each of the three images; the test
+alone x40 failed 4 (v0.32.0), 2 (v0.33.0), 1 (rocm72) times, always 8 of 152 elements, max abs diff 768 at index (2, 4). Same signature on every image, so it comes from the
+test or the kernels, not from an image. Cause not found yet. Data: `results/overlay-refresh-2026-11/kernel-test-repeats.txt`.
