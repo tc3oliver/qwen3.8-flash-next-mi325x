@@ -1,0 +1,5 @@
+gap=0s n=30 first-block-of-pair: bbbbbbababbbbbbbbbbbbbbbbbbbbb  a=2 b=28
+gap=0.01s n=30 first-block-of-pair: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb  a=0 b=30
+gap=0.1s n=30 first-block-of-pair: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb  a=0 b=30
+gap=0.5s n=30 first-block-of-pair: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb  a=0 b=30
+gap=2.0s n=12 first-block-of-pair: bbbbbbbbbabb  a=1 b=11

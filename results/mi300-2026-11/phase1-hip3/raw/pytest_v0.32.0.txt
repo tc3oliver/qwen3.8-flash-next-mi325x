@@ -1,0 +1,49 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.7.0 -- /usr/bin/python3
+rootdir: /t
+plugins: asyncio-1.4.0, anyio-4.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 19 items
+
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[bf16] PASSED [  5%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[fp16] PASSED [ 10%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[fp8] PASSED [ 15%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-bf16] PASSED [ 21%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-fp16] PASSED [ 26%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-fp8] PASSED [ 31%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-bf16] PASSED [ 36%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-fp16] PASSED [ 42%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-fp8] PASSED [ 47%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-bf16] PASSED [ 52%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-fp16] PASSED [ 57%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-fp8] PASSED [ 63%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-bf16] PASSED [ 68%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-fp16] PASSED [ 73%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-fp8] PASSED [ 78%]
+../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[bf16] PASSED [ 84%]
+../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[fp16] PASSED [ 89%]
+../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[fp8] PASSED [ 94%]
+../t/test_qsa_kernels.py::test_qsa_select_decode_rows_replays_in_cuda_graph PASSED [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_replays_in_cuda_graph
+============================== 19 passed in 7.87s ==============================

@@ -1,0 +1,40 @@
+{
+ "label": "overlay-r1-B.p3",
+ "time": "2026-11-03 07:51:00",
+ "base": "http://127.0.0.1:8012",
+ "prefill_8": {
+  "n": 8,
+  "ttft_p50": 9.3244,
+  "ttft_max": 11.808,
+  "prefill_tok_s": 24594,
+  "uncached_tokens": 290856,
+  "elapsed_s": 11.8
+ },
+ "decode_c64": {
+  "conc": 64,
+  "tpot_p50_ms": 17.2,
+  "tpot_p95_ms": 19.6,
+  "ttft_p50": 2.636,
+  "out_tok_s": 2850.7,
+  "per_seq_tok_s": 58.1,
+  "elapsed_s": 11.5
+ },
+ "agent_32k_c16": {
+  "sessions": 16,
+  "ctx": 32768,
+  "wall_s": 33.6,
+  "ttft_cold_p50": 14.3455,
+  "ttft_cold_p95": 21.552,
+  "ttft_warm_p50": 0.5295,
+  "ttft_warm_p95": 0.7019,
+  "ttft_p95": 20.7905,
+  "tpot_p50_ms": 15.6,
+  "out_tok_s": 365.8,
+  "cache_hit": 0.6452,
+  "elapsed_s": 33.6
+ },
+ "mtp": {
+  "acceptance": 0.7157,
+  "mean_accepted_len": 3.147
+ }
+}

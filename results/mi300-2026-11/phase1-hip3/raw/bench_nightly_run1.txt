@@ -1,0 +1,30 @@
+== before 07:40:36
+ 07:40:36 up 29 days, 16:14, 27 users,  load average: 7.64, 12.73, 11.67
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 0
+GPU[2]		: GPU use (%): 0
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 0
+GPU[6]		: GPU use (%): 0
+GPU[7]		: GPU use (%): 0
+W1103 07:40:38.679112       1 queue_controller.cpp:170] [queue-intercept] device-memory ring-buffer requested but profiling requires system-memory InterceptQueue; falling back to system-memory ring for agent 1084195888 (priority and CU-mask from the descriptor are not preserved)
+shape | rows | programs | stock ms | PR-3 ms | speedup | max abs diff
+TP2 (12 q / 1 kv) | 520 | 520 | 0.409 | 0.274 | 1.49x | 4.9e-04
+TP2 (12 q / 1 kv) | 1024 | 1024 | 0.787 | 0.359 | 2.19x | 4.9e-04
+TP2 (12 q / 1 kv) | 4096 | 4096 | 2.666 | 1.373 | 1.94x | 4.9e-04
+TP1 (24 q / 2 kv) | 260 | 520 | 0.413 | 0.277 | 1.49x | 4.9e-04
+TP1 (24 q / 2 kv) | 1024 | 2048 | 1.538 | 0.727 | 2.11x | 4.9e-04
+TP1 (24 q / 2 kv) | 4096 | 8192 | 5.350 | 2.794 | 1.92x | 4.9e-04
+TP4 (6 q / 1 kv) | 520 | 520 | 0.365 | 0.355 | 1.03x | 0.0e+00
+TP4 (6 q / 1 kv) | 4096 | 4096 | 2.215 | 2.205 | 1.00x | 0.0e+00
+== after 07:40:50
+ 07:40:50 up 29 days, 16:14, 27 users,  load average: 7.42, 12.43, 11.59
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 0
+GPU[2]		: GPU use (%): 0
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 0
+GPU[6]		: GPU use (%): 0
+GPU[7]		: GPU use (%): 0

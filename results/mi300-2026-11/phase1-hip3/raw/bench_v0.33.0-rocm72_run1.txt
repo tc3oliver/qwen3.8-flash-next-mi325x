@@ -1,0 +1,30 @@
+== before 07:28:05
+ 07:28:05 up 29 days, 16:01, 27 users,  load average: 14.44, 12.58, 8.86
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 0
+GPU[2]		: GPU use (%): 0
+GPU[3]		: GPU use (%): 2
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 0
+GPU[6]		: GPU use (%): 0
+GPU[7]		: GPU use (%): 0
+mi300-e2e-a
+shape | rows | programs | stock ms | PR-3 ms | speedup | max abs diff
+TP2 (12 q / 1 kv) | 520 | 520 | 0.408 | 0.275 | 1.49x | 4.9e-04
+TP2 (12 q / 1 kv) | 1024 | 1024 | 0.786 | 0.359 | 2.19x | 4.9e-04
+TP2 (12 q / 1 kv) | 4096 | 4096 | 2.667 | 1.382 | 1.93x | 4.9e-04
+TP1 (24 q / 2 kv) | 260 | 520 | 0.414 | 0.279 | 1.48x | 4.9e-04
+TP1 (24 q / 2 kv) | 1024 | 2048 | 1.542 | 0.735 | 2.10x | 4.9e-04
+TP1 (24 q / 2 kv) | 4096 | 8192 | 5.362 | 2.809 | 1.91x | 4.9e-04
+TP4 (6 q / 1 kv) | 520 | 520 | 0.366 | 0.353 | 1.04x | 0.0e+00
+TP4 (6 q / 1 kv) | 4096 | 4096 | 2.231 | 2.214 | 1.01x | 0.0e+00
+== after 07:28:21
+ 07:28:21 up 29 days, 16:02, 27 users,  load average: 22.54, 14.40, 9.51
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 0
+GPU[2]		: GPU use (%): 0
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 0
+GPU[6]		: GPU use (%): 0
+GPU[7]		: GPU use (%): 0

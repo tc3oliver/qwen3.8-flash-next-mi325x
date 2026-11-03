@@ -1,0 +1,2 @@
+stock /usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/ops/qsa.py 7a7c8501e0b92a4236e382c6ef494670d684ee1dfeb2d673f942a4f38fccf69b OK
+stock /usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/indexer_qsa.py ca8ede9f27c933b85a3a3e45e8e1b4f7693c8f0271ff3cab3fa6fb64de8c2476 OK

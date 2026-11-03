@@ -1,0 +1,66 @@
+== before p1
+08:27:29
+ 08:27:29 up 29 days, 17:01, 27 users,  load average: 24.09, 20.27, 17.48
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 1
+GPU[2]		: GPU use (%): 1
+GPU[3]		: GPU use (%): 1
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 0
+GPU[6]		: GPU use (%): 0
+GPU[7]		: GPU use (%): 0
+== after p1
+08:28:41
+ 08:28:41 up 29 days, 17:02, 27 users,  load average: 24.49, 20.88, 17.90
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 24
+GPU[2]		: GPU use (%): 24
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 100
+GPU[6]		: GPU use (%): 100
+GPU[7]		: GPU use (%): 0
+== before p2
+08:28:42
+ 08:28:42 up 29 days, 17:02, 27 users,  load average: 24.49, 20.88, 17.90
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 6
+GPU[2]		: GPU use (%): 6
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 100
+GPU[6]		: GPU use (%): 100
+GPU[7]		: GPU use (%): 0
+== after p2
+08:29:41
+ 08:29:41 up 29 days, 17:03, 27 users,  load average: 24.24, 21.59, 18.34
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 33
+GPU[2]		: GPU use (%): 33
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 100
+GPU[6]		: GPU use (%): 100
+GPU[7]		: GPU use (%): 0
+== before p3
+08:29:41
+ 08:29:41 up 29 days, 17:03, 27 users,  load average: 24.24, 21.59, 18.34
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 12
+GPU[2]		: GPU use (%): 12
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 100
+GPU[6]		: GPU use (%): 100
+GPU[7]		: GPU use (%): 0
+== after p3
+08:30:39
+ 08:30:39 up 29 days, 17:04, 27 users,  load average: 22.57, 21.53, 18.50
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 22
+GPU[2]		: GPU use (%): 22
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 100
+GPU[6]		: GPU use (%): 100
+GPU[7]		: GPU use (%): 0

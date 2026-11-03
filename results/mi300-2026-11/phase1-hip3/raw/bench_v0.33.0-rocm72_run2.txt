@@ -1,0 +1,29 @@
+== before 07:28:26
+ 07:28:26 up 29 days, 16:02, 27 users,  load average: 21.13, 14.24, 9.49
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 0
+GPU[2]		: GPU use (%): 0
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 0
+GPU[6]		: GPU use (%): 0
+GPU[7]		: GPU use (%): 0
+shape | rows | programs | stock ms | PR-3 ms | speedup | max abs diff
+TP2 (12 q / 1 kv) | 520 | 520 | 0.409 | 0.278 | 1.47x | 4.9e-04
+TP2 (12 q / 1 kv) | 1024 | 1024 | 0.786 | 0.361 | 2.18x | 4.9e-04
+TP2 (12 q / 1 kv) | 4096 | 4096 | 2.663 | 1.379 | 1.93x | 4.9e-04
+TP1 (24 q / 2 kv) | 260 | 520 | 0.411 | 0.278 | 1.48x | 4.9e-04
+TP1 (24 q / 2 kv) | 1024 | 2048 | 1.540 | 0.738 | 2.09x | 4.9e-04
+TP1 (24 q / 2 kv) | 4096 | 8192 | 5.358 | 2.809 | 1.91x | 4.9e-04
+TP4 (6 q / 1 kv) | 520 | 520 | 0.370 | 0.355 | 1.04x | 0.0e+00
+TP4 (6 q / 1 kv) | 4096 | 4096 | 2.223 | 2.218 | 1.00x | 0.0e+00
+== after 07:28:41
+ 07:28:41 up 29 days, 16:02, 27 users,  load average: 18.16, 13.92, 9.46
+GPU[0]		: GPU use (%): 0
+GPU[1]		: GPU use (%): 0
+GPU[2]		: GPU use (%): 0
+GPU[3]		: GPU use (%): 0
+GPU[4]		: GPU use (%): 0
+GPU[5]		: GPU use (%): 0
+GPU[6]		: GPU use (%): 0
+GPU[7]		: GPU use (%): 0

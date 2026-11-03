@@ -1,0 +1,10 @@
+found differing graph order: True rows: [2]
+min index -1 max 1410
+graph order (flaky) vs tiled: bitwise_identical=True max_abs_diff=0.000e+00 max_abs_diff_rows=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+tiled again vs tiled: bitwise_identical=True max_abs_diff=0.000e+00 max_abs_diff_rows=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+random column permutation #0: bitwise_identical=False max_abs_diff=7.812e-03 max_abs_diff_rows=[0.003906, 0.003906, 0.003906, 0.003906, 0.003906, 0.007812, 0.003906, 0.003906]
+random column permutation #1: bitwise_identical=False max_abs_diff=7.812e-03 max_abs_diff_rows=[0.003906, 0.003906, 0.003906, 0.007812, 0.003906, 0.007812, 0.003906, 0.003906]
+random column permutation #2: bitwise_identical=False max_abs_diff=7.812e-03 max_abs_diff_rows=[0.003906, 0.003906, 0.003906, 0.007812, 0.003906, 0.003906, 0.003906, 0.003906]
+random column permutation #3: bitwise_identical=False max_abs_diff=7.812e-03 max_abs_diff_rows=[0.003906, 0.003906, 0.003906, 0.007812, 0.0, 0.007812, 0.003906, 0.003906]
+random column permutation #4: bitwise_identical=False max_abs_diff=3.906e-03 max_abs_diff_rows=[0.003906, 0.003906, 0.003906, 0.003906, 0.003906, 0.003906, 0.003906, 0.003906]
+ref magnitude: max|out| = 1.46875  repo tolerance in test_qsa_sparse_paged_attention_matches_reference: rtol=2e-2 atol=2e-2
