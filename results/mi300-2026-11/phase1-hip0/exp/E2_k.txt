@@ -1,0 +1,20 @@
+k=0
+FP pid=7 tiled_row2=[1388, 620] rows_row2=[620, 1388] graph_row2=[620, 1388] equal(graph,tiled)=0 equal(eager_rows,tiled)=0
+k=1
+FP pid=403 tiled_row2=[620, 1388] rows_row2=[620, 1388] graph_row2=[1388, 620] equal(graph,tiled)=0 equal(eager_rows,tiled)=1
+k=2
+FP pid=635 tiled_row2=[620, 1388] rows_row2=[620, 1388] graph_row2=[1388, 620] equal(graph,tiled)=0 equal(eager_rows,tiled)=1
+k=3
+FP pid=867 tiled_row2=[1388, 620] rows_row2=[1388, 620] graph_row2=[1388, 620] equal(graph,tiled)=1 equal(eager_rows,tiled)=1
+k=4
+FP pid=1099 tiled_row2=[620, 1388] rows_row2=[620, 1388] graph_row2=[620, 1388] equal(graph,tiled)=1 equal(eager_rows,tiled)=1
+k=5
+FP pid=1331 tiled_row2=[620, 1388] rows_row2=[620, 1388] graph_row2=[1388, 620] equal(graph,tiled)=0 equal(eager_rows,tiled)=1
+k=6
+FP pid=1563 tiled_row2=[620, 1388] rows_row2=[1388, 620] graph_row2=[1388, 620] equal(graph,tiled)=0 equal(eager_rows,tiled)=0
+k=7
+FP pid=1795 tiled_row2=[620, 1388] rows_row2=[1388, 620] graph_row2=[620, 1388] equal(graph,tiled)=1 equal(eager_rows,tiled)=0
+k=8
+FP pid=2027 tiled_row2=[620, 1388] rows_row2=[1388, 620] graph_row2=[1388, 620] equal(graph,tiled)=0 equal(eager_rows,tiled)=0
+k=9
+FP pid=2259 tiled_row2=[1388, 620] rows_row2=[1388, 620] graph_row2=[1388, 620] equal(graph,tiled)=1 equal(eager_rows,tiled)=1

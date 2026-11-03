@@ -1,0 +1,79 @@
+/usr/local/lib/python3.12/dist-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_qsa_select_decode_rows_replays_in_cuda_graph _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a24b643d3a0>
+
+    @requires_qsa_kernels
+    def test_qsa_select_decode_rows_replays_in_cuda_graph(
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        spy = _force_rows_kernel(monkeypatch)
+        (
+            q,
+            k_cache,
+            page_table,
+            token_to_req,
+            positions,
+            lengths,
+            token_topk,
+            compress_ratio,
+        ) = _decode_select_case(8, "bf16")
+    
+        def select():
+            return qsa_ops.qsa_select_paged_tokens(
+                q,
+                k_cache,
+                page_table,
+                token_to_req,
+                positions,
+                lengths,
+                token_topk,
+                compress_ratio,
+                single_row_decode=True,
+            )
+    
+        select()
+        torch.accelerator.synchronize()
+        graph = torch.cuda.CUDAGraph()
+        with torch.cuda.graph(graph):
+            captured = select()
+    
+        # Replay on new inputs written in place, as the runner does between steps.
+        torch.manual_seed(1)
+        q.copy_(torch.randn_like(q))
+        new_lengths = torch.randint(
+            8, 1500, lengths.shape, device="cuda", dtype=lengths.dtype
+        )
+        lengths.copy_(new_lengths)
+        positions.copy_((new_lengths - 1).to(torch.int64))
+        graph.replay()
+        torch.accelerator.synchronize()
+        expected = qsa_ops.qsa_select_paged_tokens(
+            q,
+            k_cache,
+            page_table,
+            token_to_req,
+            positions,
+            lengths,
+            token_topk,
+            compress_ratio,
+            single_row_decode=False,
+        )
+        # Warmup and capture launched it; the replay does not go through Python.
+        assert spy.launches == 2
+>       torch.testing.assert_close(captured, expected, rtol=0, atol=0)
+E       AssertionError: Tensor-likes are not equal!
+E       
+E       Mismatched elements: 8 / 152 (5.3%)
+E       Greatest absolute difference: 768 at index (2, 4)
+E       Greatest relative difference: 1.2387096881866455 at index (2, 4)
+
+/t/test_qsa_kernels.py:257: AssertionError
+=========================== short test summary info ============================
+FAILED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_replays_in_cuda_graph
+1 failed in 5.51s

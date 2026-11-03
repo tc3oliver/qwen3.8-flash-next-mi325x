@@ -1,0 +1,3 @@
+A pytest only:        PFFFFFFPFFPF
+B dummy+pytest:       PFFFFFFFPP
+C pytest only again:  FFPPFFPFPP

@@ -1,0 +1,5 @@
+W1103 07:59:01.202704       1 queue_controller.cpp:170] [queue-intercept] device-memory ring-buffer requested but profiling requires system-memory InterceptQueue; falling back to system-memory ring for agent 518197552 (priority and CU-mask from the descriptor are not preserved)
+W1103 07:59:01.585383       1 queue_controller.cpp:170] [queue-intercept] device-memory ring-buffer requested but profiling requires system-memory InterceptQueue; falling back to system-memory ring for agent 518197552 (priority and CU-mask from the descriptor are not preserved)
+graph_replay(rows kernel): exact_equal=497/500 sorted_equal=500/500 distinct_row2_orders=2
+eager rows kernel: exact_equal=500/500 sorted_equal=500/500 distinct_row2_orders=1
+eager tiled kernel: exact_equal=493/500 sorted_equal=500/500 distinct_row2_orders=2

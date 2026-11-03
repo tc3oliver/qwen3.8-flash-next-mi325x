@@ -1,0 +1,1 @@
+RESULT v0.33.0-rocm72 pass=19 fail=21

@@ -15,7 +15,9 @@ case $slot in a) HIP=$REPLICA_A_HIP PORT=8011;; b) HIP=$REPLICA_B_HIP PORT=8012;
   g0) HIP=1 PORT=8020;; g1) HIP=3 PORT=8021;; g2) HIP=2 PORT=8022;; g3) HIP=0 PORT=8023;;
   *) echo "slot a|b|g0..g3"; exit 1;; esac
 [[ $slot == g* ]] && TP1=1 || TP1=0
-C=qwen38-exp-$slot
+C=${EXP_PREFIX:-qwen38-exp}-$slot
+# Optional per-host map "HIP=renderDnumber ..." (deploy/.env.mi300x.example). Unset: mount all of /dev/dri as before.
+declare -A RN=(); for kv in ${RENDER_MAP:-}; do RN[${kv%%=*}]=${kv#*=}; done
 declare -A BASE=(
   [tensor-parallel-size]=2 [enable-expert-parallel]= [max-model-len]=262144 [max-num-seqs]=64
   [gpu-memory-utilization]=0.93 [max-num-batched-tokens]=32768 [enable-chunked-prefill]= [enable-prefix-caching]=
@@ -49,13 +51,23 @@ ARGS=(/models/qwen3.8-flash-next-fp8 --served-model-name=qwen3.8-flash-next --ho
 for k in "${!BASE[@]}"; do [[ -n ${BASE[$k]} ]] && ARGS+=("--$k=${BASE[$k]}") || ARGS+=("--$k"); done
 ARGS+=("${EXTRA[@]}")
 EV=(); for k in "${!ENV[@]}"; do EV+=(-e "$k=${ENV[$k]}"); done
+if [[ -n ${RENDER_MAP:-} ]]; then
+  # only the render nodes of the chosen HIP ids are mounted, so ids inside the container are renumbered 0..n-1;
+  # a HIP id that is not in RENDER_MAP (e.g. a production GPU) is refused.
+  DEVS=(); IN=(); n=0
+  for h in ${HIP//,/ }; do [[ -n ${RN[$h]:-} ]] || { echo "HIP $h is not in RENDER_MAP"; exit 1; }
+    DEVS+=(--device /dev/dri/renderD${RN[$h]}); IN+=($n); n=$((n+1)); done
+  HIPIN=$(IFS=,; echo "${IN[*]}")
+else
+  DEVS=(--device /dev/dri); HIPIN=$HIP
+fi
 mkdir -p runtime/exp-$slot experiments/results experiments/profiles
 docker rm -f "$C" >/dev/null 2>&1 || true
 LOG=experiments/results/$name.server.log
 echo "[$name] slot=$slot HIP=$HIP port=$PORT"; printf '  %s\n' "${ARGS[@]:4}" "${EV[@]}" "${MOUNTS[@]}" | grep -v '^  -e$' > experiments/results/$name.config.txt
-docker run -d --name "$C" --ipc host --shm-size 32g --device /dev/kfd --device /dev/dri --group-add video --group-add render \
+docker run -d --name "$C" --ipc host --shm-size 32g --device /dev/kfd "${DEVS[@]}" --group-add video --group-add render \
   --cap-add SYS_PTRACE --security-opt seccomp=unconfined -p 127.0.0.1:$PORT:8000 \
-  -e HIP_VISIBLE_DEVICES=$HIP "${EV[@]}" "${MOUNTS[@]}" \
+  -e HIP_VISIBLE_DEVICES=$HIPIN "${EV[@]}" "${MOUNTS[@]}" \
   -v "$MODEL_DIR":/models/qwen3.8-flash-next-fp8:ro -v "$PWD/runtime/exp-$slot":/cache/vllm \
   -v "$PWD/experiments/profiles":/profiles -v "$REPO/tuned/aiter":/tuned:ro \
   "$VLLM_IMAGE" "${ARGS[@]}" >/dev/null

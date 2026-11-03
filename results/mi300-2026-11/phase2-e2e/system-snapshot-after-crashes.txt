@@ -1,0 +1,221 @@
+# System snapshot taken 2026-11-03 08:40:08 (after the crashes; read-only commands, no sudo, no reset)
+
+## dmesg
+dmesg: read kernel buffer failed: Operation not permitted
+
+## journalctl -k 07:40-08:40 (amdgpu|kfd|hsa|gpu|xgmi|ras lines)
+Hint: You are currently not seeing messages from other users and the system.
+      Users in groups 'adm', 'systemd-journal' can see all messages.
+      Pass -q to turn off this notice.
+-- No entries --
+(exit: )
+
+## rocm-smi --showrasinfo all
+
+
+============================ ROCm System Management Interface ============================
+======================================== RAS Info ========================================
+
+GPU[0]: 	RAS INFO
+         Block       Status    Correctable Error  Uncorrectable Error  
+           UMC        ENABLED                  0                    0  
+          SDMA        ENABLED                  0                    0  
+           GFX        ENABLED                  0                    0  
+         MMHUB        ENABLED                  0                    0  
+         ATHUB        ENABLED  
+      PCIE_BIF        ENABLED  
+           HDP        ENABLED  
+     XGMI_WAFL        ENABLED                  0                    0  
+            DF        ENABLED  
+           SMN        ENABLED  
+           SEM       DISABLED  
+           MP0        ENABLED  
+           MP1        ENABLED  
+          FUSE       DISABLED  
+__________________________________________________________________________________________
+
+GPU[1]: 	RAS INFO
+         Block       Status    Correctable Error  Uncorrectable Error  
+           UMC        ENABLED                  0                    0  
+          SDMA        ENABLED                  0                    0  
+           GFX        ENABLED                  0                    0  
+         MMHUB        ENABLED                  0                    0  
+         ATHUB        ENABLED  
+      PCIE_BIF        ENABLED  
+           HDP        ENABLED  
+     XGMI_WAFL        ENABLED                  0                    0  
+            DF        ENABLED  
+           SMN        ENABLED  
+           SEM       DISABLED  
+           MP0        ENABLED  
+           MP1        ENABLED  
+          FUSE       DISABLED  
+__________________________________________________________________________________________
+
+GPU[2]: 	RAS INFO
+         Block       Status    Correctable Error  Uncorrectable Error  
+           UMC        ENABLED                  0                    0  
+          SDMA        ENABLED                  0                    0  
+           GFX        ENABLED                  0                    0  
+         MMHUB        ENABLED                  0                    0  
+         ATHUB        ENABLED  
+      PCIE_BIF        ENABLED  
+           HDP        ENABLED  
+     XGMI_WAFL        ENABLED                  0                    0  
+            DF        ENABLED  
+           SMN        ENABLED  
+           SEM       DISABLED  
+           MP0        ENABLED  
+           MP1        ENABLED  
+          FUSE       DISABLED  
+__________________________________________________________________________________________
+
+GPU[3]: 	RAS INFO
+         Block       Status    Correctable Error  Uncorrectable Error  
+           UMC        ENABLED                  0                    0  
+          SDMA        ENABLED                  0                    0  
+           GFX        ENABLED                  0                    0  
+         MMHUB        ENABLED                  0                    0  
+         ATHUB        ENABLED  
+      PCIE_BIF        ENABLED  
+           HDP        ENABLED  
+     XGMI_WAFL        ENABLED                  0                    0  
+            DF        ENABLED  
+           SMN        ENABLED  
+           SEM       DISABLED  
+           MP0        ENABLED  
+           MP1        ENABLED  
+          FUSE       DISABLED  
+__________________________________________________________________________________________
+
+GPU[4]: 	RAS INFO
+         Block       Status    Correctable Error  Uncorrectable Error  
+           UMC        ENABLED                  0                    0  
+          SDMA        ENABLED                  0                    0  
+           GFX        ENABLED                  0                    0  
+         MMHUB        ENABLED                  0                    0  
+         ATHUB        ENABLED  
+      PCIE_BIF        ENABLED  
+           HDP        ENABLED  
+     XGMI_WAFL        ENABLED                  0                    0  
+            DF        ENABLED  
+           SMN        ENABLED  
+           SEM       DISABLED  
+           MP0        ENABLED  
+           MP1        ENABLED  
+          FUSE       DISABLED  
+__________________________________________________________________________________________
+
+GPU[5]: 	RAS INFO
+         Block       Status    Correctable Error  Uncorrectable Error  
+           UMC        ENABLED                  0                    0  
+          SDMA        ENABLED                  0                    0  
+           GFX        ENABLED                  0                    0  
+         MMHUB        ENABLED                  0                    0  
+         ATHUB        ENABLED  
+      PCIE_BIF        ENABLED  
+           HDP        ENABLED  
+     XGMI_WAFL        ENABLED                  0                    0  
+            DF        ENABLED  
+           SMN        ENABLED  
+           SEM       DISABLED  
+           MP0        ENABLED  
+           MP1        ENABLED  
+          FUSE       DISABLED  
+__________________________________________________________________________________________
+
+GPU[6]: 	RAS INFO
+         Block       Status    Correctable Error  Uncorrectable Error  
+           UMC        ENABLED                  0                    0  
+          SDMA        ENABLED                  0                    0  
+           GFX        ENABLED                  0                    0  
+         MMHUB        ENABLED                  0                    0  
+         ATHUB        ENABLED  
+      PCIE_BIF        ENABLED  
+           HDP        ENABLED  
+     XGMI_WAFL        ENABLED                  0                    0  
+            DF        ENABLED  
+           SMN        ENABLED  
+           SEM       DISABLED  
+           MP0        ENABLED  
+           MP1        ENABLED  
+          FUSE       DISABLED  
+__________________________________________________________________________________________
+
+GPU[7]: 	RAS INFO
+         Block       Status    Correctable Error  Uncorrectable Error  
+           UMC        ENABLED                  0                    0  
+          SDMA        ENABLED                  0                    0  
+           GFX        ENABLED                  0                    0  
+         MMHUB        ENABLED                  0                    0  
+         ATHUB        ENABLED  
+      PCIE_BIF        ENABLED  
+           HDP        ENABLED  
+     XGMI_WAFL        ENABLED                  0                    0  
+            DF        ENABLED  
+           SMN        ENABLED  
+           SEM       DISABLED  
+           MP0        ENABLED  
+           MP1        ENABLED  
+          FUSE       DISABLED  
+__________________________________________________________________________________________
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+
+## rocm-smi --showmeminfo vram --showuse --showtemp
+GPU[0]		: Temperature (Sensor junction) (C): 33.0
+GPU[0]		: Temperature (Sensor memory) (C): 28.0
+GPU[1]		: Temperature (Sensor junction) (C): 38.0
+GPU[1]		: Temperature (Sensor memory) (C): 30.0
+GPU[2]		: Temperature (Sensor junction) (C): 38.0
+GPU[2]		: Temperature (Sensor memory) (C): 31.0
+GPU[3]		: Temperature (Sensor junction) (C): 32.0
+GPU[3]		: Temperature (Sensor memory) (C): 27.0
+GPU[4]		: Temperature (Sensor junction) (C): 38.0
+GPU[4]		: Temperature (Sensor memory) (C): 30.0
+GPU[5]		: Temperature (Sensor junction) (C): 37.0
+GPU[5]		: Temperature (Sensor memory) (C): 31.0
+GPU[6]		: Temperature (Sensor junction) (C): 35.0
+GPU[6]		: Temperature (Sensor memory) (C): 32.0
+GPU[7]		: Temperature (Sensor junction) (C): 34.0
+GPU[7]		: Temperature (Sensor memory) (C): 28.0
+GPU[0]		: GPU use (%): 0
+GPU[0]		: GFX Activity: 1585965669
+GPU[1]		: GPU use (%): 0
+GPU[1]		: GFX Activity: 858352708
+GPU[2]		: GPU use (%): 0
+GPU[2]		: GFX Activity: 4146091962
+GPU[3]		: GPU use (%): 0
+GPU[3]		: GFX Activity: 4085100931
+GPU[4]		: GPU use (%): 0
+GPU[4]		: GFX Activity: 3968418822
+GPU[5]		: GPU use (%): 0
+GPU[5]		: GFX Activity: 2634017805
+GPU[6]		: GPU use (%): 0
+GPU[6]		: GFX Activity: 2644407269
+GPU[7]		: GPU use (%): 0
+GPU[7]		: GFX Activity: 2455575248
+GPU[0]		: VRAM Total Memory (B): 206141652992
+GPU[0]		: VRAM Total Used Memory (B): 300519424
+GPU[1]		: VRAM Total Memory (B): 206141652992
+GPU[1]		: VRAM Total Used Memory (B): 300519424
+GPU[2]		: VRAM Total Memory (B): 206141652992
+GPU[2]		: VRAM Total Used Memory (B): 300519424
+GPU[3]		: VRAM Total Memory (B): 206141652992
+GPU[3]		: VRAM Total Used Memory (B): 300519424
+GPU[4]		: VRAM Total Memory (B): 206141652992
+GPU[4]		: VRAM Total Used Memory (B): 300519424
+GPU[5]		: VRAM Total Memory (B): 206141652992
+GPU[5]		: VRAM Total Used Memory (B): 300519424
+GPU[6]		: VRAM Total Memory (B): 206141652992
+GPU[6]		: VRAM Total Used Memory (B): 300519424
+GPU[7]		: VRAM Total Memory (B): 206141652992
+GPU[7]		: VRAM Total Used Memory (B): 203002335232
+
+## docker ps (vllm / e2e containers)
+vllm-qwen3-6-27b Up 4 hours (healthy)
+vllm-qwen38-flash-next Exited (0) 2 hours ago
+vllm-qwen3-reranker-4b Up 2 weeks (healthy)
+vllm-qwen3-embed-4b Up 2 weeks (healthy)
+vllm-whisper-large-v3-turbo Up 2 weeks (healthy)
+deepseek-v4-inference Exited (0) 2 hours ago

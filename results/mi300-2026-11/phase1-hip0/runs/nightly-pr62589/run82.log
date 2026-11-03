@@ -1,0 +1,91 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_qsa_select_decode_rows_replays_in_cuda_graph _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76fd73e2ffe0>
+
+    @requires_qsa_kernels
+    def test_qsa_select_decode_rows_replays_in_cuda_graph(
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        spy = _force_rows_kernel(monkeypatch)
+        (
+            q,
+            k_cache,
+            page_table,
+            token_to_req,
+            positions,
+            lengths,
+            token_topk,
+            compress_ratio,
+        ) = _decode_select_case(8, "bf16")
+    
+        def select():
+            return qsa_ops.qsa_select_paged_tokens(
+                q,
+                k_cache,
+                page_table,
+                token_to_req,
+                positions,
+                lengths,
+                token_topk,
+                compress_ratio,
+                single_row_decode=True,
+            )
+    
+        select()
+        torch.accelerator.synchronize()
+        graph = torch.cuda.CUDAGraph()
+        with torch.cuda.graph(graph):
+            captured = select()
+    
+        # Replay on new inputs written in place, as the runner does between steps.
+        torch.manual_seed(1)
+        q.copy_(torch.randn_like(q))
+        new_lengths = torch.randint(
+            8, 1500, lengths.shape, device="cuda", dtype=lengths.dtype
+        )
+        lengths.copy_(new_lengths)
+        positions.copy_((new_lengths - 1).to(torch.int64))
+        graph.replay()
+        torch.accelerator.synchronize()
+        expected = qsa_ops.qsa_select_paged_tokens(
+            q,
+            k_cache,
+            page_table,
+            token_to_req,
+            positions,
+            lengths,
+            token_topk,
+            compress_ratio,
+            single_row_decode=False,
+        )
+        # Warmup and capture launched it; the replay does not go through Python.
+        assert spy.launches == 2
+>       torch.testing.assert_close(captured, expected, rtol=0, atol=0)
+E       AssertionError: Tensor-likes are not equal!
+E       
+E       Mismatched elements: 8 / 152 (5.3%)
+E       Greatest absolute difference: 768 at index (2, 4)
+E       Greatest relative difference: 1.2387096881866455 at index (2, 4)
+
+/t/test_qsa_amd.py:645: AssertionError
+----------------------------- Captured stderr call -----------------------------
+W1103 07:55:32.442872   18883 queue_controller.cpp:170] [queue-intercept] device-memory ring-buffer requested but profiling requires system-memory InterceptQueue; falling back to system-memory ring for agent 1301326000 (priority and CU-mask from the descriptor are not preserved)
+W1103 07:55:32.678847   18883 queue_controller.cpp:170] [queue-intercept] device-memory ring-buffer requested but profiling requires system-memory InterceptQueue; falling back to system-memory ring for agent 1301326000 (priority and CU-mask from the descriptor are not preserved)
+=============================== warnings summary ===============================
+<frozen importlib._bootstrap>:488
+  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:488
+  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: 14 warnings
+  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED ../t/test_qsa_amd.py::test_qsa_select_decode_rows_replays_in_cuda_graph
+1 failed, 16 warnings in 6.61s
+sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute

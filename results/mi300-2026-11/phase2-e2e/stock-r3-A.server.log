@@ -1,0 +1,932 @@
+(APIServer pid=1) INFO 11-03 08:11:21 [startup.py:38] 
+(APIServer pid=1) INFO 11-03 08:11:21 [startup.py:38]        █     █     █▄   ▄█
+(APIServer pid=1) INFO 11-03 08:11:21 [startup.py:38]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.33.0
+(APIServer pid=1) INFO 11-03 08:11:21 [startup.py:38]   █▄█▀ █     █     █     █  model   /models/qwen3.8-flash-next-fp8
+(APIServer pid=1) INFO 11-03 08:11:21 [startup.py:38]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=1) INFO 11-03 08:11:21 [startup.py:38] 
+(APIServer pid=1) INFO 11-03 08:11:21 [startup.py:96] non-default args: {'model_tag': '/models/qwen3.8-flash-next-fp8', 'enable_auto_tool_choice': True, 'tool_call_parser': 'qwen3_coder', 'enable_prompt_tokens_details': True, 'host': '0.0.0.0', 'model': '/models/qwen3.8-flash-next-fp8', 'max_model_len': 262144, 'served_model_name': ['qwen3.8-flash-next'], 'reasoning_parser': 'qwen3', 'tensor_parallel_size': 2, 'enable_expert_parallel': True, 'gpu_memory_utilization': 0.93, 'enable_prefix_caching': True, 'max_num_batched_tokens': 32768, 'max_num_seqs': 64, 'enable_chunked_prefill': True, 'async_scheduling': True, 'speculative_config': {'method': 'mtp', 'num_speculative_tokens': 3}, 'compilation_config': {'mode': None, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': [], 'ir_enable_torch_wrap': None, 'splitting_ops': None, 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'cudagraph_decoder_replay': True, 'decoder_replay_cudagraph_capture_sizes': [], 'decoder_replay_trim_threshold': 768, 'compile_sizes': None, 'compile_ranges_endpoints': None, 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_DECODE_ONLY: (2, 0)>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': None, 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': None, 'pass_config': {}, 'max_cudagraph_capture_size': None, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': None, 'static_all_moe_layers': []}, 'engram_config': EngramConfig(cpu_offload=False, embedding_across_dp=False, dp_shared_memory=None, use_thp=False)}
+(APIServer pid=1) INFO 11-03 08:11:31 [model.py:744] Resolved architecture: Qwen4ExpForConditionalGeneration
+(APIServer pid=1) INFO 11-03 08:11:31 [model.py:2170] Using max model len 262144
+[aiter] import [module_aiter_core] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_aiter_core.so
+(APIServer pid=1) INFO 11-03 08:11:44 [model.py:744] Resolved architecture: Qwen4ExpMTP
+(APIServer pid=1) INFO 11-03 08:11:44 [model.py:2170] Using max model len 262144
+(APIServer pid=1) WARNING 11-03 08:11:44 [speculative.py:1491] Enabling num_speculative_tokens > 1 will run multiple times of forward on same MTP layer,which may result in lower acceptance rate
+(APIServer pid=1) INFO 11-03 08:11:44 [scheduler.py:310] Chunked prefill is enabled with max_num_batched_tokens=32768.
+(APIServer pid=1) INFO 11-03 08:11:44 [config.py:766] Mamba cache mode is set to 'align' for Qwen4ExpForConditionalGeneration by default when prefix caching is enabled
+(APIServer pid=1) INFO 11-03 08:11:44 [vllm.py:1490] Resolved Engram configuration: EngramConfig(cpu_offload=False, embedding_across_dp=False, dp_shared_memory=False, use_thp=False)
+(APIServer pid=1) INFO 11-03 08:11:44 [kernel.py:480] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native'])
+(APIServer pid=1) INFO 11-03 08:11:44 [compilation.py:317] Enabled custom fusions: norm_quant, act_quant, allreduce_rms, mla_dual_rms_norm
+(EngineCore pid=170) INFO 11-03 08:11:57 [core.py:139] Initializing a V1 LLM engine (v0.33.0) with config: model='/models/qwen3.8-flash-next-fp8', speculative_config=SpeculativeConfig(method='mtp', model='/models/qwen3.8-flash-next-fp8', num_spec_tokens=3), tokenizer='/models/qwen3.8-flash-next-fp8', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=262144, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=fp8, quantization_config=None, enforce_eager=False, aux_output_config=AuxOutputConfig(enable_return_routed_experts=False, max_bytes=None), kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='qwen3', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, custom_histogram_buckets=None, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=qwen3.8-flash-next, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['+quant_fp8', '+quant_fp8', '+grouped_topk', '+sparse_attn_indexer', 'none', '+quant_fp8'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::qwen4_exp_ple_short_conv', 'vllm::qwen4_exp_qsa_with_output', 'vllm::qwen4_exp_qsa_prepare_with_output', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'cudagraph_decoder_replay': True, 'decoder_replay_cudagraph_capture_sizes': [], 'decoder_replay_trim_threshold': 768, 'compile_sizes': [], 'compile_ranges_endpoints': [32768], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_DECODE_ONLY: (2, 0)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'fuse_allreduce_rms': True, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_mla_dual_rms_norm': True, 'fuse_rope_kvcache': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native']), enable_flashinfer_autotune=True, enable_rocm_segmented_attn_autotune=False, enable_cutedsl_warmup=True, enable_jit_warmup=True, monokernel=False, moe_backend='auto', sparse_indexer_topk_backend='auto', linear_backend='auto', linear_backend_per_quant=None)
+(EngineCore pid=170) INFO 11-03 08:11:57 [multiproc_executor.py:167] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=172.17.0.4 (local), world_size=2, local_world_size=2
+[aiter] import [module_aiter_core] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_aiter_core.so
+[aiter] import [module_aiter_core] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_aiter_core.so
+(Worker pid=205) INFO 11-03 08:12:05 [parallel_state.py:1929] world_size=2 rank=1 local_rank=1 distributed_init_method=file:///tmp/vllm_dist_2b01c80b7c9943bd9db3f270cad77f5e backend=nccl
+(Worker pid=204) INFO 11-03 08:12:05 [parallel_state.py:1929] world_size=2 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_2b01c80b7c9943bd9db3f270cad77f5e backend=nccl
+(Worker pid=204) INFO 11-03 08:12:05 [pynccl.py:148] vLLM is using nccl==2.27.7
+[transformers] Qwen3VL video processing does not apply the per-frame pixel cap the reference implementation (qwen-vl-utils) applies, so some videos cost far more tokens than they would there. In v5.22 the capped behavior will become the default and `cap_pixels_per_frame` will be removed. Pass `cap_pixels_per_frame=True` to adopt the reference behavior now, or `False` to keep the current behavior and silence this warning.
+(APIServer pid=1) INFO 11-03 08:12:10 [base.py:283] Multi-modal warmup completed in 13.601s
+(Worker pid=204) INFO 11-03 08:12:13 [flashinfer_all_reduce.py:402] FlashInfer All Reduce is disabled because flashinfer is not available
+(Worker pid=205) INFO 11-03 08:12:13 [flashinfer_all_reduce.py:402] FlashInfer All Reduce is disabled because flashinfer is not available
+(Worker pid=204) INFO 11-03 08:12:13 [cuda_communicator.py:353] Using ['QUICK_REDUCE', 'CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=204) INFO 11-03 08:12:14 [cuda_communicator.py:353] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'ep:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=204) INFO 11-03 08:12:14 [parallel_state.py:2385] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, ETP rank 0, EP rank 0, EPLB rank N/A
+(Worker pid=204) INFO 11-03 08:12:14 [gpu_worker.py:513] Using V2 Model Runner
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:16 [model_runner.py:399] Loading model from scratch...
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:17 [rocm.py:944] Using AITER Flash Attention backend for ViT model.
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:12:17 [activation.py:816] [ROCm] PyTorch's native GELU with tanh approximation is unstable. Falling back to GELU(approximate='none').
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:17 [mm_encoder_attention.py:372] Using AttentionBackendEnum.ROCM_AITER_FA for MMEncoderAttention.
+[aiter] merge tuned file under model_configs/ and configs/ /usr/local/lib/python3.12/dist-packages/aiter/configs/chunk_gdn_h_opt_tuned.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_5_35b_chunk_gdn_h_opt_tuned.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_5_397b_chunk_gdn_h_opt_tuned.csv
+[aiter] merge tuned file under model_configs/ and configs/ /usr/local/lib/python3.12/dist-packages/aiter/configs/chunk_gdn_h_opt_tuned.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_5_35b_chunk_gdn_h_opt_tuned.csv:/usr/local/lib/python3.12/dist-packages/aiter/configs/model_configs/qwen3_5_397b_chunk_gdn_h_opt_tuned.csv
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:17 [qwen_gdn_linear_attn.py:300] Using AITER FlyDSL GDN prefill kernel (requested=auto, head_k_dim=128).
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:17 [qwen_gdn_linear_attn.py:729] GDN spec decode kernel: cuda
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:12:18 [ple_layer.py:283] Initialized AMD PLE embedding language_model.model.layers.1.ple.ple_embedding.ngram_embedding: quantization_config=Fp8Config, quantization_method=Qwen4ExpPLEFp8EmbeddingMethod, weight_dtype=torch.float8_e4m3fn, weight_device=cuda:1, pinned=False
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:18 [expert_map_manager.py:250] [EP Rank 0/2] Expert parallelism is enabled. Expert placement strategy: linear. Local/global number of experts: 256/512. Experts local to global index map: 0->0, 1->1, 2->2, 3->3, 4->4, 5->5, 6->6, 7->7, 8->8, 9->9, 10->10, 11->11, 12->12, 13->13, 14->14, 15->15, 16->16, 17->17, 18->18, 19->19, 20->20, 21->21, 22->22, 23->23, 24->24, 25->25, 26->26, 27->27, 28->28, 29->29, 30->30, 31->31, 32->32, 33->33, 34->34, 35->35, 36->36, 37->37, 38->38, 39->39, 40->40, 41->41, 42->42, 43->43, 44->44, 45->45, 46->46, 47->47, 48->48, 49->49, 50->50, 51->51, 52->52, 53->53, 54->54, 55->55, 56->56, 57->57, 58->58, 59->59, 60->60, 61->61, 62->62, 63->63, 64->64, 65->65, 66->66, 67->67, 68->68, 69->69, 70->70, 71->71, 72->72, 73->73, 74->74, 75->75, 76->76, 77->77, 78->78, 79->79, 80->80, 81->81, 82->82, 83->83, 84->84, 85->85, 86->86, 87->87, 88->88, 89->89, 90->90, 91->91, 92->92, 93->93, 94->94, 95->95, 96->96, 97->97, 98->98, 99->99, 100->100, 101->101, 102->102, 103->103, 104->104, 105->105, 106->106, 107->107, 108->108, 109->109, 110->110, 111->111, 112->112, 113->113, 114->114, 115->115, 116->116, 117->117, 118->118, 119->119, 120->120, 121->121, 122->122, 123->123, 124->124, 125->125, 126->126, 127->127, 128->128, 129->129, 130->130, 131->131, 132->132, 133->133, 134->134, 135->135, 136->136, 137->137, 138->138, 139->139, 140->140, 141->141, 142->142, 143->143, 144->144, 145->145, 146->146, 147->147, 148->148, 149->149, 150->150, 151->151, 152->152, 153->153, 154->154, 155->155, 156->156, 157->157, 158->158, 159->159, 160->160, 161->161, 162->162, 163->163, 164->164, 165->165, 166->166, 167->167, 168->168, 169->169, 170->170, 171->171, 172->172, 173->173, 174->174, 175->175, 176->176, 177->177, 178->178, 179->179, 180->180, 181->181, 182->182, 183->183, 184->184, 185->185, 186->186, 187->187, 188->188, 189->189, 190->190, 191->191, 192->192, 193->193, 194->194, 195->195, 196->196, 197->197, 198->198, 199->199, 200->200, 201->201, 202->202, 203->203, 204->204, 205->205, 206->206, 207->207, 208->208, 209->209, 210->210, 211->211, 212->212, 213->213, 214->214, 215->215, 216->216, 217->217, 218->218, 219->219, 220->220, 221->221, 222->222, 223->223, 224->224, 225->225, 226->226, 227->227, 228->228, 229->229, 230->230, 231->231, 232->232, 233->233, 234->234, 235->235, 236->236, 237->237, 238->238, 239->239, 240->240, 241->241, 242->242, 243->243, 244->244, 245->245, 246->246, 247->247, 248->248, 249->249, 250->250, 251->251, 252->252, 253->253, 254->254, 255->255.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:18 [fp8.py:450] Using AITER Fp8 MoE backend out of potential backends: ['AITER', 'FLASHINFER_TRTLLM', 'FLASHINFER_CUTLASS', 'DEEPGEMM', 'VLLM_CUTLASS', 'TRITON', 'MARLIN', 'HUMMING', 'BATCHED_DEEPGEMM', 'BATCHED_VLLM_CUTLASS', 'BATCHED_TRITON', 'XPU', 'CPU_W8A8', 'CPU', 'HPC'].
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:18 [ple_layer.py:283] Initialized AMD PLE embedding language_model.model.layers.1.ple.ple_embedding.ngram_embedding: quantization_config=Fp8Config, quantization_method=Qwen4ExpPLEFp8EmbeddingMethod, weight_dtype=torch.float8_e4m3fn, weight_device=cuda:0, pinned=False
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:18 [flash_attn.py:1122] Using FlashAttention version None
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:12:18 [compilation.py:1355] Op 'quant_fp8' not present in model, enabling with '+quant_fp8' has no effect
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:12:18 [compilation.py:1355] Op 'grouped_topk' not present in model, enabling with '+grouped_topk' has no effect
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:12:18 [compilation.py:1355] Op 'sparse_attn_indexer' not present in model, enabling with '+sparse_attn_indexer' has no effect
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:18 [base_loader.py:82] Initializing model took 1.786084 seconds
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:18 [weight_utils.py:1144] Filesystem type for checkpoints: EXT4. Checkpoint size: 172.78 GiB. Available RAM: 1146.13 GiB.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:18 [weight_utils.py:1167] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+Loading safetensors checkpoint shards:   0% Completed | 0/131 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:   2% Completed | 2/131 [00:00<00:20,  6.43it/s]
+Loading safetensors checkpoint shards:   2% Completed | 3/131 [00:00<00:18,  6.86it/s]
+Loading safetensors checkpoint shards:   3% Completed | 4/131 [00:00<00:20,  6.08it/s]
+Loading safetensors checkpoint shards:   4% Completed | 5/131 [00:00<00:23,  5.43it/s]
+Loading safetensors checkpoint shards:   5% Completed | 6/131 [00:01<00:21,  5.76it/s]
+Loading safetensors checkpoint shards:   5% Completed | 7/131 [00:01<00:22,  5.57it/s]
+Loading safetensors checkpoint shards:   6% Completed | 8/131 [00:01<00:22,  5.45it/s]
+Loading safetensors checkpoint shards:   7% Completed | 9/131 [00:01<00:22,  5.35it/s]
+Loading safetensors checkpoint shards:   8% Completed | 10/131 [00:01<00:22,  5.29it/s]
+Loading safetensors checkpoint shards:   8% Completed | 11/131 [00:01<00:23,  5.22it/s]
+Loading safetensors checkpoint shards:   9% Completed | 12/131 [00:02<00:22,  5.18it/s]
+Loading safetensors checkpoint shards:  10% Completed | 13/131 [00:02<00:22,  5.19it/s]
+Loading safetensors checkpoint shards:  11% Completed | 14/131 [00:02<00:22,  5.26it/s]
+Loading safetensors checkpoint shards:  11% Completed | 15/131 [00:02<00:21,  5.40it/s]
+Loading safetensors checkpoint shards:  12% Completed | 16/131 [00:02<00:20,  5.59it/s]
+Loading safetensors checkpoint shards:  13% Completed | 17/131 [00:03<00:19,  5.75it/s]
+Loading safetensors checkpoint shards:  14% Completed | 18/131 [00:03<00:19,  5.71it/s]
+Loading safetensors checkpoint shards:  15% Completed | 19/131 [00:03<00:20,  5.45it/s]
+Loading safetensors checkpoint shards:  15% Completed | 20/131 [00:03<00:21,  5.27it/s]
+Loading safetensors checkpoint shards:  16% Completed | 21/131 [00:03<00:18,  5.87it/s]
+Loading safetensors checkpoint shards:  29% Completed | 38/131 [00:04<00:03, 27.70it/s]
+Loading safetensors checkpoint shards:  31% Completed | 41/131 [00:04<00:05, 15.98it/s]
+Loading safetensors checkpoint shards:  33% Completed | 43/131 [00:04<00:07, 12.54it/s]
+Loading safetensors checkpoint shards:  34% Completed | 45/131 [00:05<00:08, 10.30it/s]
+Loading safetensors checkpoint shards:  36% Completed | 47/131 [00:05<00:09,  8.87it/s]
+Loading safetensors checkpoint shards:  37% Completed | 48/131 [00:05<00:10,  8.05it/s]
+Loading safetensors checkpoint shards:  37% Completed | 49/131 [00:06<00:10,  7.79it/s]
+Loading safetensors checkpoint shards:  38% Completed | 50/131 [00:06<00:11,  7.01it/s]
+Loading safetensors checkpoint shards:  39% Completed | 51/131 [00:06<00:11,  6.87it/s]
+Loading safetensors checkpoint shards:  40% Completed | 52/131 [00:06<00:12,  6.28it/s]
+Loading safetensors checkpoint shards:  40% Completed | 53/131 [00:06<00:12,  6.22it/s]
+Loading safetensors checkpoint shards:  41% Completed | 54/131 [00:06<00:13,  5.82it/s]
+Loading safetensors checkpoint shards:  42% Completed | 55/131 [00:07<00:12,  6.02it/s]
+Loading safetensors checkpoint shards:  43% Completed | 56/131 [00:07<00:13,  5.71it/s]
+Loading safetensors checkpoint shards:  44% Completed | 57/131 [00:07<00:12,  5.94it/s]
+Loading safetensors checkpoint shards:  44% Completed | 58/131 [00:07<00:12,  5.63it/s]
+Loading safetensors checkpoint shards:  45% Completed | 59/131 [00:07<00:12,  5.99it/s]
+Loading safetensors checkpoint shards:  47% Completed | 61/131 [00:08<00:10,  6.94it/s]
+Loading safetensors checkpoint shards:  47% Completed | 62/131 [00:08<00:10,  6.84it/s]
+Loading safetensors checkpoint shards:  48% Completed | 63/131 [00:08<00:10,  6.28it/s]
+Loading safetensors checkpoint shards:  49% Completed | 64/131 [00:08<00:10,  6.28it/s]
+Loading safetensors checkpoint shards:  50% Completed | 65/131 [00:08<00:11,  5.67it/s]
+Loading safetensors checkpoint shards:  50% Completed | 66/131 [00:08<00:11,  5.70it/s]
+Loading safetensors checkpoint shards:  51% Completed | 67/131 [00:09<00:11,  5.45it/s]
+Loading safetensors checkpoint shards:  52% Completed | 68/131 [00:09<00:11,  5.65it/s]
+Loading safetensors checkpoint shards:  53% Completed | 69/131 [00:09<00:11,  5.35it/s]
+Loading safetensors checkpoint shards:  53% Completed | 70/131 [00:09<00:10,  5.59it/s]
+Loading safetensors checkpoint shards:  54% Completed | 71/131 [00:09<00:10,  5.46it/s]
+Loading safetensors checkpoint shards:  55% Completed | 72/131 [00:10<00:10,  5.64it/s]
+Loading safetensors checkpoint shards:  56% Completed | 73/131 [00:10<00:10,  5.30it/s]
+Loading safetensors checkpoint shards:  56% Completed | 74/131 [00:10<00:10,  5.66it/s]
+Loading safetensors checkpoint shards:  57% Completed | 75/131 [00:10<00:10,  5.38it/s]
+Loading safetensors checkpoint shards:  58% Completed | 76/131 [00:10<00:09,  5.63it/s]
+Loading safetensors checkpoint shards:  59% Completed | 77/131 [00:10<00:09,  5.41it/s]
+Loading safetensors checkpoint shards:  60% Completed | 78/131 [00:11<00:09,  5.62it/s]
+Loading safetensors checkpoint shards:  60% Completed | 79/131 [00:11<00:09,  5.41it/s]
+Loading safetensors checkpoint shards:  61% Completed | 80/131 [00:11<00:08,  5.76it/s]
+Loading safetensors checkpoint shards:  62% Completed | 81/131 [00:11<00:09,  5.51it/s]
+Loading safetensors checkpoint shards:  63% Completed | 82/131 [00:11<00:08,  5.80it/s]
+Loading safetensors checkpoint shards:  63% Completed | 83/131 [00:12<00:08,  5.49it/s]
+Loading safetensors checkpoint shards:  64% Completed | 84/131 [00:12<00:08,  5.84it/s]
+Loading safetensors checkpoint shards:  65% Completed | 85/131 [00:12<00:08,  5.54it/s]
+Loading safetensors checkpoint shards:  66% Completed | 86/131 [00:12<00:07,  5.73it/s]
+Loading safetensors checkpoint shards:  66% Completed | 87/131 [00:12<00:08,  5.48it/s]
+Loading safetensors checkpoint shards:  67% Completed | 88/131 [00:12<00:07,  5.73it/s]
+Loading safetensors checkpoint shards:  68% Completed | 89/131 [00:13<00:07,  5.48it/s]
+Loading safetensors checkpoint shards:  69% Completed | 90/131 [00:13<00:07,  5.76it/s]
+Loading safetensors checkpoint shards:  69% Completed | 91/131 [00:13<00:07,  5.46it/s]
+Loading safetensors checkpoint shards:  70% Completed | 92/131 [00:13<00:06,  5.83it/s]
+Loading safetensors checkpoint shards:  71% Completed | 93/131 [00:13<00:06,  5.46it/s]
+Loading safetensors checkpoint shards:  72% Completed | 94/131 [00:13<00:06,  5.66it/s]
+Loading safetensors checkpoint shards:  73% Completed | 95/131 [00:14<00:06,  5.42it/s]
+Loading safetensors checkpoint shards:  73% Completed | 96/131 [00:14<00:06,  5.77it/s]
+Loading safetensors checkpoint shards:  74% Completed | 97/131 [00:14<00:06,  5.54it/s]
+Loading safetensors checkpoint shards:  75% Completed | 98/131 [00:14<00:05,  5.86it/s]
+Loading safetensors checkpoint shards:  76% Completed | 99/131 [00:14<00:05,  5.59it/s]
+Loading safetensors checkpoint shards:  76% Completed | 100/131 [00:15<00:05,  6.02it/s]
+Loading safetensors checkpoint shards:  77% Completed | 101/131 [00:15<00:05,  5.71it/s]
+Loading safetensors checkpoint shards:  78% Completed | 102/131 [00:15<00:04,  6.07it/s]
+Loading safetensors checkpoint shards:  79% Completed | 103/131 [00:15<00:04,  5.76it/s]
+Loading safetensors checkpoint shards:  79% Completed | 104/131 [00:15<00:04,  6.17it/s]
+Loading safetensors checkpoint shards:  80% Completed | 105/131 [00:15<00:04,  5.83it/s]
+Loading safetensors checkpoint shards:  81% Completed | 106/131 [00:16<00:04,  6.22it/s]
+Loading safetensors checkpoint shards:  82% Completed | 107/131 [00:16<00:04,  5.91it/s]
+Loading safetensors checkpoint shards:  82% Completed | 108/131 [00:16<00:03,  6.34it/s]
+Loading safetensors checkpoint shards:  83% Completed | 109/131 [00:16<00:03,  5.99it/s]
+Loading safetensors checkpoint shards:  84% Completed | 110/131 [00:16<00:03,  6.50it/s]
+Loading safetensors checkpoint shards:  85% Completed | 111/131 [00:16<00:03,  5.92it/s]
+Loading safetensors checkpoint shards:  85% Completed | 112/131 [00:16<00:03,  6.19it/s]
+Loading safetensors checkpoint shards:  86% Completed | 113/131 [00:17<00:03,  5.83it/s]
+Loading safetensors checkpoint shards:  87% Completed | 114/131 [00:17<00:02,  6.27it/s]
+Loading safetensors checkpoint shards:  88% Completed | 115/131 [00:17<00:02,  5.95it/s]
+Loading safetensors checkpoint shards:  89% Completed | 116/131 [00:17<00:02,  6.33it/s]
+Loading safetensors checkpoint shards:  89% Completed | 117/131 [00:17<00:02,  5.97it/s]
+Loading safetensors checkpoint shards:  90% Completed | 118/131 [00:17<00:02,  6.44it/s]
+Loading safetensors checkpoint shards:  91% Completed | 119/131 [00:18<00:01,  6.07it/s]
+Loading safetensors checkpoint shards:  92% Completed | 120/131 [00:18<00:01,  6.43it/s]
+Loading safetensors checkpoint shards:  92% Completed | 121/131 [00:18<00:01,  6.07it/s]
+Loading safetensors checkpoint shards:  93% Completed | 122/131 [00:18<00:01,  6.48it/s]
+Loading safetensors checkpoint shards:  94% Completed | 123/131 [00:18<00:01,  6.11it/s]
+Loading safetensors checkpoint shards:  95% Completed | 124/131 [00:18<00:01,  6.57it/s]
+Loading safetensors checkpoint shards:  95% Completed | 125/131 [00:19<00:00,  6.08it/s]
+Loading safetensors checkpoint shards:  96% Completed | 126/131 [00:19<00:00,  6.37it/s]
+Loading safetensors checkpoint shards:  97% Completed | 127/131 [00:19<00:00,  5.94it/s]
+Loading safetensors checkpoint shards:  98% Completed | 128/131 [00:19<00:00,  6.31it/s]
+Loading safetensors checkpoint shards:  98% Completed | 129/131 [00:19<00:00,  5.94it/s]
+Loading safetensors checkpoint shards:  99% Completed | 130/131 [00:19<00:00,  5.95it/s]
+Loading safetensors checkpoint shards: 100% Completed | 131/131 [00:19<00:00,  6.55it/s]
+
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:38 [default_loader.py:506] Loading weights took 20.01 seconds
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:39 [fp8.py:880] Using MoEPrepareAndFinalizeNoDPEPModular
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:39 [vllm.py:1490] Resolved Engram configuration: EngramConfig(cpu_offload=False, embedding_across_dp=False, dp_shared_memory=False, use_thp=False)
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:39 [kernel.py:480] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native'])
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:39 [compilation.py:317] Enabled custom fusions: norm_quant, act_quant, allreduce_rms, mla_dual_rms_norm
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:39 [base_loader.py:82] Initializing model took 0.055058 seconds
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:39 [weight_utils.py:1144] Filesystem type for checkpoints: EXT4. Checkpoint size: 172.78 GiB. Available RAM: 1147.38 GiB.
+Loading safetensors checkpoint shards:   0% Completed | 0/131 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  31% Completed | 40/131 [00:00<00:00, 349.31it/s]
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:12:40 [kernel.py:480] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native'])
+Loading safetensors checkpoint shards:  57% Completed | 75/131 [00:00<00:00, 70.62it/s]
+ Loading safetensors checkpoint shards:  70% Completed | 92/131 [00:01<00:00, 70.09it/s]
+Loading safetensors checkpoint shards:  80% Completed | 105/131 [00:01<00:00, 69.52it/s]
+Loading safetensors checkpoint shards:  89% Completed | 116/131 [00:01<00:00, 69.33it/s]
+Loading safetensors checkpoint shards:  95% Completed | 125/131 [00:01<00:00, 69.19it/s]
+Loading safetensors checkpoint shards: 100% Completed | 131/131 [00:01<00:00, 71.63it/s]
+
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:41 [default_loader.py:506] Loading weights took 1.84 seconds
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:12:42 [speculator.py:248] Draft model Qwen4ExpMTP does not support external multimodal embeddings. Embeddings from the target model will not be passed to the drafter; using text-only draft inputs instead.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:43 [model_runner.py:428] Model loading took 91.19 GiB memory and 27.242283 seconds
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:12:43 [torch_utils.py:269] OMP_NUM_THREADS=8 is set; leaving Torch threads at 8 for serving. Multi-threaded torch CPU ops during serving can degrade performance through spin-wait contention and cgroup CPU-quota throttling.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:43 [interface.py:1108] Setting attention block size to 1600 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:43 [interface.py:1132] Padding mamba page size by 0.25% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:12:43 [model_runner.py:428] Model loading took 91.19 GiB memory and 27.643649 seconds
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:12:43 [interface.py:1108] Setting attention block size to 1600 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:12:43 [interface.py:1132] Padding mamba page size by 0.25% to ensure that mamba page size and attention page size are exactly equal.
+(EngineCore pid=170) WARNING 11-03 08:12:43 [torch_utils.py:269] OMP_NUM_THREADS=8 is set; leaving Torch threads at 8 for serving. Multi-threaded torch CPU ops during serving can degrade performance through spin-wait contention and cgroup CPU-quota throttling.
+(EngineCore pid=170) INFO 11-03 08:12:43 [utils.py:381] Using BLNHC KV cache layout.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:12:49 [encoder_runner.py:131] Encoder cache will be initialized with a budget of 32768 tokens, and profiled with 2 image items of the maximum feature size.
+[aiter] [pid=205 pname=VllmWorker-1] start build [mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale] under /usr/local/lib/python3.12/dist-packages/aiter/jit/build/mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale
+[aiter] [pid=204 pname=VllmWorker-0] waiting for baton release at /usr/local/lib/python3.12/dist-packages/aiter/jit/build/lock_mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale
+[aiter] Current hipcc not support: -mllvm -amdgpu-coerce-illegal-types=1, skip it.
+(EngineCore pid=170) INFO 11-03 08:13:45 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+[aiter] [pid=205 pname=VllmWorker-1] [32mfinish build [mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale], cost 61.1s [0m
+[aiter] import [mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale] under /usr/local/lib/python3.12/dist-packages/aiter/jit/mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale.so
+[aiter] import [mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale] under /usr/local/lib/python3.12/dist-packages/aiter/jit/mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale.so
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:13:51 [caching.py:342] reconstructed serializable fn from standalone compile artifacts. num_artifacts=7 num_submods=50
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:13:51 [decorators.py:326] [backbone] Directly load AOT compilation from path /cache/vllm/torch_compile_cache/torch_aot_compile/3075e0651d5282208951b92449d00b507aedfb6ee1473351f2da08832747df31/rank_1_0/model
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:13:51 [monitor.py:62] [backbone] torch.compile took 0.09 s in total
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:13:51 [caching.py:342] reconstructed serializable fn from standalone compile artifacts. num_artifacts=7 num_submods=50
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:13:51 [decorators.py:326] [backbone] Directly load AOT compilation from path /cache/vllm/torch_compile_cache/torch_aot_compile/3075e0651d5282208951b92449d00b507aedfb6ee1473351f2da08832747df31/rank_0_0/model
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:13:51 [monitor.py:62] [backbone] torch.compile took 0.09 s in total
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:13:53 [_aiter_ops.py:2819] Dispatching AITER FlyDSL GDN prefill (prepare=flydsl, chunk=flydsl).
+[aiter] import [module_moe_asm] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_asm.so
+[aiter] import [module_moe_asm] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_asm.so
+[aiter] [fused_moe] duplicate tuned rows after disabling act_type in /tmp/aiter_configs/tuned_fmoe.csv; keeping first match for 32 rows
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 1280
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 32768, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_sorting_opus] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_sorting_opus.so
+[aiter] import [module_quant] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_quant.so
+[aiter] LoadKernel: _ZN5aiter50fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128.co
+[aiter] [fused_moe] duplicate tuned rows after disabling act_type in /tmp/aiter_configs/tuned_fmoe.csv; keeping first match for 32 rows
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 1280
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 32768, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_sorting_opus] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_sorting_opus.so
+[aiter] import [module_quant] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_quant.so
+[aiter] LoadKernel: _ZN5aiter50fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128.co
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:13:57 [monitor.py:91] [backbone] Initial profiling/warmup run took 6.01 s
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:13:57 [monitor.py:91] [backbone] Initial profiling/warmup run took 6.03 s
+[rank1]:W1103 08:13:57.611000 205 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_bitwise_and_bitwise_not_bitwise_or_embedding_ge_lt_masked_fill_mul_sub_unsqueeze_0
+[rank1]:W1103 08:13:57.611000 205 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1103 08:13:57.611000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1103 08:13:57.611000 205 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1103 08:13:57.611000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1103 08:13:57.611000 205 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1103 08:13:57.611000 205 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/1/JYJ2OJLCAEUZ247KIC2FEZA4JF2FORLEVHAXNF6N3BTIQNGSLB2Q/triton_poi_fused_add_bitwise_and_bitwise_not_bitwise_or_embedding_ge_lt_masked_fill_mul_sub_unsqueeze_0.hsaco')
+[rank1]:W1103 08:13:57.612000 205 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_red_fused__to_copy_add_rms_norm_1
+[rank1]:W1103 08:13:57.612000 205 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1103 08:13:57.612000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1103 08:13:57.612000 205 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1103 08:13:57.612000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1103 08:13:57.612000 205 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1103 08:13:57.612000 205 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/1/WVNJDTJ7NSEYNIPVZDC57OD3EI2RG5AXMDWJL6RNWWOSTCJPS5HA/triton_red_fused__to_copy_add_rms_norm_1.hsaco')
+[rank0]:W1103 08:13:57.612000 204 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_bitwise_and_bitwise_not_bitwise_or_embedding_ge_lt_masked_fill_mul_sub_unsqueeze_0
+[rank0]:W1103 08:13:57.612000 204 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1103 08:13:57.612000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1103 08:13:57.612000 204 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1103 08:13:57.612000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1103 08:13:57.612000 204 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1103 08:13:57.612000 204 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/0/3Y3CFTEPVQ5C6SN5GFRCD3KXM7TDISXX74YEWKQ32SCT4AR2T6RQ/triton_poi_fused_add_bitwise_and_bitwise_not_bitwise_or_embedding_ge_lt_masked_fill_mul_sub_unsqueeze_0.hsaco')
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_red_fused__to_copy_add_rms_norm_2
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/1/6W662QHE2YDQ7ELHITWNWZSHGMZZFDMROMNMUFSMGYGXBSTGBU2A/triton_red_fused__to_copy_add_rms_norm_2.hsaco')
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_unsqueeze_3
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1103 08:13:57.613000 205 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/1/NGHTJUKJUB2NV4P4GALJDLW3P2GESFGLH5QGJLWS2D6QLQ7T5WKA/triton_poi_fused_add_unsqueeze_3.hsaco')
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_red_fused__to_copy_add_rms_norm_1
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/0/WVNJDTJ7NSEYNIPVZDC57OD3EI2RG5AXMDWJL6RNWWOSTCJPS5HA/triton_red_fused__to_copy_add_rms_norm_1.hsaco')
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_red_fused__to_copy_add_rms_norm_2
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/0/6W662QHE2YDQ7ELHITWNWZSHGMZZFDMROMNMUFSMGYGXBSTGBU2A/triton_red_fused__to_copy_add_rms_norm_2.hsaco')
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_unsqueeze_3
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1103 08:13:57.613000 204 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/0/NGHTJUKJUB2NV4P4GALJDLW3P2GESFGLH5QGJLWS2D6QLQ7T5WKA/triton_poi_fused_add_unsqueeze_3.hsaco')
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_mul_sigmoid_view_0
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/1/AXJP4VSP6HXH7EDXNTKXWMOKERCSVIKVLFC73JO6PCLLHLU7LTNQ/triton_poi_fused_mul_sigmoid_view_0.hsaco')
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_1
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1103 08:13:57.623000 205 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/1/FYSLLEZEDFUHLZQKYW2SUF6JO56VPSK2WXGTBXCPB4MNGNQCVSJQ/triton_poi_fused_add_1.hsaco')
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_mul_sigmoid_view_0
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/0/AXJP4VSP6HXH7EDXNTKXWMOKERCSVIKVLFC73JO6PCLLHLU7LTNQ/triton_poi_fused_mul_sigmoid_view_0.hsaco')
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_1
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1103 08:13:57.623000 204 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/inductor_cache/triton/0/FYSLLEZEDFUHLZQKYW2SUF6JO56VPSK2WXGTBXCPB4MNGNQCVSJQ/triton_poi_fused_add_1.hsaco')
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:13:57 [caching.py:342] reconstructed serializable fn from standalone compile artifacts. num_artifacts=2 num_submods=2
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:13:57 [caching.py:342] reconstructed serializable fn from standalone compile artifacts. num_artifacts=2 num_submods=2
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:13:57 [decorators.py:326] [eagle_head] Directly load AOT compilation from path /cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/rank_1_0/model
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:13:57 [monitor.py:62] [eagle_head] torch.compile took 0.04 s in total
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:13:57 [decorators.py:326] [eagle_head] Directly load AOT compilation from path /cache/vllm/torch_compile_cache/torch_aot_compile/7e28d65e6a40af9ef8d6e51d466532aa14f8918a17ff38a3ecb858c6bc843c7a/rank_0_0/model
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:13:57 [monitor.py:62] [eagle_head] torch.compile took 0.04 s in total
+/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:13:57 [monitor.py:91] [eagle_head] Initial profiling/warmup run took 0.22 s
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:13:57 [monitor.py:91] [eagle_head] Initial profiling/warmup run took 0.23 s
+[aiter] import [module_moe_topk] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_topk.so
+[aiter] import [module_moe_topk] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_topk.so
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 2
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 64, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 2
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 64, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:02 [speculator.py:323] Attention backend(s) QWEN4_EXP_EXP_QSA_STATE cannot update draft decode metadata in place; falling back to rebuilding attention metadata eagerly.
+Capturing CUDA graphs (FULL):   0%|          | 0/2 [00:00<?, ?it/s][aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 10
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 256, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 10
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 256, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+Capturing CUDA graphs (FULL):  50%|█████     | 1/2 [00:02<00:02,  2.92s/it]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:04<00:00,  2.15s/it]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:04<00:00,  2.26s/it]
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:07 [speculator.py:110] Capturing model for speculator...
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:07 [speculator.py:110] Capturing model for speculator...
+Capturing prefill CUDA graphs (FULL):   0%|          | 0/33 [00:00<?, ?it/s]Capturing prefill CUDA graphs (FULL):   3%|▎         | 1/33 [00:00<00:15,  2.13it/s]Capturing prefill CUDA graphs (FULL):   9%|▉         | 3/33 [00:01<00:17,  1.67it/s]Capturing prefill CUDA graphs (FULL):  33%|███▎      | 11/33 [00:01<00:02,  7.94it/s][aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 5
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 128, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 5
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 128, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+Capturing prefill CUDA graphs (FULL):  55%|█████▍    | 18/33 [00:01<00:01, 14.32it/s]Capturing prefill CUDA graphs (FULL):  79%|███████▉  | 26/33 [00:02<00:00, 22.43it/s][aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2.so
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2.so
+[aiter] type hints mismatch, override to --> ck_moe_stage1(hidden_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w1_scale: Optional[torch.Tensor] = None, a1_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+[aiter] type hints mismatch, override to --> ck_moe_stage1(hidden_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w1_scale: Optional[torch.Tensor] = None, a1_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+[aiter] type hints mismatch, override to --> ck_moe_stage2(inter_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w2_scale: Optional[torch.Tensor] = None, a2_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+[aiter] type hints mismatch, override to --> ck_moe_stage2(inter_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w2_scale: Optional[torch.Tensor] = None, a2_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+Capturing prefill CUDA graphs (FULL):  97%|█████████▋| 32/33 [00:02<00:00, 13.02it/s][aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 4, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 4, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] LoadKernel: _ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128.co
+[aiter] LoadKernel: _ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128.co
+Capturing prefill CUDA graphs (FULL): 100%|██████████| 33/33 [00:03<00:00,  9.42it/s]
+Capturing decode CUDA graphs (FULL):   0%|          | 0/11 [00:00<?, ?it/s]Capturing decode CUDA graphs (FULL):  45%|████▌     | 5/11 [00:00<00:00, 45.40it/s][aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 2, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 2, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+Capturing decode CUDA graphs (FULL):  91%|█████████ | 10/11 [00:00<00:00, 10.71it/s][aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk.so
+[aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk.so
+[aiter] import [module_activation] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_activation.so
+[aiter] import [module_activation] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_activation.so
+Capturing decode CUDA graphs (FULL): 100%|██████████| 11/11 [00:01<00:00,  7.27it/s]
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:12 [model_runner.py:1163] Graph capturing finished in 11 secs, took 1.41 GiB
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:12 [model_runner.py:1163] Graph capturing finished in 10 secs, took 1.41 GiB
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:13 [gpu_worker.py:772] Available KV cache memory: 80.32 GiB
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:13 [gpu_worker.py:787] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9300 is equivalent to --gpu-memory-utilization=0.9220 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9380. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:13 [gpu_worker.py:787] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9300 is equivalent to --gpu-memory-utilization=0.9220 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9380. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=170) INFO 11-03 08:14:13 [kv_cache_utils.py:1147] GPU KV cache size: 5,398,749 tokens, Maximum concurrency for 262,144 tokens per request: 20.59x
+(EngineCore pid=170) INFO 11-03 08:14:13 [kv_cache_utils.py:865] kv cache group sizes (1600, 1600, 1600, 1600, 8, 1600)
+(EngineCore pid=170) INFO 11-03 08:14:13 [kv_cache_utils.py:866] kv lcm block sizes 1600
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:13 [kernel_warmup.py:179] JIT kernel warmup starting.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:13 [kernel_warmup.py:179] JIT kernel warmup starting.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:29 [kernel_warmup.py:192] JIT kernel warmup finished in 16.08s.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:29 [qwen_triton_warmup.py:370] Warming up Qwen GDN Triton kernels for model_type=qwen4_exp_text.
+JIT kernel warmup (28 compile keys):   0%|          | 0/4 [00:00<?, ?kernel/s]JIT kernel warmup (28 compile keys):  25%|██▌       | 1/4 [00:12<00:37, 12.63s/kernel, _DecoratedTritonJitKernel (12 keys)]JIT kernel warmup (28 compile keys):  50%|█████     | 2/4 [00:12<00:10,  5.36s/kernel, _DecoratedTritonJitKernel (4 keys)] JIT kernel warmup (28 compile keys):  75%|███████▌  | 3/4 [00:14<00:03,  3.80s/kernel, _DecoratedTritonJitKernel (8 keys)]JIT kernel warmup (28 compile keys): 100%|██████████| 4/4 [00:16<00:00,  2.80s/kernel, _DecoratedTritonJitKernel (4 keys)]JIT kernel warmup (28 compile keys): 100%|██████████| 4/4 [00:16<00:00,  4.03s/kernel, _DecoratedTritonJitKernel (4 keys)]
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:29 [kernel_warmup.py:192] JIT kernel warmup finished in 16.16s.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:29 [qwen_triton_warmup.py:370] Warming up Qwen GDN Triton kernels for model_type=qwen4_exp_text.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:31 [qwen_vl_triton_warmup.py:57] Warmed position embedding and vision rotary kernels on grids=[(1, 16, 16), (1, 16, 2), (1, 2, 16), (1, 2, 2)].
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:31 [qwen_vl_triton_warmup.py:57] Warmed position embedding and vision rotary kernels on grids=[(1, 16, 16), (1, 16, 2), (1, 2, 16), (1, 2, 2)].
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:31 [qwen_vl_triton_warmup.py:102] Warmed M-RoPE Triton kernels.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:31 [qwen_vl_triton_warmup.py:102] Warmed M-RoPE Triton kernels.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:31 [mamba_triton_warmup.py:42] Warmed Mamba batch_memcpy_kernel.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:31 [mamba_triton_warmup.py:42] Warmed Mamba batch_memcpy_kernel.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:31 [_ll_router_common.py:28] cuteDSL (CUTLASS Python) not available, ll_bf16_gemm disabled
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:31 [_ll_router_common.py:28] cuteDSL (CUTLASS Python) not available, ll_bf16_gemm disabled
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 20
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 512, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 20
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 512, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+Capturing CUDA graphs (FULL):   0%|          | 0/33 [00:00<?, ?it/s]Capturing CUDA graphs (FULL):   3%|▎         | 1/33 [00:00<00:12,  2.47it/s]Capturing CUDA graphs (FULL):   6%|▌         | 2/33 [00:01<00:30,  1.02it/s]Capturing CUDA graphs (FULL):   9%|▉         | 3/33 [00:03<00:36,  1.21s/it]Capturing CUDA graphs (FULL):  12%|█▏        | 4/33 [00:03<00:24,  1.20it/s]Capturing CUDA graphs (FULL):  15%|█▌        | 5/33 [00:03<00:16,  1.68it/s]Capturing CUDA graphs (FULL):  18%|█▊        | 6/33 [00:03<00:12,  2.22it/s]Capturing CUDA graphs (FULL):  21%|██        | 7/33 [00:04<00:09,  2.80it/s]Capturing CUDA graphs (FULL):  24%|██▍       | 8/33 [00:04<00:09,  2.75it/s]Capturing CUDA graphs (FULL):  27%|██▋       | 9/33 [00:04<00:07,  3.31it/s]Capturing CUDA graphs (FULL):  30%|███       | 10/33 [00:04<00:05,  3.85it/s]Capturing CUDA graphs (FULL):  33%|███▎      | 11/33 [00:04<00:05,  4.34it/s]Capturing CUDA graphs (FULL):  36%|███▋      | 12/33 [00:05<00:04,  4.74it/s]Capturing CUDA graphs (FULL):  39%|███▉      | 13/33 [00:05<00:03,  5.08it/s]Capturing CUDA graphs (FULL):  42%|████▏     | 14/33 [00:05<00:03,  5.34it/s]Capturing CUDA graphs (FULL):  45%|████▌     | 15/33 [00:05<00:03,  5.53it/s]Capturing CUDA graphs (FULL):  48%|████▊     | 16/33 [00:05<00:02,  5.68it/s]Capturing CUDA graphs (FULL):  52%|█████▏    | 17/33 [00:05<00:02,  5.80it/s]Capturing CUDA graphs (FULL):  55%|█████▍    | 18/33 [00:06<00:02,  5.90it/s]Capturing CUDA graphs (FULL):  58%|█████▊    | 19/33 [00:06<00:02,  5.95it/s]Capturing CUDA graphs (FULL):  61%|██████    | 20/33 [00:06<00:02,  5.95it/s]Capturing CUDA graphs (FULL):  64%|██████▎   | 21/33 [00:06<00:02,  5.97it/s]Capturing CUDA graphs (FULL):  67%|██████▋   | 22/33 [00:06<00:01,  6.00it/s]Capturing CUDA graphs (FULL):  70%|██████▉   | 23/33 [00:06<00:01,  6.03it/s]Capturing CUDA graphs (FULL):  73%|███████▎  | 24/33 [00:07<00:01,  6.05it/s]Capturing CUDA graphs (FULL):  76%|███████▌  | 25/33 [00:07<00:01,  6.05it/s]Capturing CUDA graphs (FULL):  79%|███████▉  | 26/33 [00:07<00:01,  5.98it/s]Capturing CUDA graphs (FULL):  82%|████████▏ | 27/33 [00:07<00:01,  6.00it/s]Capturing CUDA graphs (FULL):  85%|████████▍ | 28/33 [00:07<00:00,  6.02it/s]Capturing CUDA graphs (FULL):  88%|████████▊ | 29/33 [00:07<00:00,  5.96it/s]Capturing CUDA graphs (FULL):  91%|█████████ | 30/33 [00:08<00:00,  5.93it/s]Capturing CUDA graphs (FULL):  94%|█████████▍| 31/33 [00:08<00:00,  4.20it/s]Capturing CUDA graphs (FULL):  97%|█████████▋| 32/33 [00:08<00:00,  4.55it/s]Capturing CUDA graphs (FULL): 100%|██████████| 33/33 [00:08<00:00,  5.08it/s]Capturing CUDA graphs (FULL): 100%|██████████| 33/33 [00:08<00:00,  3.76it/s]
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:52 [speculator.py:110] Capturing model for speculator...
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:52 [speculator.py:110] Capturing model for speculator...
+Capturing prefill CUDA graphs (FULL):   0%|          | 0/33 [00:00<?, ?it/s]Capturing prefill CUDA graphs (FULL):  21%|██        | 7/33 [00:00<00:00, 63.01it/s]Capturing prefill CUDA graphs (FULL):  42%|████▏     | 14/33 [00:00<00:00, 65.28it/s]Capturing prefill CUDA graphs (FULL):  64%|██████▎   | 21/33 [00:00<00:00, 66.71it/s]Capturing prefill CUDA graphs (FULL):  88%|████████▊ | 29/33 [00:00<00:00, 68.85it/s]Capturing prefill CUDA graphs (FULL): 100%|██████████| 33/33 [00:00<00:00, 68.44it/s]
+Capturing decode CUDA graphs (FULL):   0%|          | 0/11 [00:00<?, ?it/s]Capturing decode CUDA graphs (FULL):  64%|██████▎   | 7/11 [00:00<00:00, 22.03it/s]Capturing decode CUDA graphs (FULL): 100%|██████████| 11/11 [00:00<00:00, 30.17it/s]
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:53 [model_runner.py:1163] Graph capturing finished in 11 secs, took 1.51 GiB
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:53 [gpu_worker.py:1003] CUDA graph pool memory: 1.51 GiB (actual), 1.54 GiB (estimated), difference: 0.03 GiB (2.1%).
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:53 [gpu_worker.py:1066] Free memory on device (185.49/191.98 GiB) on startup. Desired GPU memory utilization is (0.93, 178.55 GiB). Actual usage is 93.19 GiB for consumed memory (weights + non-torch), 5.03 GiB for peak activation, and 1.51 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=84461286851` (78.66 GiB) to fit into requested memory, or `--kv-cache-memory=91920269312` (85.61 GiB) to fully utilize gpu memory. Current kv cache memory in use is 80.32 GiB.
+(Worker_TP0_EP0 pid=204) INFO 11-03 08:14:53 [jit_monitor.py:84] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:53 [model_runner.py:1163] Graph capturing finished in 11 secs, took 1.51 GiB
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:53 [gpu_worker.py:1003] CUDA graph pool memory: 1.51 GiB (actual), 1.54 GiB (estimated), difference: 0.03 GiB (2.1%).
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:53 [gpu_worker.py:1066] Free memory on device (185.49/191.98 GiB) on startup. Desired GPU memory utilization is (0.93, 178.55 GiB). Actual usage is 93.19 GiB for consumed memory (weights + non-torch), 5.03 GiB for peak activation, and 1.51 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=84461286851` (78.66 GiB) to fit into requested memory, or `--kv-cache-memory=91920269312` (85.61 GiB) to fully utilize gpu memory. Current kv cache memory in use is 80.32 GiB.
+(Worker_TP1_EP1 pid=205) INFO 11-03 08:14:53 [jit_monitor.py:84] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(EngineCore pid=170) INFO 11-03 08:14:54 [core.py:405] init engine (profile, create kv cache, warmup model) took 130.76 s (compilation: 0.13 s)
+[aiter] import [module_aiter_core] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_aiter_core.so
+(EngineCore pid=170) INFO 11-03 08:15:01 [vllm.py:1490] Resolved Engram configuration: EngramConfig(cpu_offload=False, embedding_across_dp=False, dp_shared_memory=False, use_thp=False)
+(EngineCore pid=170) INFO 11-03 08:15:01 [kernel.py:480] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native'])
+(EngineCore pid=170) INFO 11-03 08:15:01 [compilation.py:317] Enabled custom fusions: norm_quant, act_quant, allreduce_rms, mla_dual_rms_norm
+(APIServer pid=1) INFO 11-03 08:15:01 [entry.py:135] Supported tasks: ['generate']
+(APIServer pid=1) INFO 11-03 08:15:01 [factories.py:105] Scale-out endpoints are disabled. Restart vllm serve with --enable-scale-out to enable them.
+(APIServer pid=1) INFO 11-03 08:15:01 [parser_manager.py:36] "auto" tool choice has been enabled.
+(APIServer pid=1) INFO 11-03 08:15:02 [hf.py:736] Detected the chat template content format to be 'openai'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=1) WARNING 11-03 08:15:02 [model.py:1907] Default vLLM sampling parameters have been overridden by the model's `generation_config.json`: `{'temperature': 1.0, 'top_k': 20, 'top_p': 0.95}`. If this is not intended, please relaunch vLLM instance with `--generation-config vllm`.
+(APIServer pid=1) WARNING 11-03 08:15:02 [serving.py:291] The chat template requires system-first ordering, so inline system messages in /v1/messages requests (e.g. Claude Code's per-turn reminders) are merged into the leading system prompt. Each new one changes the prompt prefix, so the rest of the conversation misses the prefix cache. Pass a --chat-template that accepts non-leading system messages to avoid this.
+(APIServer pid=1) INFO 11-03 08:15:02 [entry.py:139] Starting vLLM server on http://0.0.0.0:8000
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:188] Available routes are:
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /openapi.json, Methods: HEAD, GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /docs, Methods: HEAD, GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /docs/oauth2-redirect, Methods: HEAD, GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /redoc, Methods: HEAD, GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /load, Methods: GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /version, Methods: GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /kv_event_sources, Methods: GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /health, Methods: GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /metrics, Methods: GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /tokenize, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /detokenize, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/models, Methods: GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/systemone, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/decisions, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /ping, Methods: GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /ping, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /invocations, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/responses, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/completions, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/messages, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /generative_scoring, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/messages/render, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/completions/render, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/responses/render, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/chat/completions/derender, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /v1/completions/derender, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=1) INFO 11-03 08:15:02 [launcher.py:197] Route: /inference/v1/abort_requests, Methods: POST
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     172.17.0.1:39282 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39296 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:15:15 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _qsa_sparse_paged_gqa_splitk_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+INFO:     172.17.0.1:39296 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39296 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39068 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39080 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39096 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39102 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39110 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39120 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39122 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:15:15 [jit_monitor.py:140] Triton kernel JIT compilation during inference: chunk_fwd_kernel_o_opt_vk. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:15:16 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _qsa_prepare_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:15:16 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _qsa_mqa_paged_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:15:16 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _expand_qsa_indices_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter49fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 8192, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] LoadKernel: _ZN5aiter49fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128.co
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter49fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 8192, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] LoadKernel: _ZN5aiter49fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128.co
+(APIServer pid=1) INFO 11-03 08:15:23 [loggers.py:335] Engine 000: Avg prompt throughput: 2.3 tokens/s, Avg generation throughput: 0.8 tokens/s, Running: 2 reqs, Waiting: 6 reqs, GPU KV cache usage: 2.3%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 11-03 08:15:23 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 1.75, Accepted throughput: 0.14 tokens/s, Drafted throughput: 0.55 tokens/s, Accepted: 3 tokens, Drafted: 12 tokens, Per-position acceptance rate: 0.500, 0.250, 0.000, Avg Draft acceptance rate: 25.0%
+(APIServer pid=1) INFO 11-03 08:15:33 [loggers.py:335] Engine 000: Avg prompt throughput: 7373.7 tokens/s, Avg generation throughput: 0.2 tokens/s, Running: 3 reqs, Waiting: 3 reqs, GPU KV cache usage: 3.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 11-03 08:15:43 [loggers.py:335] Engine 000: Avg prompt throughput: 14397.9 tokens/s, Avg generation throughput: 0.4 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.4%, Prefix cache hit rate: 0.0%
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 80
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 2048, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 80
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 2048, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+INFO:     172.17.0.1:39110 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39120 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39122 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57446 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57454 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57468 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57470 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57480 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57492 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57494 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57504 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57510 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57524 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57526 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57530 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57544 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57548 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57554 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57568 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57572 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57576 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57592 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57600 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57602 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57612 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57622 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57636 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57648 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57658 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57660 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57662 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57676 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57692 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57708 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57710 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57726 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57728 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57742 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57754 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57768 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57776 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57790 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57800 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57814 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57818 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57820 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57834 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57848 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57858 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57862 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57874 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57888 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57904 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57920 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57926 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57932 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57940 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57956 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57966 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57980 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57986 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57994 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57998 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:15:47 [jit_monitor.py:140] Triton kernel JIT compilation during inference: fused_sigmoid_gating_delta_rule_update_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:15:47 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _ple_conv_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:15:47 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _ple_conv_writeback_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=1) INFO 11-03 08:15:53 [loggers.py:335] Engine 000: Avg prompt throughput: 10520.1 tokens/s, Avg generation throughput: 3.7 tokens/s, Running: 54 reqs, Waiting: 10 reqs, GPU KV cache usage: 25.7%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 11-03 08:15:53 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 4.00, Accepted throughput: 0.20 tokens/s, Drafted throughput: 0.20 tokens/s, Accepted: 6 tokens, Drafted: 6 tokens, Per-position acceptance rate: 1.000, 1.000, 1.000, Avg Draft acceptance rate: 100.0%
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 16384, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 16384, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+(APIServer pid=1) INFO 11-03 08:16:03 [loggers.py:335] Engine 000: Avg prompt throughput: 4516.1 tokens/s, Avg generation throughput: 2072.2 tokens/s, Running: 64 reqs, Waiting: 0 reqs, GPU KV cache usage: 30.8%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 11-03 08:16:03 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.19, Accepted throughput: 1420.53 tokens/s, Drafted throughput: 1943.90 tokens/s, Accepted: 14206 tokens, Drafted: 19440 tokens, Per-position acceptance rate: 0.850, 0.730, 0.613, Avg Draft acceptance rate: 73.1%
+INFO:     172.17.0.1:39110 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39120 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39122 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57446 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57454 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57468 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57470 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57480 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57492 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57494 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57504 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57510 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57524 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57526 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57530 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57544 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:16:13 [loggers.py:335] Engine 000: Avg prompt throughput: 3328.6 tokens/s, Avg generation throughput: 1201.0 tokens/s, Running: 3 reqs, Waiting: 13 reqs, GPU KV cache usage: 3.1%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 11-03 08:16:13 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.18, Accepted throughput: 828.89 tokens/s, Drafted throughput: 1140.14 tokens/s, Accepted: 8290 tokens, Drafted: 11403 tokens, Per-position acceptance rate: 0.841, 0.722, 0.619, Avg Draft acceptance rate: 72.7%
+(APIServer pid=1) INFO 11-03 08:16:23 [loggers.py:335] Engine 000: Avg prompt throughput: 7230.8 tokens/s, Avg generation throughput: 1.2 tokens/s, Running: 6 reqs, Waiting: 10 reqs, GPU KV cache usage: 6.4%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 11-03 08:16:23 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.50, Accepted throughput: 0.60 tokens/s, Drafted throughput: 1.20 tokens/s, Accepted: 6 tokens, Drafted: 12 tokens, Per-position acceptance rate: 0.750, 0.500, 0.250, Avg Draft acceptance rate: 50.0%
+(APIServer pid=1) INFO 11-03 08:16:33 [loggers.py:335] Engine 000: Avg prompt throughput: 14109.1 tokens/s, Avg generation throughput: 4.9 tokens/s, Running: 10 reqs, Waiting: 6 reqs, GPU KV cache usage: 10.4%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 11-03 08:16:33 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.50, Accepted throughput: 2.70 tokens/s, Drafted throughput: 5.40 tokens/s, Accepted: 27 tokens, Drafted: 54 tokens, Per-position acceptance rate: 0.667, 0.500, 0.333, Avg Draft acceptance rate: 50.0%
+(APIServer pid=1) INFO 11-03 08:16:43 [loggers.py:335] Engine 000: Avg prompt throughput: 13692.9 tokens/s, Avg generation throughput: 8.0 tokens/s, Running: 14 reqs, Waiting: 2 reqs, GPU KV cache usage: 14.3%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 11-03 08:16:43 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.24, Accepted throughput: 4.20 tokens/s, Drafted throughput: 10.20 tokens/s, Accepted: 42 tokens, Drafted: 102 tokens, Per-position acceptance rate: 0.559, 0.412, 0.265, Avg Draft acceptance rate: 41.2%
+(APIServer pid=1) INFO 11-03 08:16:53 [loggers.py:335] Engine 000: Avg prompt throughput: 9873.3 tokens/s, Avg generation throughput: 9.9 tokens/s, Running: 16 reqs, Waiting: 0 reqs, GPU KV cache usage: 16.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 11-03 08:16:53 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.67, Accepted throughput: 6.00 tokens/s, Drafted throughput: 10.80 tokens/s, Accepted: 60 tokens, Drafted: 108 tokens, Per-position acceptance rate: 0.806, 0.500, 0.361, Avg Draft acceptance rate: 55.6%
+INFO:     172.17.0.1:57504 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57446 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39122 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57470 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57510 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0_EP0 pid=204) WARNING 11-03 08:16:57 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _qsa_merge_splitk_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+INFO:     172.17.0.1:57492 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57468 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39120 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57454 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57544 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57480 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39110 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57530 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 1024, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 1024, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+INFO:     172.17.0.1:57526 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57524 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57494 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 160
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 4096, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 160
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 4096, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+(APIServer pid=1) INFO 11-03 08:17:03 [loggers.py:335] Engine 000: Avg prompt throughput: 8840.1 tokens/s, Avg generation throughput: 469.3 tokens/s, Running: 16 reqs, Waiting: 0 reqs, GPU KV cache usage: 17.0%, Prefix cache hit rate: 36.3%
+(APIServer pid=1) INFO 11-03 08:17:03 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.07, Accepted throughput: 316.80 tokens/s, Drafted throughput: 459.60 tokens/s, Accepted: 3168 tokens, Drafted: 4596 tokens, Per-position acceptance rate: 0.824, 0.687, 0.557, Avg Draft acceptance rate: 68.9%
+INFO:     172.17.0.1:57510 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39122 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57470 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57504 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57468 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39120 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57446 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57454 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57526 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57492 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39110 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57544 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57524 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57530 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57480 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57494 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:39110 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:17:13 [loggers.py:335] Engine 000: Avg prompt throughput: 2839.7 tokens/s, Avg generation throughput: 735.2 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 52.8%
+(APIServer pid=1) INFO 11-03 08:17:13 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.19, Accepted throughput: 505.37 tokens/s, Drafted throughput: 692.95 tokens/s, Accepted: 5054 tokens, Drafted: 6930 tokens, Per-position acceptance rate: 0.841, 0.720, 0.627, Avg Draft acceptance rate: 72.9%
+INFO:     172.17.0.1:41106 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41106 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41106 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41120 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41126 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41132 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41154 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41142 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41160 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41172 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:17:23 [loggers.py:335] Engine 000: Avg prompt throughput: 3883.6 tokens/s, Avg generation throughput: 0.9 tokens/s, Running: 3 reqs, Waiting: 4 reqs, GPU KV cache usage: 3.3%, Prefix cache hit rate: 49.3%
+(APIServer pid=1) INFO 11-03 08:17:23 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.00, Accepted throughput: 0.40 tokens/s, Drafted throughput: 1.20 tokens/s, Accepted: 4 tokens, Drafted: 12 tokens, Per-position acceptance rate: 0.750, 0.250, 0.000, Avg Draft acceptance rate: 33.3%
+(APIServer pid=1) INFO 11-03 08:17:33 [loggers.py:335] Engine 000: Avg prompt throughput: 14458.5 tokens/s, Avg generation throughput: 0.4 tokens/s, Running: 3 reqs, Waiting: 0 reqs, GPU KV cache usage: 3.0%, Prefix cache hit rate: 46.2%
+INFO:     172.17.0.1:41172 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41142 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41160 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58652 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58668 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58672 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58684 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58690 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58702 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58718 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58720 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58732 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58740 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58756 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58768 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58778 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58782 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58790 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58792 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58798 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58814 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58824 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58840 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58848 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58856 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58862 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58874 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58890 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58894 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58910 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58920 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58922 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58934 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58944 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58958 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58964 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58966 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58970 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58982 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58992 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58998 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59012 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59014 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59024 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59030 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59034 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59036 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59044 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59054 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59058 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59074 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59076 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59090 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59100 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59110 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59118 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59122 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59136 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59142 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59156 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59172 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59180 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59190 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:59194 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:17:43 [loggers.py:335] Engine 000: Avg prompt throughput: 14173.7 tokens/s, Avg generation throughput: 3.8 tokens/s, Running: 54 reqs, Waiting: 10 reqs, GPU KV cache usage: 25.5%, Prefix cache hit rate: 45.0%
+(APIServer pid=1) INFO 11-03 08:17:43 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 4.00, Accepted throughput: 0.30 tokens/s, Drafted throughput: 0.30 tokens/s, Accepted: 6 tokens, Drafted: 6 tokens, Per-position acceptance rate: 1.000, 1.000, 1.000, Avg Draft acceptance rate: 100.0%
+(APIServer pid=1) INFO 11-03 08:17:53 [loggers.py:335] Engine 000: Avg prompt throughput: 4372.5 tokens/s, Avg generation throughput: 2471.8 tokens/s, Running: 64 reqs, Waiting: 0 reqs, GPU KV cache usage: 31.2%, Prefix cache hit rate: 44.7%
+(APIServer pid=1) INFO 11-03 08:17:53 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.21, Accepted throughput: 1698.90 tokens/s, Drafted throughput: 2307.75 tokens/s, Accepted: 16999 tokens, Drafted: 23091 tokens, Per-position acceptance rate: 0.857, 0.729, 0.623, Avg Draft acceptance rate: 73.6%
+INFO:     172.17.0.1:41172 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41142 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41160 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58652 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58668 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58672 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58684 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58690 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58702 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58718 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58720 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58732 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58740 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58756 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58768 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58778 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:18:03 [loggers.py:335] Engine 000: Avg prompt throughput: 3215.1 tokens/s, Avg generation throughput: 800.1 tokens/s, Running: 3 reqs, Waiting: 13 reqs, GPU KV cache usage: 3.2%, Prefix cache hit rate: 43.0%
+(APIServer pid=1) INFO 11-03 08:18:03 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.15, Accepted throughput: 550.46 tokens/s, Drafted throughput: 769.15 tokens/s, Accepted: 5505 tokens, Drafted: 7692 tokens, Per-position acceptance rate: 0.837, 0.715, 0.596, Avg Draft acceptance rate: 71.6%
+(APIServer pid=1) INFO 11-03 08:18:13 [loggers.py:335] Engine 000: Avg prompt throughput: 10029.2 tokens/s, Avg generation throughput: 2.2 tokens/s, Running: 7 reqs, Waiting: 9 reqs, GPU KV cache usage: 7.4%, Prefix cache hit rate: 40.7%
+(APIServer pid=1) INFO 11-03 08:18:13 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.38, Accepted throughput: 1.10 tokens/s, Drafted throughput: 2.40 tokens/s, Accepted: 11 tokens, Drafted: 24 tokens, Per-position acceptance rate: 0.625, 0.500, 0.250, Avg Draft acceptance rate: 45.8%
+(APIServer pid=1) INFO 11-03 08:18:23 [loggers.py:335] Engine 000: Avg prompt throughput: 10547.6 tokens/s, Avg generation throughput: 5.6 tokens/s, Running: 10 reqs, Waiting: 6 reqs, GPU KV cache usage: 10.4%, Prefix cache hit rate: 39.3%
+(APIServer pid=1) INFO 11-03 08:18:23 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.53, Accepted throughput: 3.80 tokens/s, Drafted throughput: 4.50 tokens/s, Accepted: 38 tokens, Drafted: 45 tokens, Per-position acceptance rate: 0.933, 0.867, 0.733, Avg Draft acceptance rate: 84.4%
+(APIServer pid=1) INFO 11-03 08:18:33 [loggers.py:335] Engine 000: Avg prompt throughput: 13223.8 tokens/s, Avg generation throughput: 10.4 tokens/s, Running: 14 reqs, Waiting: 2 reqs, GPU KV cache usage: 14.3%, Prefix cache hit rate: 37.4%
+(APIServer pid=1) INFO 11-03 08:18:33 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.94, Accepted throughput: 6.60 tokens/s, Drafted throughput: 10.20 tokens/s, Accepted: 66 tokens, Drafted: 102 tokens, Per-position acceptance rate: 0.794, 0.647, 0.500, Avg Draft acceptance rate: 64.7%
+(APIServer pid=1) INFO 11-03 08:18:43 [loggers.py:335] Engine 000: Avg prompt throughput: 16853.2 tokens/s, Avg generation throughput: 228.0 tokens/s, Running: 16 reqs, Waiting: 0 reqs, GPU KV cache usage: 16.3%, Prefix cache hit rate: 36.6%
+(APIServer pid=1) INFO 11-03 08:18:43 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.96, Accepted throughput: 150.59 tokens/s, Drafted throughput: 230.69 tokens/s, Accepted: 1506 tokens, Drafted: 2307 tokens, Per-position acceptance rate: 0.815, 0.642, 0.501, Avg Draft acceptance rate: 65.3%
+INFO:     172.17.0.1:58668 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41142 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41172 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58718 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58732 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58740 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58690 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58702 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41160 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58652 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58684 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58672 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58768 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58720 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58778 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58756 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58668 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41172 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41142 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58732 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58702 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58690 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58718 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58652 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58672 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58684 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58740 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58720 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58768 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58756 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:41160 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:58778 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:18:53 [loggers.py:335] Engine 000: Avg prompt throughput: 4265.6 tokens/s, Avg generation throughput: 682.9 tokens/s, Running: 16 reqs, Waiting: 0 reqs, GPU KV cache usage: 17.2%, Prefix cache hit rate: 52.7%
+(APIServer pid=1) INFO 11-03 08:18:53 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.12, Accepted throughput: 464.80 tokens/s, Drafted throughput: 657.00 tokens/s, Accepted: 4648 tokens, Drafted: 6570 tokens, Per-position acceptance rate: 0.829, 0.698, 0.595, Avg Draft acceptance rate: 70.7%
+INFO:     172.17.0.1:41172 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33908 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33908 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33908 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33924 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33940 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33948 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33950 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33954 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33960 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:19:03 [loggers.py:335] Engine 000: Avg prompt throughput: 4799.3 tokens/s, Avg generation throughput: 300.4 tokens/s, Running: 2 reqs, Waiting: 5 reqs, GPU KV cache usage: 2.1%, Prefix cache hit rate: 51.2%
+(APIServer pid=1) INFO 11-03 08:19:03 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.15, Accepted throughput: 206.09 tokens/s, Drafted throughput: 287.09 tokens/s, Accepted: 2061 tokens, Drafted: 2871 tokens, Per-position acceptance rate: 0.834, 0.722, 0.598, Avg Draft acceptance rate: 71.8%
+(APIServer pid=1) INFO 11-03 08:19:13 [loggers.py:335] Engine 000: Avg prompt throughput: 7690.1 tokens/s, Avg generation throughput: 0.2 tokens/s, Running: 3 reqs, Waiting: 2 reqs, GPU KV cache usage: 3.1%, Prefix cache hit rate: 49.9%
+INFO:     172.17.0.1:33954 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33960 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56792 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56798 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56804 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56816 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56828 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56834 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56836 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56852 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56864 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56868 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56878 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56892 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56898 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56910 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56916 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56924 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56928 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56936 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56950 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56954 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56966 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56970 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56982 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56996 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57012 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57028 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57036 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57040 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57054 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57062 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57072 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57086 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57102 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57108 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57124 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57140 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57150 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57162 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57166 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57168 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57180 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57190 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57206 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57208 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57214 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57226 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57240 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57248 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57260 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57274 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57288 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57296 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57312 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57318 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57330 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57344 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57354 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57360 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57370 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57384 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:57386 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:19:23 [loggers.py:335] Engine 000: Avg prompt throughput: 18319.0 tokens/s, Avg generation throughput: 1.0 tokens/s, Running: 28 reqs, Waiting: 36 reqs, GPU KV cache usage: 13.3%, Prefix cache hit rate: 48.7%
+(APIServer pid=1) INFO 11-03 08:19:23 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 4.00, Accepted throughput: 0.15 tokens/s, Drafted throughput: 0.15 tokens/s, Accepted: 3 tokens, Drafted: 3 tokens, Per-position acceptance rate: 1.000, 1.000, 1.000, Avg Draft acceptance rate: 100.0%
+(APIServer pid=1) INFO 11-03 08:19:33 [loggers.py:335] Engine 000: Avg prompt throughput: 7479.0 tokens/s, Avg generation throughput: 1634.4 tokens/s, Running: 64 reqs, Waiting: 0 reqs, GPU KV cache usage: 30.4%, Prefix cache hit rate: 48.3%
+(APIServer pid=1) INFO 11-03 08:19:33 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.17, Accepted throughput: 1114.45 tokens/s, Drafted throughput: 1540.93 tokens/s, Accepted: 11150 tokens, Drafted: 15417 tokens, Per-position acceptance rate: 0.847, 0.723, 0.599, Avg Draft acceptance rate: 72.3%
+INFO:     172.17.0.1:33954 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33960 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56792 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56798 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56804 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56816 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56828 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56834 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56836 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56852 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56864 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56868 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56878 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56892 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56898 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:19:43 [loggers.py:335] Engine 000: Avg prompt throughput: 3268.2 tokens/s, Avg generation throughput: 1641.1 tokens/s, Running: 2 reqs, Waiting: 14 reqs, GPU KV cache usage: 2.1%, Prefix cache hit rate: 47.6%
+(APIServer pid=1) INFO 11-03 08:19:43 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.14, Accepted throughput: 1124.44 tokens/s, Drafted throughput: 1576.72 tokens/s, Accepted: 11245 tokens, Drafted: 15768 tokens, Per-position acceptance rate: 0.838, 0.707, 0.594, Avg Draft acceptance rate: 71.3%
+(APIServer pid=1) INFO 11-03 08:19:53 [loggers.py:335] Engine 000: Avg prompt throughput: 6500.3 tokens/s, Avg generation throughput: 2.4 tokens/s, Running: 6 reqs, Waiting: 10 reqs, GPU KV cache usage: 6.2%, Prefix cache hit rate: 46.2%
+(APIServer pid=1) INFO 11-03 08:19:53 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.14, Accepted throughput: 1.50 tokens/s, Drafted throughput: 2.10 tokens/s, Accepted: 15 tokens, Drafted: 21 tokens, Per-position acceptance rate: 0.857, 0.857, 0.429, Avg Draft acceptance rate: 71.4%
+(APIServer pid=1) INFO 11-03 08:20:03 [loggers.py:335] Engine 000: Avg prompt throughput: 13397.2 tokens/s, Avg generation throughput: 4.8 tokens/s, Running: 10 reqs, Waiting: 6 reqs, GPU KV cache usage: 10.3%, Prefix cache hit rate: 44.9%
+(APIServer pid=1) INFO 11-03 08:20:03 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.44, Accepted throughput: 2.60 tokens/s, Drafted throughput: 5.40 tokens/s, Accepted: 26 tokens, Drafted: 54 tokens, Per-position acceptance rate: 0.722, 0.500, 0.222, Avg Draft acceptance rate: 48.1%
+(APIServer pid=1) INFO 11-03 08:20:13 [loggers.py:335] Engine 000: Avg prompt throughput: 10197.6 tokens/s, Avg generation throughput: 6.3 tokens/s, Running: 13 reqs, Waiting: 3 reqs, GPU KV cache usage: 13.3%, Prefix cache hit rate: 44.0%
+(APIServer pid=1) INFO 11-03 08:20:13 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.50, Accepted throughput: 3.60 tokens/s, Drafted throughput: 7.20 tokens/s, Accepted: 36 tokens, Drafted: 72 tokens, Per-position acceptance rate: 0.708, 0.500, 0.292, Avg Draft acceptance rate: 50.0%
+(APIServer pid=1) INFO 11-03 08:20:23 [loggers.py:335] Engine 000: Avg prompt throughput: 13559.7 tokens/s, Avg generation throughput: 14.0 tokens/s, Running: 16 reqs, Waiting: 0 reqs, GPU KV cache usage: 16.6%, Prefix cache hit rate: 43.1%
+(APIServer pid=1) INFO 11-03 08:20:23 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.96, Accepted throughput: 9.00 tokens/s, Drafted throughput: 13.80 tokens/s, Accepted: 90 tokens, Drafted: 138 tokens, Per-position acceptance rate: 0.848, 0.652, 0.457, Avg Draft acceptance rate: 65.2%
+INFO:     172.17.0.1:56792 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56836 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56798 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33960 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33954 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56828 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56892 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56864 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56804 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56816 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56852 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56834 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56868 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56878 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56898 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56836 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56798 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56792 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33960 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56892 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56864 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33954 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-03 08:20:33 [loggers.py:335] Engine 000: Avg prompt throughput: 9790.3 tokens/s, Avg generation throughput: 777.6 tokens/s, Running: 16 reqs, Waiting: 0 reqs, GPU KV cache usage: 16.5%, Prefix cache hit rate: 50.5%
+(APIServer pid=1) INFO 11-03 08:20:33 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.02, Accepted throughput: 520.64 tokens/s, Drafted throughput: 772.56 tokens/s, Accepted: 5208 tokens, Drafted: 7728 tokens, Per-position acceptance rate: 0.812, 0.670, 0.540, Avg Draft acceptance rate: 67.4%
+INFO:     172.17.0.1:56852 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56816 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56804 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56828 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56834 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56868 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56878 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:56898 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:33954 - "GET /metrics HTTP/1.1" 200 OK

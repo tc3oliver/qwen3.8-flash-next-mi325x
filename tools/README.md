@@ -4,7 +4,7 @@ For verifying the results or re-tuning. Not needed to use the overlay or the tun
 Run everything from `tools/`. Scripts read `../deploy/.env` (copy `deploy/.env.example` first).
 Python scripts run with `uv run --with httpx ...` (GSM8K also needs `datasets`).
 
-**Shared hosts:** `experiments/exp.sh` starts containers with `--device /dev/dri` (every GPU render node) and selects GPUs with `HIP_VISIBLE_DEVICES`. If some GPUs on your host serve production, edit it to pass only the render nodes of the GPUs you test on (`--device /dev/dri/renderD<n>`), as the 2026-11 refresh did ([results/overlay-refresh-2026-11/](../results/overlay-refresh-2026-11/)).
+**Shared hosts:** `experiments/exp.sh` starts containers with `--device /dev/dri` (every GPU render node) and selects GPUs with `HIP_VISIBLE_DEVICES`. If some GPUs on your host serve production, set `RENDER_MAP` in `deploy/.env` (e.g. `RENDER_MAP="0=128 1=136"`, HIP id=renderD number; sample: `deploy/.env.mi300x.example`) to pass only those render nodes; HIP ids not in the map are refused. As the 2026-11 refresh did ([results/overlay-refresh-2026-11/](../results/overlay-refresh-2026-11/)).
 
 ## Corpus
 

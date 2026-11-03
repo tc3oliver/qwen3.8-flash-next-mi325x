@@ -1,0 +1,126 @@
+0.33.0
+f59670bf046ad58b051b74d80ba23883477b845824278704eff6ee67116ac524  /usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/ops/qsa.py
+/usr/local/lib/python3.12/dist-packages/pytest_asyncio/plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-9.2.0, pluggy-1.7.0 -- /usr/bin/python3
+rootdir: /t
+plugins: asyncio-1.4.1, anyio-4.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 19 items
+
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[bf16] PASSED [  5%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[fp16] PASSED [ 10%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[fp8] PASSED [ 15%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-bf16] PASSED [ 21%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-fp16] PASSED [ 26%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-fp8] PASSED [ 31%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-bf16] PASSED [ 36%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-fp16] PASSED [ 42%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-fp8] PASSED [ 47%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-bf16] PASSED [ 52%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-fp16] PASSED [ 57%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-fp8] PASSED [ 63%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-bf16] PASSED [ 68%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-fp16] PASSED [ 73%]
+../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-fp8] PASSED [ 78%]
+../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[bf16] PASSED [ 84%]
+../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[fp16] PASSED [ 89%]
+../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[fp8] PASSED [ 94%]
+../t/test_qsa_kernels.py::test_qsa_select_decode_rows_replays_in_cuda_graph FAILED [100%]
+
+=================================== FAILURES ===================================
+______________ test_qsa_select_decode_rows_replays_in_cuda_graph _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0ade4cd7c0>
+
+    @requires_qsa_kernels
+    def test_qsa_select_decode_rows_replays_in_cuda_graph(
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        spy = _force_rows_kernel(monkeypatch)
+        (
+            q,
+            k_cache,
+            page_table,
+            token_to_req,
+            positions,
+            lengths,
+            token_topk,
+            compress_ratio,
+        ) = _decode_select_case(8, "bf16")
+    
+        def select():
+            return qsa_ops.qsa_select_paged_tokens(
+                q,
+                k_cache,
+                page_table,
+                token_to_req,
+                positions,
+                lengths,
+                token_topk,
+                compress_ratio,
+                single_row_decode=True,
+            )
+    
+        select()
+        torch.accelerator.synchronize()
+        graph = torch.cuda.CUDAGraph()
+        with torch.cuda.graph(graph):
+            captured = select()
+    
+        # Replay on new inputs written in place, as the runner does between steps.
+        torch.manual_seed(1)
+        q.copy_(torch.randn_like(q))
+        new_lengths = torch.randint(
+            8, 1500, lengths.shape, device="cuda", dtype=lengths.dtype
+        )
+        lengths.copy_(new_lengths)
+        positions.copy_((new_lengths - 1).to(torch.int64))
+        graph.replay()
+        torch.accelerator.synchronize()
+        expected = qsa_ops.qsa_select_paged_tokens(
+            q,
+            k_cache,
+            page_table,
+            token_to_req,
+            positions,
+            lengths,
+            token_topk,
+            compress_ratio,
+            single_row_decode=False,
+        )
+        # Warmup and capture launched it; the replay does not go through Python.
+        assert spy.launches == 2
+>       torch.testing.assert_close(captured, expected, rtol=0, atol=0)
+E       AssertionError: Tensor-likes are not equal!
+E       
+E       Mismatched elements: 8 / 152 (5.3%)
+E       Greatest absolute difference: 768 at index (2, 4)
+E       Greatest relative difference: 1.2387096881866455 at index (2, 8)
+
+/t/test_qsa_kernels.py:257: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_matches_reference_on_visible_columns[fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[1-fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[5-fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[32-fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_mqa_paged_decode_rows_match_reference[33-fp8]
+PASSED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[bf16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[fp16]
+PASSED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_ignores_unwritten_logits[fp8]
+FAILED ../t/test_qsa_kernels.py::test_qsa_select_decode_rows_replays_in_cuda_graph
+======================== 1 failed, 18 passed in 10.18s =========================

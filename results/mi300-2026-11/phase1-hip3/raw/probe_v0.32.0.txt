@@ -1,0 +1,2 @@
+device_count 1  gfx942:sramecc+:xnack- CUs 304
+is_rocm True on_gfx942 True
