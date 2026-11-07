@@ -1,11 +1,11 @@
 # Qwen3.8-Flash-Next-FP8 on AMD MI325X
 
-Serving settings, a two-file vLLM overlay and tuned AITER MoE tables that roughly double prefill and halve agent wall time for Qwen3.8-Flash-Next-FP8 on MI325X (gfx942), behind a LiteLLM gateway.
+Serving settings and a two-file vLLM overlay that roughly double prefill and halve agent wall time for Qwen3.8-Flash-Next-FP8 on MI325X (gfx942), behind a LiteLLM gateway. Tuned AITER MoE tables are included; their only isolated end-to-end measurement moved 8 × 32K prefill by under 1%, on TP1.
 
 ## Results
 
 Plain vLLM v0.32.0 (same flags; no overlay, no tuned tables, no QuickReduce) against this repo, TP2 + expert parallel, run d02 (October).
-Run-to-run noise is about 3-5%.
+Run-to-run noise is about 3-5%, more on cold TTFT: stock measured 3.48 s and 2.92 s in two runs with the same flags.
 
 | TP2, one engine on 2 GPUs | stock | this repo |
 |---|---:|---:|
@@ -16,8 +16,10 @@ Run-to-run noise is about 3-5%.
 | Agent 96K, 8 sessions x 3 turns, wall | 84.9 s | **41.7 s** |
 | GSM8K, 1319 questions zero-shot | | 0.9629 |
 
-Accuracy gate for the same run: 238K needle 3/3, functional 9/9. At 100 simulated users on 2 x TP2 through LiteLLM:
-0 errors in 2,312 requests, warm TTFT p50 0.58 s, 94% warm-turn cache hit.
+Accuracy gate for the same run: 238K needle 3/3, functional 9/9.
+
+At 100 simulated users on 2 x TP2 through LiteLLM, with the first overlay revision:
+0 errors in 2,312 requests, warm TTFT p50 0.58 s, p99 49.8 s, 94% warm-turn cache hit.
 
 Re-measured 2026-11-03 with the refreshed overlay. Here QuickReduce INT6 and the tuned MoE table are on in **both** columns,
 so the difference is the overlay (and, in the last two columns, the newer vLLM). Medians of 3 passes.
@@ -69,7 +71,7 @@ model `Qwen/Qwen3.8-Flash-Next-FP8` @ `236dfdf285828023ca3bcd3f37366c58a3469b13`
 | PR | content | status |
 |---|---|---|
 | [vllm#62589](https://github.com/vllm-project/vllm/pull/62589) | tiled QSA indexer | open, no maintainer review |
-| [vllm#62590](https://github.com/vllm-project/vllm/pull/62590) | sparse-GQA BLOCK_N=32 on gfx942 | open, no maintainer review |
+| [vllm#62590](https://github.com/vllm-project/vllm/pull/62590) | sparse-GQA launch profile on gfx942 and gfx950 | open, no maintainer review |
 | [vllm#64662](https://github.com/vllm-project/vllm/pull/64662) | MI325X Triton FP8 MoE configs | open, no maintainer review |
 | [aiter#6692](https://github.com/ROCm/aiter/pull/6692) | MoE tuner fallback | merged 2026-11-03 |
 | [aiter#6693](https://github.com/ROCm/aiter/pull/6693) | gfx942 MoE configs | merged 2026-10-22; not yet in the vLLM v0.32.0 / v0.33.0 images, so `tuned/aiter/` is still needed |

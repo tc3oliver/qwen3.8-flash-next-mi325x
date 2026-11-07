@@ -66,7 +66,7 @@ Through LiteLLM v1.105.1.
 | `failover-tp1x4*.json` | pinned replica stopped mid-session (`tools/tests/failover.py`). v1: `allowed_fails: 1`; v2-v4: `allowed_fails: 0`, aiohttp; v5: httpx transport |
 | `session-id-affinity-tp2x2.json` | pinning per session-id format, 8 sessions × 4 requests each; `.` and `:` break it (`tools/tests/session_id_probe.py`) |
 | `functional-gateway-*.json` | functional suite through the gateway. `tp2x2-upstream-overlay` = shipped overlay, the others the first revision |
-| `opencode-run*`, `pi-run*` | real agent task (`tools/tests/agent_real.sh`): summary `.json`, pytest output, agent transcript `.jsonl` (paths anonymized) |
+| `opencode-run*`, `pi-run*` | real agent task (`tools/tests/agent_real.sh`): summary `.json`, pytest output, agent transcript `.jsonl` for opencode (paths anonymized); pi transcripts are not kept because they contain Pi's system prompt and tool definitions |
 
 ## first-deploy/
 

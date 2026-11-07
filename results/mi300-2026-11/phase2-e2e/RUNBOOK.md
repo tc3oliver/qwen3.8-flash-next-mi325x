@@ -6,7 +6,7 @@ Config = `deploy/compose.yaml` TP2: EP2, MTP 3, AITER FP8 MoE, QuickReduce INT6 
 Arm A = `stock`, arm B = `overlay` (`PATCH_QSA=1`). Same image, same flags. (Arm "A/B" below = stock/overlay; pairs are named Pair A / Pair B.)
 
 GPUs: Pair A = HIP 6,7 (renderD176+184, container `mi300-e2e-a`, port 8011); Pair B = HIP 2,3 (renderD144+152, container `mi300-e2e-b`, port 8012). HIP 4 is never mounted
-(`exp.sh` takes the render-node table from `RENDER_MAP` in `deploy/.env`, see `deploy/.env.mi300x.example`: HIP 4 is not in it and unknown ids are refused; the runs themselves used the first, hard-coded version of this table, commit 0b1c69a). Inside the container ids are 0..1.
+(`exp.sh` takes the render-node table from `RENDER_MAP` in `deploy/.env`, see `deploy/.env.mi300x.example`: HIP 4 is not in it and unknown ids are refused; the runs themselves used the first, hard-coded version of this table, commit b85fced). Inside the container ids are 0..1.
 
 `arm.sh <stock|overlay> <A|B> <round> [smoke]` (this dir) does: boot -> hash of the files python actually imports (aborts with exit 2 on MISMATCH) -> PCI BDFs seen in the container (`*.gpu.txt`, expect e6+96 for Pair A, 66+16 for Pair B) -> 3 x perfsuite `--only prefill_8,decode_c64,agent_32k_c16` -> remove container.
 Outputs: `<arm>-r<round>-<pair>.{hash.txt,gpu.txt,server.log,p1,p2,p3.perf.json}` here. Default perfsuite behaviour is unchanged (`--only` already existed).
