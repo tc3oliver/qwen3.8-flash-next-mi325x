@@ -4,7 +4,7 @@
 #   tp2x2  two TP2 replicas vllm-a, vllm-b      (original spec; lower idle single-request TTFT)
 # Operate via deploy/scripts/ (up.sh, down.sh, restart.sh, status.sh, logs.sh); see ../README.md.
 # Every workaround/tuning below cites its source and the version it was checked against
-# (vLLM 0.32.0 image); measurements are in ../docs/lab-notebook.md and ../results/.
+# (vLLM 0.32.0 image unless noted; tp2x2 defaults re-checked on v0.33.0 in ../results/v033-512k-2026-11); measurements are in ../docs/lab-notebook.md and ../results/.
 
 x-vllm: &vllm
   image: ${VLLM_IMAGE:?set in .env}
@@ -12,7 +12,8 @@ x-vllm: &vllm
   ipc: host
   shm_size: "32g"
   devices: [/dev/kfd, /dev/dri]
-  group_add: [video, render]
+  # Numeric host GIDs: the v0.33.0 image has no "render" group, and names fail at container start.
+  group_add: ["${VIDEO_GID:?set in .env}", "${RENDER_GID:?set in .env}"]
   cap_add: [SYS_PTRACE]
   security_opt: [seccomp=unconfined]
   networks: [qwen38]
@@ -95,7 +96,11 @@ x-cmd-tp2: &cmd-tp2
   # Experts split across the 2 ranks (expert width 640 does not tile into 128-wide FP8 blocks under
   # pure TP; AITER FP8 MoE rejects the refined 64x64 scales, vllm#60839).
   - --enable-expert-parallel
-  - --max-model-len=${MAX_MODEL_LEN:-262144}
+  # 512K: YaRN factor 2 from config/model-yarn512/config.json (scripts/make_model_yarn512.sh). Not --hf-overrides:
+  # dict overrides skip the MTP draft, whose RoPE cache stays 262,144 rows and faults past that position
+  # (../results/v033-512k-2026-11). GSM8K-1319 0.9644, cold TTFT +4.5% vs 262K. Start with scripts/up.sh, which builds the
+  # directory (plain `docker compose up` creates an empty one); delete it after changing MODEL_DIR.
+  - --max-model-len=${TP2_MAX_MODEL_LEN:-524288}
   - --max-num-seqs=${MAX_NUM_SEQS:-64}
   - --gpu-memory-utilization=${GPU_MEMORY_UTILIZATION:-0.93}
   - --max-num-batched-tokens=${MAX_NUM_BATCHED_TOKENS:-32768}
@@ -123,6 +128,9 @@ x-tp2-env: &tp2-env
   # +14..+17%, agent wall -8..-15% (e03/e11). Quantized reduction: validated by full GSM8K (README).
   VLLM_ROCM_QUICK_REDUCE_QUANTIZATION: ${TP2_QUICK_REDUCE:-INT6}
   VLLM_ROCM_QUICK_REDUCE_CAST_BF16_TO_FP16: "0"
+  # Largest all-reduce is 32768 x 2560 x bf16 = 160 MB; the default 2048 MB buffer apparently sits outside the util budget.
+  VLLM_ROCM_QUICK_REDUCE_MAX_SIZE_BYTES_MB: "256"
+  VLLM_ALLOW_LONG_MAX_MODEL_LEN: "1"
 
 x-tp1-env: &tp1-env
   <<: *vllm-env
@@ -189,7 +197,8 @@ services:
     environment: { <<: *tp2-env, HIP_VISIBLE_DEVICES: "${REPLICA_A_HIP:-1,3}" }
     ports: ["${BIND_ADDR:-127.0.0.1}:${REPLICA_A_PORT:-8001}:8000"]
     volumes:
-      - ${MODEL_DIR:?set in .env}:/models/qwen3.8-flash-next-fp8:ro
+      - ./config/model-yarn512:/models/qwen3.8-flash-next-fp8:ro   # config.json with YaRN; other files link into /models-orig
+      - ${MODEL_DIR:?set in .env}:/models-orig:ro
       - ./runtime/aiter:/root/.aiter
       - ../tuned/aiter:/aiter-tuned:ro
       - ../overlay/qsa.py:/usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/ops/qsa.py:ro
@@ -203,7 +212,8 @@ services:
     environment: { <<: *tp2-env, HIP_VISIBLE_DEVICES: "${REPLICA_B_HIP:-2,0}" }
     ports: ["${BIND_ADDR:-127.0.0.1}:${REPLICA_B_PORT:-8002}:8000"]
     volumes:
-      - ${MODEL_DIR:?set in .env}:/models/qwen3.8-flash-next-fp8:ro
+      - ./config/model-yarn512:/models/qwen3.8-flash-next-fp8:ro   # config.json with YaRN; other files link into /models-orig
+      - ${MODEL_DIR:?set in .env}:/models-orig:ro
       - ./runtime/aiter:/root/.aiter
       - ../tuned/aiter:/aiter-tuned:ro
       - ../overlay/qsa.py:/usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/amd/ops/qsa.py:ro

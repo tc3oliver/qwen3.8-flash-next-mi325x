@@ -4,6 +4,7 @@
 #   scripts/up.sh 1|2|3|4|a|b  one replica      scripts/up.sh gw   LiteLLM only
 source "$(dirname "$0")/_lib.sh"
 mkdir -p runtime/aiter; for r in "${REPLICAS[@]}"; do mkdir -p "runtime/$r"; done
+[[ $LAYOUT != tp2x2 || -f config/model-yarn512/config.json ]] || scripts/make_model_yarn512.sh "$MODEL_DIR" config/model-yarn512
 if [[ $# -gt 0 ]]; then
   s=$(svc_of "$1"); "${DC[@]}" up -d --no-deps "$s"; [[ $s == litellm ]] || wait_healthy "$s"; exit
 fi

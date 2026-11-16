@@ -35,15 +35,32 @@ so the difference is the overlay (and, in the last two columns, the newer vLLM).
 
 Caveats:
 - The newest numbers are one boot per arm, 3 passes, medians; ranges are in [`results/overlay-refresh-2026-11/`](results/overlay-refresh-2026-11/).
-- vLLM v0.33.0 gains 2-7% over v0.32.0 on the same ROCm 7.2 (`v0.33.0-rocm72`) and 5-9% on the ROCm 10.0 build (`v0.33.0` tag). Both were tested with the overlay; neither is the compose default (v0.32.0, ROCm 7.2.3).
-- GSM8K-200 has a standard error of about 1.2 points; the 1319-question run is the accuracy gate. It has not been run on v0.33.0, where the four n=200 runs (0.960-0.975) sit slightly below the v0.32.0 ones (0.975, 0.980).
+- vLLM v0.33.0 gains 2-7% over v0.32.0 on the same ROCm 7.2 (`v0.33.0-rocm72`) and 5-9% on the ROCm 10.0 build (`v0.33.0` tag). Both were tested with the overlay.
+- GSM8K-200 has a standard error of about 1.2 points; the 1319-question run is the accuracy gate (v0.33.0 below).
+
+2026-11-16, 512K context and the v0.33.0 gate ([`results/v033-512k-2026-11/`](results/v033-512k-2026-11/)), one boot per arm, 512K unless noted:
+
+| TP2 + EP2, MTP 3 | v0.32.0 + d02 overlay, 262K | v0.32.0 + d02 overlay | v0.33.0 (ROCm 10.0) + overlay |
+|---|---:|---:|---:|
+| GSM8K-1319 | 0.9568 | 0.9644 | 0.9644 |
+| 500K retrieval (4 facts), TTFT | n/a | 4/4, 24.9 s | 4/4, 22.8 s |
+| Decode, 1 stream, short prompt (tok/s) | | 166 ¹ | 241 |
+| 50 simulated users, 15 min: cold / warm TTFT p50 | 14.2 / 0.53 s | 14.8 / 0.56 s | 14.0 / 0.49 s |
+
+512K comes from YaRN factor 2 in a copy of `config.json`; 1M (factor 4) also passed but cost 28% cold TTFT. With MTP, YaRN must not go through
+`--hf-overrides`: the MTP draft ignores dict overrides and the engine faults past position 262,144. The v0.33.0 column also uses the newer overlay,
+so its decode gain mixes image and overlay revision (the overlay's decode change is inactive with MTP). These are the `deploy/` tp2x2 defaults now.
+¹ measured on the `b32` arm (same, plus QuickReduce max 256 MB and the `deploy/` model-dir layout).
+
+Upgrading an existing `deploy/.env`: add `VIDEO_GID` / `RENDER_GID` (compose now requires them), and note that tp2x2 reads `TP2_MAX_MODEL_LEN`
+(default 524288), not `MAX_MODEL_LEN`. `VLLM_IMAGE` is shared: tp1x4 users should keep the v0.32.0 line.
 
 ## Quick start
 
 ```bash
 git clone https://github.com/tc3oliver/qwen3.8-flash-next-mi325x && cd qwen3.8-flash-next-mi325x/deploy
-cp .env.example .env && chmod 600 .env   # set MODEL_DIR, HIP ids, LITELLM_MASTER_KEY, LAYOUT (tp2x2 or tp1x4)
-./scripts/up.sh                          # docker compose; overlay/ and tuned/ are mounted by compose.yaml
+cp .env.example .env && chmod 600 .env   # set MODEL_DIR, VIDEO_GID/RENDER_GID, HIP ids, LITELLM_MASTER_KEY, LAYOUT (tp2x2 or tp1x4)
+./scripts/up.sh                          # docker compose; overlay/ and tuned/ are mounted by compose.yaml; tp2x2 builds config/model-yarn512 first
 ./scripts/status.sh
 ```
 
@@ -63,10 +80,11 @@ Caveat: per-row decode (part of #62589) is inactive with MTP 3; the shipped depl
 ## Validated on
 
 `vllm/vllm-openai-rocm:v0.32.0` @ `sha256:14f6a575e1fb0a580b0f633c09e06f648709d60405b85f6a7ff3f80d49f39905`
-(ROCm 7.2.3, torch 2.13, aiter 0.1.24.post1), MI325X (gfx942, 304 CUs, 256 GiB HBM),
+(ROCm 7.2.3, torch 2.13, aiter 0.1.24.post1) and, for tp2x2 at 512K, `v0.33.0` @ `sha256:4fcd39b758b660c4e9c345c021e2ea8f0ccdb31e3c32507d676cc3005ae83fba`
+(ROCm 10.0, aiter 0.1.26), MI325X (gfx942, 304 CUs, 256 GiB HBM),
 model `Qwen/Qwen3.8-Flash-Next-FP8` @ `236dfdf285828023ca3bcd3f37366c58a3469b13`.
 
-## Upstream status (2026-11-03)
+## Upstream status (2026-11-16)
 
 | PR | content | status |
 |---|---|---|
