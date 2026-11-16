@@ -1,0 +1,5 @@
+B0_repro faults=2 [A_256K] ERROR TypeError("'NoneType' object is not subscriptable")
+B1_nomtp faults=0 [A_256K] decode: ttft(2nd)=0.5s tokens=256 TPOT=7.5 ms (133.6 tok/s)
+B2_batch8k faults=2 [A_256K] ERROR TypeError("'NoneType' object is not subscriptable")
+B3_noprefix BOOT_DIED
+B3_noprefix faults=0 

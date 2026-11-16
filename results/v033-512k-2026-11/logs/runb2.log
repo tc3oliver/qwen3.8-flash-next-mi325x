@@ -1,0 +1,4 @@
+B2 launch 01:51:14
+B2 healthy 01:55:35
+B2 sim: {'requests': 1230, 'errors': 0, 'ttft_cold_p50': 14.234, 'ttft_warm_p50': 0.555, 'ttft_warm_p95': 1.023, 'warm_cache_hit': 0.9513}
+B2 all-done 02:12:09

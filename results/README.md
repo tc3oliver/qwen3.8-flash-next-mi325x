@@ -1,6 +1,6 @@
 # Raw results
 
-`overlay-refresh-2026-11/` is the newest set (2026-11-03, see its README). All other runs: 2026-10-19/20, MI325X, `vllm/vllm-openai-rocm:v0.32.0` (digest in [docs/full-report.md](../docs/full-report.md)), model revision
+`v033-512k-2026-11/` is the newest set (2026-11-16: 512K/1M context, v0.33.0 accuracy gate), then `long-context-1m-2026-11/` (1M on TP4, the TP2 + MTP fault) and `overlay-refresh-2026-11/` (2026-11-03); see each README. All other runs: 2026-10-19/20, MI325X, `vllm/vllm-openai-rocm:v0.32.0` (digest in [docs/full-report.md](../docs/full-report.md)), model revision
 `236dfdf2…`. Run ids (e00, d01, c02, ...) match `docs/lab-notebook.md`.
 
 ## experiments/

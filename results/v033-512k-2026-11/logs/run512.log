@@ -1,0 +1,7 @@
+P512 launch 01:49:28
+P512 healthy 01:53:59 GPU KV cache size: 9,913,399 tokens, Maximum concurrency for 524,288 tokens per request: 18.91x
+P512 functional: 8/9 passed -> data/funct | GSM8K zero-shot subset n=1319 accuracy=0.9644
+P512 stage500K:   answer='ALPHA=onyx-7750-dune, BRAVO=russet-6614-kelp, CHARLIE=russet-6644-basalt, PRESSURE=12.054 bar' [P512_500K] decode: ttft(2nd)=1.3s tokens=256 TPOT=4.3 ms (233.8 tok/s) 
+P512 sim: {'requests': 1218, 'errors': 0, 'ttft_cold_p50': 14.812, 'ttft_warm_p50': 0.56, 'ttft_warm_p95': 0.998, 'warm_cache_hit': 0.9513}
+P512 faults: 0 running=true
+P512 all-done 02:16:28

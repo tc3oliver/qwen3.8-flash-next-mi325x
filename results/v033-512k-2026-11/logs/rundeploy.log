@@ -1,0 +1,6 @@
+DEP launch 03:09:22
+DEP healthy 03:13:13 | GPU KV cache size: 9,911,897 tokens, Maximum concurrency for 524,288 tokens per request: 18.91x | links via: /models-orig/LICENSE
+DEP functional: 9/9 passed -> data/functional-dep.json | fails: 
+DEP stage300K:   answer='ALPHA=juniper-1422-lantern, BRAVO=pewter-9466-willow, CHARLIE=ember-4690-xenon, PRESSURE=75.854 bar' [DEP_300K] decode: ttft(2nd)=0.5s tokens=256 TPOT=4.3 ms (233.7 tok/s) 
+DEP faults=0
+DEP all-done 03:13:44

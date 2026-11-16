@@ -1,0 +1,4 @@
+[DEP_300K] built 6987 lines, 725692 chars
+[DEP_300K] prompt_tokens=299923 ttft=14.4s prefill=20781 tok/s correct={'ALPHA': True, 'BRAVO': True, 'CHARLIE': True, 'PRESSURE': True}
+  answer='ALPHA=juniper-1422-lantern, BRAVO=pewter-9466-willow, CHARLIE=ember-4690-xenon, PRESSURE=75.854 bar'
+[DEP_300K] decode: ttft(2nd)=0.5s tokens=256 TPOT=4.3 ms (233.7 tok/s)

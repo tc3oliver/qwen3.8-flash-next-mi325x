@@ -1,0 +1,593 @@
+(APIServer pid=1) INFO 11-04 01:31:12 [api_utils.py:347] 
+(APIServer pid=1) INFO 11-04 01:31:12 [api_utils.py:347]        █     █     █▄   ▄█
+(APIServer pid=1) INFO 11-04 01:31:12 [api_utils.py:347]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.32.0
+(APIServer pid=1) INFO 11-04 01:31:12 [api_utils.py:347]   █▄█▀ █     █     █     █  model   /models/qwen3.8-flash-next-fp8
+(APIServer pid=1) INFO 11-04 01:31:12 [api_utils.py:347]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=1) INFO 11-04 01:31:12 [api_utils.py:347] 
+(APIServer pid=1) INFO 11-04 01:31:12 [api_utils.py:286] non-default args: {'model_tag': '/models/qwen3.8-flash-next-fp8', 'enable_prompt_tokens_details': True, 'host': '0.0.0.0', 'model': '/models/qwen3.8-flash-next-fp8', 'max_model_len': 1000000, 'served_model_name': ['qwen3.8-flash-next'], 'hf_overrides': {'text_config': {'rope_parameters': {'rope_type': 'yarn', 'factor': 4.0, 'original_max_position_embeddings': 262144, 'rope_theta': 10000000, 'partial_rotary_factor': 0.25, 'mrope_interleaved': True, 'mrope_section': [11, 11, 10]}}}, 'reasoning_parser': 'qwen3', 'tensor_parallel_size': 2, 'enable_expert_parallel': True, 'gpu_memory_utilization': 0.9, 'enable_prefix_caching': True, 'max_num_batched_tokens': 32768, 'max_num_seqs': 64, 'enable_chunked_prefill': True, 'async_scheduling': True, 'speculative_config': {'method': 'mtp', 'num_speculative_tokens': 3}, 'compilation_config': {'mode': None, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': [], 'ir_enable_torch_wrap': None, 'splitting_ops': None, 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'cudagraph_decoder_replay': True, 'decoder_replay_cudagraph_capture_sizes': [], 'decoder_replay_trim_threshold': 768, 'compile_sizes': None, 'compile_ranges_endpoints': None, 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_DECODE_ONLY: (2, 0)>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': None, 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': None, 'pass_config': {}, 'max_cudagraph_capture_size': None, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': None, 'static_all_moe_layers': []}, 'engram_config': EngramConfig(cpu_offload=False, embedding_across_dp=False, dp_shared_memory=None, use_thp=False)}
+(APIServer pid=1) INFO 11-04 01:31:12 [model.py:733] Resolved architecture: Qwen4ExpForConditionalGeneration
+(APIServer pid=1) WARNING 11-04 01:31:12 [model.py:2660] User-specified max_model_len (1000000) is greater than the derived max_model_len (max_position_embeddings=262144.0 or model_max_length=None in model's config.json). VLLM_ALLOW_LONG_MAX_MODEL_LEN must be used with extreme caution. If the model uses relative position encoding (RoPE), positions exceeding derived_max_model_len lead to nan. If the model uses absolute position encoding, positions exceeding derived_max_model_len will cause a CUDA array out-of-bounds error.
+(APIServer pid=1) INFO 11-04 01:31:12 [model.py:2152] Using max model len 1000000
+[aiter] import [module_aiter_core] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_aiter_core.so
+(APIServer pid=1) INFO 11-04 01:31:14 [model.py:733] Resolved architecture: Qwen4ExpMTP
+(APIServer pid=1) INFO 11-04 01:31:14 [model.py:2152] Using max model len 262144
+(APIServer pid=1) WARNING 11-04 01:31:14 [speculative.py:1381] Enabling num_speculative_tokens > 1 will run multiple times of forward on same MTP layer,which may result in lower acceptance rate
+(APIServer pid=1) INFO 11-04 01:31:14 [scheduler.py:307] Chunked prefill is enabled with max_num_batched_tokens=32768.
+(APIServer pid=1) INFO 11-04 01:31:14 [config.py:688] Mamba cache mode is set to 'align' for Qwen4ExpForConditionalGeneration by default when prefix caching is enabled
+(APIServer pid=1) INFO 11-04 01:31:14 [vllm.py:1412] Resolved Engram configuration: EngramConfig(cpu_offload=False, embedding_across_dp=False, dp_shared_memory=False, use_thp=False)
+(APIServer pid=1) INFO 11-04 01:31:14 [kernel.py:467] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native'])
+(APIServer pid=1) INFO 11-04 01:31:14 [compilation.py:317] Enabled custom fusions: norm_quant, act_quant, allreduce_rms, mla_dual_rms_norm
+(EngineCore pid=84) INFO 11-04 01:31:24 [core.py:133] Initializing a V1 LLM engine (v0.32.0) with config: model='/models/qwen3.8-flash-next-fp8', speculative_config=SpeculativeConfig(method='mtp', model='/models/qwen3.8-flash-next-fp8', num_spec_tokens=3), tokenizer='/models/qwen3.8-flash-next-fp8', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=1000000, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=fp8, quantization_config=None, enforce_eager=False, aux_output_config=AuxOutputConfig(enable_return_routed_experts=False, max_bytes=None), kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='qwen3', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, custom_histogram_buckets=None, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=qwen3.8-flash-next, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['+quant_fp8', '+quant_fp8', '+grouped_topk', '+sparse_attn_indexer', 'none', '+quant_fp8'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::qwen4_exp_ple_short_conv', 'vllm::qwen4_exp_qsa_with_output', 'vllm::qwen4_exp_qsa_prepare_with_output', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'cudagraph_decoder_replay': True, 'decoder_replay_cudagraph_capture_sizes': [], 'decoder_replay_trim_threshold': 768, 'compile_sizes': [], 'compile_ranges_endpoints': [32768], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_DECODE_ONLY: (2, 0)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'fuse_allreduce_rms': True, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_mla_dual_rms_norm': True, 'fuse_rope_kvcache': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native']), enable_flashinfer_autotune=True, enable_rocm_segmented_attn_autotune=False, enable_cutedsl_warmup=True, enable_jit_warmup=True, moe_backend='auto', sparse_indexer_topk_backend='auto', linear_backend='auto', linear_backend_per_quant=None)
+(EngineCore pid=84) INFO 11-04 01:31:24 [multiproc_executor.py:153] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=172.17.0.2 (local), world_size=2, local_world_size=2
+[aiter] import [module_aiter_core] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_aiter_core.so
+(Worker pid=116) INFO 11-04 01:31:31 [parallel_state.py:1906] world_size=2 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_5c7c0a7ce7854e4e917a5acf2fa062ce backend=nccl
+[transformers] Qwen3VL video processing does not apply the per-frame pixel cap the reference implementation (qwen-vl-utils) applies, so some videos cost far more tokens than they would there. In v5.22 the capped behavior will become the default and `cap_pixels_per_frame` will be removed. Pass `cap_pixels_per_frame=True` to adopt the reference behavior now, or `False` to keep the current behavior and silence this warning.
+(APIServer pid=1) INFO 11-04 01:31:33 [base.py:280] Multi-modal warmup completed in 9.124s
+[aiter] import [module_aiter_core] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_aiter_core.so
+(Worker pid=142) INFO 11-04 01:31:35 [parallel_state.py:1906] world_size=2 rank=1 local_rank=1 distributed_init_method=file:///tmp/vllm_dist_5c7c0a7ce7854e4e917a5acf2fa062ce backend=nccl
+(Worker pid=116) INFO 11-04 01:31:35 [pynccl.py:148] vLLM is using nccl==2.27.7
+(Worker pid=142) INFO 11-04 01:31:42 [flashinfer_all_reduce.py:403] FlashInfer All Reduce is disabled because flashinfer is not available
+(Worker pid=116) INFO 11-04 01:31:42 [flashinfer_all_reduce.py:403] FlashInfer All Reduce is disabled because flashinfer is not available
+(Worker pid=116) INFO 11-04 01:31:42 [cuda_communicator.py:353] Using ['QUICK_REDUCE', 'CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=116) INFO 11-04 01:31:42 [cuda_communicator.py:353] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'ep:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=116) INFO 11-04 01:31:42 [parallel_state.py:2350] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, ETP rank 0, EP rank 0, EPLB rank N/A
+(Worker pid=116) INFO 11-04 01:31:42 [gpu_worker.py:518] Using V2 Model Runner
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:43 [model_runner.py:392] Loading model from scratch...
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:43 [rocm.py:886] Using AITER Flash Attention backend for ViT model.
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:31:43 [activation.py:816] [ROCm] PyTorch's native GELU with tanh approximation is unstable. Falling back to GELU(approximate='none').
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:43 [mm_encoder_attention.py:372] Using AttentionBackendEnum.ROCM_AITER_FA for MMEncoderAttention.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:43 [qwen_gdn_linear_attn.py:221] Using Triton/FLA GDN prefill kernel (requested=auto, head_k_dim=128).
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:43 [qwen_gdn_linear_attn.py:606] Falling back to the Triton GDN spec decode path: torch.ops._C.fused_gdn_decode_post_conv_mtp is not built
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:43 [qwen_gdn_linear_attn.py:620] GDN spec decode kernel: triton
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:44 [expert_map_manager.py:250] [EP Rank 0/2] Expert parallelism is enabled. Expert placement strategy: linear. Local/global number of experts: 256/512. Experts local to global index map: 0->0, 1->1, 2->2, 3->3, 4->4, 5->5, 6->6, 7->7, 8->8, 9->9, 10->10, 11->11, 12->12, 13->13, 14->14, 15->15, 16->16, 17->17, 18->18, 19->19, 20->20, 21->21, 22->22, 23->23, 24->24, 25->25, 26->26, 27->27, 28->28, 29->29, 30->30, 31->31, 32->32, 33->33, 34->34, 35->35, 36->36, 37->37, 38->38, 39->39, 40->40, 41->41, 42->42, 43->43, 44->44, 45->45, 46->46, 47->47, 48->48, 49->49, 50->50, 51->51, 52->52, 53->53, 54->54, 55->55, 56->56, 57->57, 58->58, 59->59, 60->60, 61->61, 62->62, 63->63, 64->64, 65->65, 66->66, 67->67, 68->68, 69->69, 70->70, 71->71, 72->72, 73->73, 74->74, 75->75, 76->76, 77->77, 78->78, 79->79, 80->80, 81->81, 82->82, 83->83, 84->84, 85->85, 86->86, 87->87, 88->88, 89->89, 90->90, 91->91, 92->92, 93->93, 94->94, 95->95, 96->96, 97->97, 98->98, 99->99, 100->100, 101->101, 102->102, 103->103, 104->104, 105->105, 106->106, 107->107, 108->108, 109->109, 110->110, 111->111, 112->112, 113->113, 114->114, 115->115, 116->116, 117->117, 118->118, 119->119, 120->120, 121->121, 122->122, 123->123, 124->124, 125->125, 126->126, 127->127, 128->128, 129->129, 130->130, 131->131, 132->132, 133->133, 134->134, 135->135, 136->136, 137->137, 138->138, 139->139, 140->140, 141->141, 142->142, 143->143, 144->144, 145->145, 146->146, 147->147, 148->148, 149->149, 150->150, 151->151, 152->152, 153->153, 154->154, 155->155, 156->156, 157->157, 158->158, 159->159, 160->160, 161->161, 162->162, 163->163, 164->164, 165->165, 166->166, 167->167, 168->168, 169->169, 170->170, 171->171, 172->172, 173->173, 174->174, 175->175, 176->176, 177->177, 178->178, 179->179, 180->180, 181->181, 182->182, 183->183, 184->184, 185->185, 186->186, 187->187, 188->188, 189->189, 190->190, 191->191, 192->192, 193->193, 194->194, 195->195, 196->196, 197->197, 198->198, 199->199, 200->200, 201->201, 202->202, 203->203, 204->204, 205->205, 206->206, 207->207, 208->208, 209->209, 210->210, 211->211, 212->212, 213->213, 214->214, 215->215, 216->216, 217->217, 218->218, 219->219, 220->220, 221->221, 222->222, 223->223, 224->224, 225->225, 226->226, 227->227, 228->228, 229->229, 230->230, 231->231, 232->232, 233->233, 234->234, 235->235, 236->236, 237->237, 238->238, 239->239, 240->240, 241->241, 242->242, 243->243, 244->244, 245->245, 246->246, 247->247, 248->248, 249->249, 250->250, 251->251, 252->252, 253->253, 254->254, 255->255.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:44 [fp8.py:446] Using AITER Fp8 MoE backend out of potential backends: ['AITER', 'FLASHINFER_TRTLLM', 'FLASHINFER_CUTLASS', 'DEEPGEMM', 'VLLM_CUTLASS', 'TRITON', 'MARLIN', 'HUMMING', 'BATCHED_DEEPGEMM', 'BATCHED_VLLM_CUTLASS', 'BATCHED_TRITON', 'XPU', 'CPU_W8A8', 'CPU', 'HPC'].
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:44 [ple_layer.py:261] Initialized AMD PLE embedding language_model.model.layers.1.ple.ple_embedding.ngram_embedding: quantization_method=Qwen4ExpPLEFp8EmbeddingMethod, weight_dtype=torch.float8_e4m3fn, weight_device=cuda:0, pinned=False
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:44 [flash_attn.py:1117] Using FlashAttention version None
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:31:44 [ple_layer.py:261] Initialized AMD PLE embedding language_model.model.layers.1.ple.ple_embedding.ngram_embedding: quantization_method=Qwen4ExpPLEFp8EmbeddingMethod, weight_dtype=torch.float8_e4m3fn, weight_device=cuda:1, pinned=False
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:31:44 [compilation.py:1348] Op 'quant_fp8' not present in model, enabling with '+quant_fp8' has no effect
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:31:44 [compilation.py:1348] Op 'grouped_topk' not present in model, enabling with '+grouped_topk' has no effect
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:31:44 [compilation.py:1348] Op 'sparse_attn_indexer' not present in model, enabling with '+sparse_attn_indexer' has no effect
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:44 [base_loader.py:82] Initializing model took 1.420592 seconds
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:44 [weight_utils.py:1108] Filesystem type for checkpoints: EXT4. Checkpoint size: 172.78 GiB. Available RAM: 2886.38 GiB.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:44 [weight_utils.py:1131] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+Loading safetensors checkpoint shards:   0% Completed | 0/131 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:   2% Completed | 2/131 [00:00<00:13,  9.60it/s]
+Loading safetensors checkpoint shards:   3% Completed | 4/131 [00:00<00:13,  9.32it/s]
+Loading safetensors checkpoint shards:   4% Completed | 5/131 [00:00<00:14,  8.65it/s]
+Loading safetensors checkpoint shards:   5% Completed | 7/131 [00:00<00:14,  8.48it/s]
+Loading safetensors checkpoint shards:   6% Completed | 8/131 [00:00<00:15,  7.78it/s]
+Loading safetensors checkpoint shards:   7% Completed | 9/131 [00:01<00:16,  7.44it/s]
+Loading safetensors checkpoint shards:   8% Completed | 10/131 [00:01<00:15,  7.84it/s]
+Loading safetensors checkpoint shards:   8% Completed | 11/131 [00:01<00:14,  8.13it/s]
+Loading safetensors checkpoint shards:   9% Completed | 12/131 [00:01<00:14,  8.38it/s]
+Loading safetensors checkpoint shards:  10% Completed | 13/131 [00:01<00:14,  8.10it/s]
+Loading safetensors checkpoint shards:  11% Completed | 14/131 [00:01<00:14,  8.23it/s]
+Loading safetensors checkpoint shards:  11% Completed | 15/131 [00:01<00:14,  8.20it/s]
+Loading safetensors checkpoint shards:  12% Completed | 16/131 [00:01<00:14,  8.17it/s]
+Loading safetensors checkpoint shards:  13% Completed | 17/131 [00:02<00:14,  8.12it/s]
+Loading safetensors checkpoint shards:  14% Completed | 18/131 [00:02<00:14,  8.05it/s]
+Loading safetensors checkpoint shards:  15% Completed | 19/131 [00:02<00:13,  8.03it/s]
+Loading safetensors checkpoint shards:  15% Completed | 20/131 [00:02<00:13,  8.05it/s]
+Loading safetensors checkpoint shards:  29% Completed | 38/131 [00:02<00:02, 37.84it/s]
+Loading safetensors checkpoint shards:  31% Completed | 41/131 [00:03<00:03, 24.62it/s]
+Loading safetensors checkpoint shards:  34% Completed | 44/131 [00:03<00:05, 17.14it/s]
+Loading safetensors checkpoint shards:  35% Completed | 46/131 [00:03<00:05, 14.63it/s]
+Loading safetensors checkpoint shards:  37% Completed | 48/131 [00:03<00:06, 12.97it/s]
+Loading safetensors checkpoint shards:  38% Completed | 50/131 [00:04<00:06, 11.59it/s]
+Loading safetensors checkpoint shards:  40% Completed | 52/131 [00:04<00:07, 10.61it/s]
+Loading safetensors checkpoint shards:  41% Completed | 54/131 [00:04<00:07, 10.04it/s]
+Loading safetensors checkpoint shards:  43% Completed | 56/131 [00:04<00:07,  9.63it/s]
+Loading safetensors checkpoint shards:  44% Completed | 58/131 [00:05<00:07,  9.24it/s]
+Loading safetensors checkpoint shards:  46% Completed | 60/131 [00:05<00:06, 10.63it/s]
+Loading safetensors checkpoint shards:  47% Completed | 62/131 [00:05<00:07,  9.79it/s]
+Loading safetensors checkpoint shards:  49% Completed | 64/131 [00:05<00:07,  9.31it/s]
+Loading safetensors checkpoint shards:  50% Completed | 65/131 [00:05<00:07,  8.75it/s]
+Loading safetensors checkpoint shards:  51% Completed | 67/131 [00:06<00:07,  8.87it/s]
+Loading safetensors checkpoint shards:  53% Completed | 69/131 [00:06<00:07,  8.68it/s]
+Loading safetensors checkpoint shards:  54% Completed | 71/131 [00:06<00:06,  8.60it/s]
+Loading safetensors checkpoint shards:  56% Completed | 73/131 [00:06<00:06,  8.48it/s]
+Loading safetensors checkpoint shards:  57% Completed | 75/131 [00:06<00:06,  8.51it/s]
+Loading safetensors checkpoint shards:  59% Completed | 77/131 [00:07<00:06,  8.42it/s]
+Loading safetensors checkpoint shards:  60% Completed | 79/131 [00:07<00:06,  8.32it/s]
+Loading safetensors checkpoint shards:  62% Completed | 81/131 [00:07<00:05,  8.42it/s]
+Loading safetensors checkpoint shards:  63% Completed | 83/131 [00:07<00:05,  8.38it/s]
+Loading safetensors checkpoint shards:  65% Completed | 85/131 [00:08<00:05,  8.44it/s]
+Loading safetensors checkpoint shards:  66% Completed | 87/131 [00:08<00:05,  8.39it/s]
+Loading safetensors checkpoint shards:  68% Completed | 89/131 [00:08<00:05,  8.34it/s]
+Loading safetensors checkpoint shards:  69% Completed | 91/131 [00:08<00:04,  8.31it/s]
+Loading safetensors checkpoint shards:  71% Completed | 93/131 [00:09<00:04,  8.31it/s]
+Loading safetensors checkpoint shards:  73% Completed | 95/131 [00:09<00:04,  8.30it/s]
+Loading safetensors checkpoint shards:  74% Completed | 97/131 [00:09<00:04,  8.31it/s]
+Loading safetensors checkpoint shards:  76% Completed | 99/131 [00:09<00:03,  8.30it/s]
+Loading safetensors checkpoint shards:  77% Completed | 101/131 [00:10<00:03,  8.39it/s]
+Loading safetensors checkpoint shards:  79% Completed | 103/131 [00:10<00:03,  8.38it/s]
+Loading safetensors checkpoint shards:  80% Completed | 105/131 [00:10<00:03,  8.38it/s]
+Loading safetensors checkpoint shards:  82% Completed | 107/131 [00:10<00:02,  8.36it/s]
+Loading safetensors checkpoint shards:  83% Completed | 109/131 [00:11<00:02,  8.36it/s]
+Loading safetensors checkpoint shards:  85% Completed | 111/131 [00:11<00:02,  8.43it/s]
+Loading safetensors checkpoint shards:  86% Completed | 113/131 [00:11<00:02,  8.36it/s]
+Loading safetensors checkpoint shards:  88% Completed | 115/131 [00:11<00:01,  8.37it/s]
+Loading safetensors checkpoint shards:  89% Completed | 117/131 [00:12<00:01,  8.35it/s]
+Loading safetensors checkpoint shards:  91% Completed | 119/131 [00:12<00:01,  8.44it/s]
+Loading safetensors checkpoint shards:  92% Completed | 121/131 [00:12<00:01,  8.44it/s]
+Loading safetensors checkpoint shards:  94% Completed | 123/131 [00:12<00:00,  8.47it/s]
+Loading safetensors checkpoint shards:  95% Completed | 125/131 [00:12<00:00,  8.56it/s]
+Loading safetensors checkpoint shards:  97% Completed | 127/131 [00:13<00:00,  8.51it/s]
+Loading safetensors checkpoint shards:  98% Completed | 129/131 [00:13<00:00,  8.50it/s]
+Loading safetensors checkpoint shards:  99% Completed | 130/131 [00:13<00:00,  8.47it/s]
+Loading safetensors checkpoint shards: 100% Completed | 131/131 [00:13<00:00,  9.63it/s]
+
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:58 [default_loader.py:501] Loading weights took 13.61 seconds
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:58 [fp8.py:856] Using MoEPrepareAndFinalizeNoDPEPModular
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:59 [vllm.py:1412] Resolved Engram configuration: EngramConfig(cpu_offload=False, embedding_across_dp=False, dp_shared_memory=False, use_thp=False)
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:59 [kernel.py:467] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native'])
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:59 [compilation.py:317] Enabled custom fusions: norm_quant, act_quant, allreduce_rms, mla_dual_rms_norm
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:59 [base_loader.py:82] Initializing model took 0.045843 seconds
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:31:59 [weight_utils.py:1108] Filesystem type for checkpoints: EXT4. Checkpoint size: 172.78 GiB. Available RAM: 2886.77 GiB.
+Loading safetensors checkpoint shards:   0% Completed | 0/131 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  31% Completed | 41/131 [00:00<00:00, 405.96it/s]
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:31:59 [kernel.py:467] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native'])
+Loading safetensors checkpoint shards:  63% Completed | 82/131 [00:00<00:00, 89.44it/s]
+ Loading safetensors checkpoint shards:  79% Completed | 103/131 [00:01<00:00, 86.65it/s]
+Loading safetensors checkpoint shards:  90% Completed | 118/131 [00:01<00:00, 85.31it/s]
+Loading safetensors checkpoint shards: 100% Completed | 131/131 [00:01<00:00, 75.60it/s]
+Loading safetensors checkpoint shards: 100% Completed | 131/131 [00:01<00:00, 87.71it/s]
+
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:32:00 [default_loader.py:501] Loading weights took 1.50 seconds
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:32:01 [speculator.py:243] Draft model Qwen4ExpMTP does not support external multimodal embeddings. Embeddings from the target model will not be passed to the drafter; using text-only draft inputs instead.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:32:02 [model_runner.py:424] Model loading took 91.32 GiB memory and 19.538363 seconds
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:32:02 [torch_utils.py:283] OMP_NUM_THREADS=8 is set; leaving Torch threads at 8 for serving. Multi-threaded torch CPU ops during serving can degrade performance through spin-wait contention and cgroup CPU-quota throttling.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:32:02 [interface.py:1096] Setting attention block size to 1600 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:32:02 [interface.py:1120] Padding mamba page size by 0.25% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:32:03 [model_runner.py:424] Model loading took 91.32 GiB memory and 20.719680 seconds
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:32:03 [interface.py:1096] Setting attention block size to 1600 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:32:03 [interface.py:1120] Padding mamba page size by 0.25% to ensure that mamba page size and attention page size are exactly equal.
+(EngineCore pid=84) WARNING 11-04 01:32:03 [torch_utils.py:283] OMP_NUM_THREADS=8 is set; leaving Torch threads at 8 for serving. Multi-threaded torch CPU ops during serving can degrade performance through spin-wait contention and cgroup CPU-quota throttling.
+(EngineCore pid=84) INFO 11-04 01:32:03 [utils.py:347] Using BLNHC KV cache layout.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:32:07 [encoder_runner.py:131] Encoder cache will be initialized with a budget of 32768 tokens, and profiled with 2 image items of the maximum feature size.
+[aiter] [pid=116 pname=VllmWorker-0] start build [mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale] under /usr/local/lib/python3.12/dist-packages/aiter/jit/build/mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale
+[aiter] [pid=142 pname=VllmWorker-1] waiting for baton release at /usr/local/lib/python3.12/dist-packages/aiter/jit/build/lock_mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale
+[aiter] Current hipcc not support: -mllvm -amdgpu-coerce-illegal-types=1, skip it.
+[aiter] [pid=116 pname=VllmWorker-0] [32mfinish build [mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale], cost 51.5s [0m
+[aiter] import [mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale] under /usr/local/lib/python3.12/dist-packages/aiter/jit/mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale.so
+[aiter] import [mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale] under /usr/local/lib/python3.12/dist-packages/aiter/jit/mha_varlen_fwd_bf16_nlogits_nbias_nmask_nlse_ndropout_nskip_nqscale.so
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:00 [caching.py:342] reconstructed serializable fn from standalone compile artifacts. num_artifacts=7 num_submods=50
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:00 [decorators.py:319] [backbone] Directly load AOT compilation from path /cache/vllm/torch_compile_cache/torch_aot_compile/4cb9104f48629e4b2a004008dccd0b05d28d8c4c7e023d0d069011199b70cad7/rank_0_0/model
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:00 [monitor.py:62] [backbone] torch.compile took 0.09 s in total
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:00 [caching.py:342] reconstructed serializable fn from standalone compile artifacts. num_artifacts=7 num_submods=50
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:00 [decorators.py:319] [backbone] Directly load AOT compilation from path /cache/vllm/torch_compile_cache/torch_aot_compile/4cb9104f48629e4b2a004008dccd0b05d28d8c4c7e023d0d069011199b70cad7/rank_1_0/model
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:00 [monitor.py:62] [backbone] torch.compile took 0.08 s in total
+(EngineCore pid=84) INFO 11-04 01:33:04 [shm_broadcast.py:871] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+[aiter] import [module_moe_asm] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_asm.so
+[aiter] import [module_moe_asm] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_asm.so
+[aiter] [fused_moe] duplicate tuned rows after disabling act_type in /tmp/aiter_configs/tuned_fmoe.csv; keeping first match for 32 rows
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 1280
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 32768, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_sorting_opus] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_sorting_opus.so
+[aiter] [fused_moe] duplicate tuned rows after disabling act_type in /tmp/aiter_configs/tuned_fmoe.csv; keeping first match for 32 rows
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 1280
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 32768, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_sorting_opus] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_sorting_opus.so
+[aiter] import [module_quant] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_quant.so
+[aiter] import [module_quant] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_quant.so
+[aiter] LoadKernel: _ZN5aiter50fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128.co
+[aiter] LoadKernel: _ZN5aiter50fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_ps_32x128.co
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:39 [monitor.py:91] [backbone] Initial profiling/warmup run took 38.75 s
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:39 [monitor.py:91] [backbone] Initial profiling/warmup run took 38.81 s
+[rank1]:W1104 01:33:39.434000 142 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_bitwise_and_bitwise_not_bitwise_or_embedding_ge_lt_masked_fill_mul_sub_unsqueeze_0
+[rank1]:W1104 01:33:39.434000 142 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1104 01:33:39.434000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1104 01:33:39.434000 142 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1104 01:33:39.434000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1104 01:33:39.434000 142 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1104 01:33:39.434000 142 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/1/JYJ2OJLCAEUZ247KIC2FEZA4JF2FORLEVHAXNF6N3BTIQNGSLB2Q/triton_poi_fused_add_bitwise_and_bitwise_not_bitwise_or_embedding_ge_lt_masked_fill_mul_sub_unsqueeze_0.hsaco')
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_red_fused__to_copy_add_rms_norm_1
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/1/WVNJDTJ7NSEYNIPVZDC57OD3EI2RG5AXMDWJL6RNWWOSTCJPS5HA/triton_red_fused__to_copy_add_rms_norm_1.hsaco')
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_red_fused__to_copy_add_rms_norm_2
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/1/6W662QHE2YDQ7ELHITWNWZSHGMZZFDMROMNMUFSMGYGXBSTGBU2A/triton_red_fused__to_copy_add_rms_norm_2.hsaco')
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_unsqueeze_3
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1104 01:33:39.436000 142 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/1/NGHTJUKJUB2NV4P4GALJDLW3P2GESFGLH5QGJLWS2D6QLQ7T5WKA/triton_poi_fused_add_unsqueeze_3.hsaco')
+[rank0]:W1104 01:33:39.438000 116 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_bitwise_and_bitwise_not_bitwise_or_embedding_ge_lt_masked_fill_mul_sub_unsqueeze_0
+[rank0]:W1104 01:33:39.438000 116 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1104 01:33:39.438000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1104 01:33:39.438000 116 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1104 01:33:39.438000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1104 01:33:39.438000 116 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1104 01:33:39.438000 116 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/0/3Y3CFTEPVQ5C6SN5GFRCD3KXM7TDISXX74YEWKQ32SCT4AR2T6RQ/triton_poi_fused_add_bitwise_and_bitwise_not_bitwise_or_embedding_ge_lt_masked_fill_mul_sub_unsqueeze_0.hsaco')
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_red_fused__to_copy_add_rms_norm_1
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/0/WVNJDTJ7NSEYNIPVZDC57OD3EI2RG5AXMDWJL6RNWWOSTCJPS5HA/triton_red_fused__to_copy_add_rms_norm_1.hsaco')
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_red_fused__to_copy_add_rms_norm_2
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/0/6W662QHE2YDQ7ELHITWNWZSHGMZZFDMROMNMUFSMGYGXBSTGBU2A/triton_red_fused__to_copy_add_rms_norm_2.hsaco')
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_unsqueeze_3
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1104 01:33:39.439000 116 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/0/NGHTJUKJUB2NV4P4GALJDLW3P2GESFGLH5QGJLWS2D6QLQ7T5WKA/triton_poi_fused_add_unsqueeze_3.hsaco')
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_mul_sigmoid_view_0
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/1/JL3PYLINC34XMNGOJLK2AMBV2TC5EVMEMR2C4A5AIKRAAMHT3HQQ/triton_poi_fused_mul_sigmoid_view_0.hsaco')
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_1
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank1]:W1104 01:33:39.445000 142 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/1/FYSLLEZEDFUHLZQKYW2SUF6JO56VPSK2WXGTBXCPB4MNGNQCVSJQ/triton_poi_fused_add_1.hsaco')
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_mul_sigmoid_view_0
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/0/JL3PYLINC34XMNGOJLK2AMBV2TC5EVMEMR2C4A5AIKRAAMHT3HQQ/triton_poi_fused_mul_sigmoid_view_0.hsaco')
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242] Failed to reload cubin file statically launchable autotuner triton_poi_fused_add_1
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242] Traceback (most recent call last):
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/triton_bundler.py", line 240, in load_autotuners
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242]     compile_result.reload_cubin_path()
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242]   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/runtime/triton_heuristics.py", line 2607, in reload_cubin_path
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242]     raise RuntimeError(
+[rank0]:W1104 01:33:39.448000 116 torch/_inductor/triton_bundler.py:242] RuntimeError: ('Cubin file saved by TritonBundler not found at %s', '/cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/inductor_cache/triton/0/FYSLLEZEDFUHLZQKYW2SUF6JO56VPSK2WXGTBXCPB4MNGNQCVSJQ/triton_poi_fused_add_1.hsaco')
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:39 [caching.py:342] reconstructed serializable fn from standalone compile artifacts. num_artifacts=2 num_submods=2
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:39 [caching.py:342] reconstructed serializable fn from standalone compile artifacts. num_artifacts=2 num_submods=2
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:39 [decorators.py:319] [eagle_head] Directly load AOT compilation from path /cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/rank_1_0/model
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:39 [monitor.py:62] [eagle_head] torch.compile took 0.03 s in total
+/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:39 [decorators.py:319] [eagle_head] Directly load AOT compilation from path /cache/vllm/torch_compile_cache/torch_aot_compile/53f72ad49cbc31b27fb983a298bbac3847dd43c641d3e3f382aa927dbf87af18/rank_0_0/model
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:39 [monitor.py:62] [eagle_head] torch.compile took 0.03 s in total
+/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:39 [monitor.py:91] [eagle_head] Initial profiling/warmup run took 0.19 s
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:39 [monitor.py:91] [eagle_head] Initial profiling/warmup run took 0.20 s
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 2
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 64, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 2
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 64, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:42 [speculator.py:318] Attention backend(s) QWEN4_EXP_EXP_QSA_STATE cannot update draft decode metadata in place; falling back to rebuilding attention metadata eagerly.
+Capturing CUDA graphs (FULL):   0%|          | 0/2 [00:00<?, ?it/s][aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 10
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 256, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 10
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 256, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+Capturing CUDA graphs (FULL):  50%|█████     | 1/2 [00:02<00:02,  2.81s/it]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:04<00:00,  2.30s/it]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:04<00:00,  2.38s/it]
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:47 [speculator.py:110] Capturing model for speculator...
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:47 [speculator.py:110] Capturing model for speculator...
+Capturing prefill CUDA graphs (FULL):   0%|          | 0/33 [00:00<?, ?it/s]Capturing prefill CUDA graphs (FULL):   3%|▎         | 1/33 [00:00<00:13,  2.34it/s]Capturing prefill CUDA graphs (FULL):   9%|▉         | 3/33 [00:01<00:14,  2.10it/s]Capturing prefill CUDA graphs (FULL):  33%|███▎      | 11/33 [00:01<00:02,  9.89it/s][aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 5
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 128, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 5
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 128, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+Capturing prefill CUDA graphs (FULL):  52%|█████▏    | 17/33 [00:01<00:01, 12.40it/s]Capturing prefill CUDA graphs (FULL):  61%|██████    | 20/33 [00:02<00:01, 11.71it/s][aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 1
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 32, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2.so
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2.so
+[aiter] type hints mismatch, override to --> ck_moe_stage1(hidden_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w1_scale: Optional[torch.Tensor] = None, a1_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+[aiter] type hints mismatch, override to --> ck_moe_stage1(hidden_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w1_scale: Optional[torch.Tensor] = None, a1_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+[aiter] type hints mismatch, override to --> ck_moe_stage2(inter_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w2_scale: Optional[torch.Tensor] = None, a2_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+[aiter] type hints mismatch, override to --> ck_moe_stage2(inter_states: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, sorted_token_ids: torch.Tensor, sorted_expert_ids: torch.Tensor, num_valid_ids: torch.Tensor, out: torch.Tensor, topk: int, kernelName: str = None, w2_scale: Optional[torch.Tensor] = None, a2_scale: Optional[torch.Tensor] = None, block_m: Optional[int] = 32, sorted_weights: Optional[torch.Tensor] = None, quant_type: int = 0, activation: int = 0, splitk: Optional[int] = 1, non_temporal_load: bool = False, dst_type: Optional[str] = None, is_shuffled: bool = True) -> None
+Capturing prefill CUDA graphs (FULL):  88%|████████▊ | 29/33 [00:02<00:00, 20.79it/s][aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 16, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 8, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 4, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] LoadKernel: _ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128.co
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 4, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] LoadKernel: _ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128.co
+Capturing prefill CUDA graphs (FULL): 100%|██████████| 33/33 [00:03<00:00,  9.44it/s]
+Capturing decode CUDA graphs (FULL):   0%|          | 0/11 [00:00<?, ?it/s]Capturing decode CUDA graphs (FULL):  64%|██████▎   | 7/11 [00:00<00:00, 24.48it/s][aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 2, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter47fmoe_bf16_blockscaleFp8_g1u1_vs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 2, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+Capturing decode CUDA graphs (FULL):  91%|█████████ | 10/11 [00:00<00:00, 18.33it/s][aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk.so
+[aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = False, xbf16 = False, ksplit = 5 q_type = QuantType.per_1x128 block_m = 16 use_nt = True, estimated_m_per_expert = 0
+[aiter] [fused_moe] using 2stage default for ('gfx942', 304, 1, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] import [module_activation] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_activation.so
+[aiter] import [module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_moe_ck2stages_f8_f8_preshuffle_on_b16_silu_per_1x128_mulWeightStage2_splitk.so
+[aiter] import [module_activation] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_activation.so
+Capturing decode CUDA graphs (FULL): 100%|██████████| 11/11 [00:01<00:00,  8.76it/s]
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:53 [model_runner.py:1127] Graph capturing finished in 11 secs, took 1.75 GiB
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:53 [model_runner.py:1127] Graph capturing finished in 11 secs, took 1.75 GiB
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:53 [gpu_worker.py:774] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8920 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9080. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:53 [gpu_worker.py:759] Available KV cache memory: 130.96 GiB
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:53 [gpu_worker.py:774] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8920 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9080. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=84) INFO 11-04 01:33:53 [kv_cache_utils.py:2327] GPU KV cache size: 9,617,647 tokens, Maximum concurrency for 1,000,000 tokens per request: 9.62x
+(EngineCore pid=84) INFO 11-04 01:33:53 [kv_cache_utils.py:853] kv cache group sizes (1600, 1600, 1600, 1600, 8, 1600)
+(EngineCore pid=84) INFO 11-04 01:33:53 [kv_cache_utils.py:854] kv lcm block sizes 1600
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:33:53 [kernel_warmup.py:176] JIT kernel warmup starting.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:33:53 [kernel_warmup.py:176] JIT kernel warmup starting.
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:18 [kernel_warmup.py:189] JIT kernel warmup finished in 24.58s.
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:18 [qwen_triton_warmup.py:296] Warming up Qwen GDN Triton kernels for model_type=qwen4_exp_text.
+JIT kernel warmup (76 compile keys):   0%|          | 0/4 [00:00<?, ?kernel/s]JIT kernel warmup (76 compile keys):  25%|██▌       | 1/4 [00:12<00:37, 12.49s/kernel, _DecoratedTritonJitKernel (12 keys)]JIT kernel warmup (76 compile keys):  50%|█████     | 2/4 [00:13<00:11,  5.92s/kernel, _DecoratedTritonJitKernel (16 keys)]JIT kernel warmup (76 compile keys):  75%|███████▌  | 3/4 [00:20<00:06,  6.19s/kernel, _DecoratedTritonJitKernel (32 keys)]JIT kernel warmup (76 compile keys): 100%|██████████| 4/4 [00:24<00:00,  5.48s/kernel, _DecoratedTritonJitKernel (16 keys)]JIT kernel warmup (76 compile keys): 100%|██████████| 4/4 [00:24<00:00,  6.18s/kernel, _DecoratedTritonJitKernel (16 keys)]
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:18 [kernel_warmup.py:189] JIT kernel warmup finished in 24.76s.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:18 [qwen_triton_warmup.py:296] Warming up Qwen GDN Triton kernels for model_type=qwen4_exp_text.
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:19 [qwen_vl_triton_warmup.py:57] Warmed position embedding and vision rotary kernels on grids=[(1, 16, 16), (1, 16, 2), (1, 2, 16), (1, 2, 2)].
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:19 [qwen_vl_triton_warmup.py:57] Warmed position embedding and vision rotary kernels on grids=[(1, 16, 16), (1, 16, 2), (1, 2, 16), (1, 2, 2)].
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:19 [qwen_vl_triton_warmup.py:102] Warmed M-RoPE Triton kernels.
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:19 [mamba_triton_warmup.py:42] Warmed Mamba batch_memcpy_kernel.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:19 [qwen_vl_triton_warmup.py:102] Warmed M-RoPE Triton kernels.
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:19 [ll_bf16.py:30] cuteDSL (CUTLASS Python) not available, ll_bf16_gemm disabled
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:19 [mamba_triton_warmup.py:42] Warmed Mamba batch_memcpy_kernel.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:19 [ll_bf16.py:30] cuteDSL (CUTLASS Python) not available, ll_bf16_gemm disabled
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 20
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 512, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = True, estimated_m_per_expert = 20
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 512, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+Capturing CUDA graphs (FULL):   0%|          | 0/33 [00:00<?, ?it/s]Capturing CUDA graphs (FULL):   3%|▎         | 1/33 [00:00<00:08,  3.71it/s]Capturing CUDA graphs (FULL):   6%|▌         | 2/33 [00:01<00:30,  1.01it/s]Capturing CUDA graphs (FULL):   9%|▉         | 3/33 [00:02<00:32,  1.10s/it]Capturing CUDA graphs (FULL):  12%|█▏        | 4/33 [00:03<00:21,  1.37it/s]Capturing CUDA graphs (FULL):  15%|█▌        | 5/33 [00:03<00:14,  1.91it/s]Capturing CUDA graphs (FULL):  18%|█▊        | 6/33 [00:03<00:10,  2.51it/s]Capturing CUDA graphs (FULL):  21%|██        | 7/33 [00:03<00:08,  3.13it/s]Capturing CUDA graphs (FULL):  24%|██▍       | 8/33 [00:03<00:06,  3.74it/s]Capturing CUDA graphs (FULL):  27%|██▋       | 9/33 [00:03<00:05,  4.32it/s]Capturing CUDA graphs (FULL):  30%|███       | 10/33 [00:04<00:04,  4.81it/s]Capturing CUDA graphs (FULL):  33%|███▎      | 11/33 [00:04<00:04,  5.23it/s]Capturing CUDA graphs (FULL):  36%|███▋      | 12/33 [00:04<00:03,  5.57it/s]Capturing CUDA graphs (FULL):  39%|███▉      | 13/33 [00:04<00:03,  5.85it/s]Capturing CUDA graphs (FULL):  42%|████▏     | 14/33 [00:04<00:03,  6.06it/s]Capturing CUDA graphs (FULL):  45%|████▌     | 15/33 [00:04<00:02,  6.22it/s]Capturing CUDA graphs (FULL):  48%|████▊     | 16/33 [00:04<00:02,  6.33it/s]Capturing CUDA graphs (FULL):  52%|█████▏    | 17/33 [00:05<00:02,  6.38it/s]Capturing CUDA graphs (FULL):  55%|█████▍    | 18/33 [00:05<00:02,  6.47it/s]Capturing CUDA graphs (FULL):  58%|█████▊    | 19/33 [00:05<00:03,  4.44it/s]Capturing CUDA graphs (FULL):  61%|██████    | 20/33 [00:05<00:02,  4.95it/s]Capturing CUDA graphs (FULL):  64%|██████▎   | 21/33 [00:05<00:02,  5.35it/s]Capturing CUDA graphs (FULL):  67%|██████▋   | 22/33 [00:06<00:01,  5.72it/s]Capturing CUDA graphs (FULL):  70%|██████▉   | 23/33 [00:06<00:01,  6.02it/s]Capturing CUDA graphs (FULL):  73%|███████▎  | 24/33 [00:06<00:01,  6.23it/s]Capturing CUDA graphs (FULL):  76%|███████▌  | 25/33 [00:06<00:01,  6.40it/s]Capturing CUDA graphs (FULL):  79%|███████▉  | 26/33 [00:06<00:01,  6.53it/s]Capturing CUDA graphs (FULL):  82%|████████▏ | 27/33 [00:06<00:00,  6.61it/s]Capturing CUDA graphs (FULL):  85%|████████▍ | 28/33 [00:07<00:00,  6.68it/s]Capturing CUDA graphs (FULL):  88%|████████▊ | 29/33 [00:07<00:00,  6.67it/s]Capturing CUDA graphs (FULL):  91%|█████████ | 30/33 [00:07<00:00,  6.68it/s]Capturing CUDA graphs (FULL):  94%|█████████▍| 31/33 [00:07<00:00,  4.71it/s]Capturing CUDA graphs (FULL):  97%|█████████▋| 32/33 [00:07<00:00,  5.18it/s]Capturing CUDA graphs (FULL): 100%|██████████| 33/33 [00:07<00:00,  5.79it/s]Capturing CUDA graphs (FULL): 100%|██████████| 33/33 [00:07<00:00,  4.15it/s]
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:38 [speculator.py:110] Capturing model for speculator...
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:38 [speculator.py:110] Capturing model for speculator...
+Capturing prefill CUDA graphs (FULL):   0%|          | 0/33 [00:00<?, ?it/s]Capturing prefill CUDA graphs (FULL):  24%|██▍       | 8/33 [00:00<00:00, 70.31it/s]Capturing prefill CUDA graphs (FULL):  48%|████▊     | 16/33 [00:00<00:00, 75.00it/s]Capturing prefill CUDA graphs (FULL):  76%|███████▌  | 25/33 [00:00<00:00, 78.43it/s]Capturing prefill CUDA graphs (FULL): 100%|██████████| 33/33 [00:00<00:00, 78.69it/s]
+Capturing decode CUDA graphs (FULL):   0%|          | 0/11 [00:00<?, ?it/s]Capturing decode CUDA graphs (FULL):  64%|██████▎   | 7/11 [00:00<00:00, 25.59it/s]Capturing decode CUDA graphs (FULL): 100%|██████████| 11/11 [00:00<00:00, 35.12it/s]
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:39 [model_runner.py:1127] Graph capturing finished in 10 secs, took 1.85 GiB
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:39 [gpu_worker.py:971] CUDA graph pool memory: 1.85 GiB (actual), 2.05 GiB (estimated), difference: 0.2 GiB (10.5%).
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:39 [gpu_worker.py:1034] Free memory on device (249.63/255.98 GiB) on startup. Desired GPU memory utilization is (0.9, 230.39 GiB). Actual usage is 93.62 GiB for consumed memory (weights + non-torch), 5.8 GiB for peak activation, and 1.85 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=138465731380` (128.96 GiB) to fit into requested memory, or `--kv-cache-memory=159131906048` (148.2 GiB) to fully utilize gpu memory. Current kv cache memory in use is 130.96 GiB.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:39 [model_runner.py:1127] Graph capturing finished in 10 secs, took 1.85 GiB
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:39 [gpu_worker.py:971] CUDA graph pool memory: 1.85 GiB (actual), 2.05 GiB (estimated), difference: 0.2 GiB (10.5%).
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:39 [gpu_worker.py:1034] Free memory on device (249.63/255.98 GiB) on startup. Desired GPU memory utilization is (0.9, 230.39 GiB). Actual usage is 93.62 GiB for consumed memory (weights + non-torch), 5.8 GiB for peak activation, and 1.85 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=138465731380` (128.96 GiB) to fit into requested memory, or `--kv-cache-memory=159131906048` (148.2 GiB) to fully utilize gpu memory. Current kv cache memory in use is 130.96 GiB.
+(Worker_TP1_EP1 pid=142) INFO 11-04 01:34:39 [jit_monitor.py:84] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP0_EP0 pid=116) INFO 11-04 01:34:39 [jit_monitor.py:84] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(EngineCore pid=84) INFO 11-04 01:34:40 [core.py:395] init engine (profile, create kv cache, warmup model) took 156.59 s (compilation: 0.12 s)
+[aiter] import [module_aiter_core] under /usr/local/lib/python3.12/dist-packages/aiter/jit/module_aiter_core.so
+(EngineCore pid=84) INFO 11-04 01:34:46 [vllm.py:1412] Resolved Engram configuration: EngramConfig(cpu_offload=False, embedding_across_dp=False, dp_shared_memory=False, use_thp=False)
+(EngineCore pid=84) INFO 11-04 01:34:46 [kernel.py:467] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native'])
+(EngineCore pid=84) INFO 11-04 01:34:46 [compilation.py:317] Enabled custom fusions: norm_quant, act_quant, allreduce_rms, mla_dual_rms_norm
+(APIServer pid=1) INFO 11-04 01:34:46 [entry.py:136] Supported tasks: ['generate']
+(APIServer pid=1) INFO 11-04 01:34:46 [factories.py:89] Scale-out endpoints are disabled. Restart vllm serve with --enable-scale-out to enable them.
+(APIServer pid=1) INFO 11-04 01:34:46 [hf.py:648] Detected the chat template content format to be 'openai'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=1) WARNING 11-04 01:34:46 [model.py:1893] Default vLLM sampling parameters have been overridden by the model's `generation_config.json`: `{'temperature': 1.0, 'top_k': 20, 'top_p': 0.95}`. If this is not intended, please relaunch vLLM instance with `--generation-config vllm`.
+(APIServer pid=1) WARNING 11-04 01:34:47 [serving.py:262] The chat template requires system-first ordering, so inline system messages in /v1/messages requests (e.g. Claude Code's per-turn reminders) are merged into the leading system prompt. Each new one changes the prompt prefix, so the rest of the conversation misses the prefix cache. Pass a --chat-template that accepts non-leading system messages to avoid this.
+(APIServer pid=1) INFO 11-04 01:34:47 [entry.py:140] Starting vLLM server on http://0.0.0.0:8000
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:186] Available routes are:
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /openapi.json, Methods: HEAD, GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /docs, Methods: HEAD, GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /docs/oauth2-redirect, Methods: HEAD, GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /redoc, Methods: HEAD, GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /load, Methods: GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /version, Methods: GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /kv_event_sources, Methods: GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /health, Methods: GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /metrics, Methods: GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /tokenize, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /detokenize, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/models, Methods: GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/systemone, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /ping, Methods: GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /ping, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /invocations, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/responses, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/completions, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/messages, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /generative_scoring, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/messages/render, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/completions/render, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/responses/render, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/chat/completions/derender, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /v1/completions/derender, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=1) INFO 11-04 01:34:47 [launcher.py:195] Route: /inference/v1/abort_requests, Methods: POST
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     172.17.0.1:38656 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.17.0.1:38660 - "POST /tokenize HTTP/1.1" 200 OK
+INFO:     172.17.0.1:38668 - "POST /tokenize HTTP/1.1" 200 OK
+INFO:     172.17.0.1:38678 - "POST /tokenize HTTP/1.1" 200 OK
+INFO:     172.17.0.1:38694 - "POST /tokenize HTTP/1.1" 200 OK
+INFO:     172.17.0.1:38702 - "POST /tokenize HTTP/1.1" 200 OK
+INFO:     172.17.0.1:38708 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter49fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 8192, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] [fused_moe] using 1stage (kernelName1='_ZN5aiter49fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128E', kernelName2=nan) for ('gfx942', 304, 8192, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+[aiter] LoadKernel: _ZN5aiter49fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128.co
+[aiter] LoadKernel: _ZN5aiter49fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128E hsaco: /usr/local/lib/python3.12/dist-packages/aiter_meta/hsa//gfx942/fmoe/silu/fmoe_bf16_blockscaleFp8_g1u1_novs_silu_1tg_32x128.co
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:34:56 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _qsa_prepare_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:34:57 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _qsa_mqa_paged_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:34:57 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _expand_qsa_indices_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:34:57 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _qsa_sparse_paged_gqa_splitk_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 160
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 4096, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:34:58 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _fused_post_conv_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+[aiter] run_1stage = True, xbf16 = False, ksplit = 0 q_type = QuantType.per_1x128 block_m = 32 use_nt = False, estimated_m_per_expert = 160
+[aiter] [fused_moe] using 1stage default for ('gfx942', 304, 4096, 2560, 640, 256, 10, <ActivationType.Silu: 0>, 'torch.bfloat16', 'torch.float8_e4m3fnuz', 'torch.float8_e4m3fnuz', 'QuantType.per_1x128', True, False) 
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:34:58 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _compute_local_logits_stats_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:34:58 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _rejection_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=116) WARNING 11-04 01:34:59 [jit_monitor.py:140] Triton kernel JIT compilation during inference: _resample_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+INFO:     172.17.0.1:49090 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     172.17.0.1:49098 - "POST /tokenize HTTP/1.1" 200 OK
+INFO:     172.17.0.1:49102 - "POST /tokenize HTTP/1.1" 200 OK
+INFO:     172.17.0.1:49118 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 11-04 01:35:07 [loggers.py:335] Engine 000: Avg prompt throughput: 1092.2 tokens/s, Avg generation throughput: 30.9 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.7%, Prefix cache hit rate: 1.7%
+(APIServer pid=1) INFO 11-04 01:35:07 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 1.66, Accepted throughput: 5.76 tokens/s, Drafted throughput: 26.08 tokens/s, Accepted: 124 tokens, Drafted: 561 tokens, Per-position acceptance rate: 0.289, 0.214, 0.160, Avg Draft acceptance rate: 22.1%
+INFO:     172.17.0.1:50298 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+Memory access fault by GPU node-3 (Agent handle: 0x26a45f30) on address 0x74b84e000000. Reason: Unknown.
+Memory access fault by GPU node-2 (Agent handle: 0x42699250) on address 0x71064f600000. Reason: Unknown.
+GPU coredump: execvp failed: No such file or directory
+GPU coredump: execvp failed: No such file or directory
+Failed to write program header to pipe: Broken pipe
+GPU coredump: handler exited with error (status: 1)
+GPU core dump failed
+Failed to write program header to pipe: Broken pipe
+GPU coredump: handler exited with error (status: 1)
+GPU core dump failed
+(APIServer pid=1) INFO 11-04 01:35:17 [loggers.py:335] Engine 000: Avg prompt throughput: 26485.8 tokens/s, Avg generation throughput: 15.6 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 2.9%, Prefix cache hit rate: 48.9%
+(APIServer pid=1) INFO 11-04 01:35:17 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.42, Accepted throughput: 10.90 tokens/s, Drafted throughput: 13.50 tokens/s, Accepted: 109 tokens, Drafted: 135 tokens, Per-position acceptance rate: 0.933, 0.889, 0.600, Avg Draft acceptance rate: 80.7%
+(EngineCore pid=84) ERROR 11-04 01:35:20 [multiproc_executor.py:315] Worker proc VllmWorker-1 died unexpectedly (exit code: None), shutting down executor.
+(EngineCore pid=84) INFO 11-04 01:35:20 [multiproc_executor.py:479] [shutdown] Executor: waiting for worker exit count=2
+(EngineCore pid=84) INFO 11-04 01:35:24 [multiproc_executor.py:486] [shutdown] Executor: all workers exited gracefully
+(EngineCore pid=84) ERROR 11-04 01:35:24 [dump_input.py:72] Dumping input data for V1 LLM engine (v0.32.0) with config: model='/models/qwen3.8-flash-next-fp8', speculative_config=SpeculativeConfig(method='mtp', model='/models/qwen3.8-flash-next-fp8', num_spec_tokens=3), tokenizer='/models/qwen3.8-flash-next-fp8', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=1000000, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=fp8, quantization_config=None, enforce_eager=False, aux_output_config=AuxOutputConfig(enable_return_routed_experts=False, max_bytes=None), kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='qwen3', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, custom_histogram_buckets=None, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=qwen3.8-flash-next, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['+quant_fp8', '+quant_fp8', '+grouped_topk', '+sparse_attn_indexer', 'none', '+quant_fp8', '+quant_fp8', '+quant_fp8', '+sparse_attn_indexer', '+quant_fp8'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::qwen4_exp_ple_short_conv', 'vllm::qwen4_exp_qsa_with_output', 'vllm::qwen4_exp_qsa_prepare_with_output', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'cudagraph_decoder_replay': True, 'decoder_replay_cudagraph_capture_sizes': [], 'decoder_replay_trim_threshold': 768, 'compile_sizes': [], 'compile_ranges_endpoints': [32768], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_DECODE_ONLY: (2, 0)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'fuse_allreduce_rms': True, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_mla_dual_rms_norm': True, 'fuse_rope_kvcache': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['aiter', 'native'], fused_add_rms_norm=['aiter', 'native'], gelu_and_mul_sparse=['native']), enable_flashinfer_autotune=True, enable_rocm_segmented_attn_autotune=False, enable_cutedsl_warmup=True, enable_jit_warmup=True, moe_backend='auto', sparse_indexer_topk_backend='auto', linear_backend='auto', linear_backend_per_quant=None), 
+(EngineCore pid=84) ERROR 11-04 01:35:24 [dump_input.py:79] Dumping scheduler output for model execution: SchedulerOutput(scheduled_new_reqs=[], scheduled_cached_reqs=CachedRequestData(req_ids=['chatcmpl-8badeb28841d1c29-9661813f'],resumed_req_ids=set(),new_token_ids_lens=[],all_token_ids_lens={},new_block_ids=[None],num_computed_tokens=[262145],num_output_tokens=[104]), num_scheduled_tokens={chatcmpl-8badeb28841d1c29-9661813f: 4}, total_num_scheduled_tokens=4, scheduled_spec_decode_tokens={chatcmpl-8badeb28841d1c29-9661813f: [-1, -1, -1]}, scheduled_encoder_inputs={}, finished_req_ids=[], free_encoder_mm_hashes=[], scheduled_encoder_input_stats=null, preempted_req_ids=[], has_structured_output_requests=false, pending_structured_output_tokens=false, num_invalid_spec_tokens=null, kv_connector_metadata=null, has_sync_kv_loads=false, aux_output_connector_metadata=null, ec_connector_metadata=null, ec_manager_metadata=null, new_block_ids_to_zero=null, kv_cache_block_copies=null, kv_connector_block_state=null, num_spec_tokens_to_schedule=3, num_common_prefix_blocks=[])
+(EngineCore pid=84) ERROR 11-04 01:35:24 [dump_input.py:81] Dumping scheduler stats: SchedulerStats(num_running_reqs=1, num_waiting_reqs=0, num_skipped_waiting_reqs=0, num_kv_fetch_reqs_by_stage={'waiting_to_start': 0, 'in_progress': 0, 'completed_waiting': 0}, step_counter=0, current_wave=0, kv_cache_usage=0.02913715389568572, iteration_details=None, prefix_cache_stats=PrefixCacheStats(reset=False, requests=0, queries=0, hits=0, preempted_requests=0, preempted_queries=0, preempted_hits=0, hits_by_source={}), connector_prefix_cache_stats=None, kv_cache_eviction_events=[], spec_decoding_stats=None, kv_connector_stats=None, ec_connector_stats=None, waiting_lora_adapters={}, running_lora_adapters={}, cudagraph_stats=None, perf_stats=None)
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512] EngineCore encountered a fatal error.
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512] Traceback (most recent call last):
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1496, in run_engine_core
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     engine_core.run_busy_loop()
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/fault_tolerance/engine_core_sentinel.py", line 178, in run_with_fault_tolerance
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     busy_loop_func(self)
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1555, in run_busy_loop
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     self._process_engine_step()
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1606, in _process_engine_step
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     outputs, model_executed = self.step_fn()
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]                               ^^^^^^^^^^^^^^
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 773, in step_with_batch_queue
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     model_output = future.result()
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]                    ^^^^^^^^^^^^^^^
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 99, in result
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     return super().result()
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]            ^^^^^^^^^^^^^^^^
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     return self.__get_result()
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]            ^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     raise self._exception
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 103, in _wait_for_response
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     response = self.aggregate(self.get_response())
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]                               ^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 440, in get_response
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     status, result = mq.dequeue(timeout=dequeue_timeout)
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/shm_broadcast.py", line 971, in dequeue
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     with self.acquire_read(timeout, indefinite) as buf:
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     return next(self.gen)
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]            ^^^^^^^^^^^^^^
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/shm_broadcast.py", line 867, in acquire_read
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512]     raise RuntimeError("cancelled")
+(EngineCore pid=84) ERROR 11-04 01:35:24 [core.py:1512] RuntimeError: cancelled
+(APIServer pid=1) ERROR 11-04 01:35:24 [async_llm.py:906] AsyncLLM output_handler failed.
+(APIServer pid=1) ERROR 11-04 01:35:24 [async_llm.py:906] Traceback (most recent call last):
+(APIServer pid=1) ERROR 11-04 01:35:24 [async_llm.py:906]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/async_llm.py", line 849, in output_handler
+(APIServer pid=1) ERROR 11-04 01:35:24 [async_llm.py:906]     outputs = await engine_core.get_output_async()
+(APIServer pid=1) ERROR 11-04 01:35:24 [async_llm.py:906]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1) ERROR 11-04 01:35:24 [async_llm.py:906]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 1235, in get_output_async
+(APIServer pid=1) ERROR 11-04 01:35:24 [async_llm.py:906]     raise self._format_exception(outputs) from None
+(APIServer pid=1) ERROR 11-04 01:35:24 [async_llm.py:906] vllm.v1.engine.exceptions.EngineDeadError: EngineCore encountered an issue. See stack trace (above) for the root cause.
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929] Error in chat completion stream generator.
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929] Traceback (most recent call last):
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]   File "/usr/local/lib/python3.12/dist-packages/vllm/entrypoints/openai/chat_completion/serving.py", line 527, in chat_completion_stream_generator
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]     async for res in result_generator:
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/async_llm.py", line 767, in generate
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]     out = q.get_nowait() or await q.get()
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]                             ^^^^^^^^^^^^^
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/output_processor.py", line 92, in get
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]     raise output
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/async_llm.py", line 849, in output_handler
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]     outputs = await engine_core.get_output_async()
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core_client.py", line 1235, in get_output_async
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929]     raise self._format_exception(outputs) from None
+(APIServer pid=1) ERROR 11-04 01:35:24 [serving.py:929] vllm.v1.engine.exceptions.EngineDeadError: EngineCore encountered an issue. See stack trace (above) for the root cause.
+Process EngineCore:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1514, in run_engine_core
+    raise e
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1496, in run_engine_core
+    engine_core.run_busy_loop()
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/fault_tolerance/engine_core_sentinel.py", line 178, in run_with_fault_tolerance
+    busy_loop_func(self)
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1555, in run_busy_loop
+    self._process_engine_step()
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1606, in _process_engine_step
+    outputs, model_executed = self.step_fn()
+                              ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 773, in step_with_batch_queue
+    model_output = future.result()
+                   ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 99, in result
+    return super().result()
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 103, in _wait_for_response
+    response = self.aggregate(self.get_response())
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 440, in get_response
+    status, result = mq.dequeue(timeout=dequeue_timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/shm_broadcast.py", line 971, in dequeue
+    with self.acquire_read(timeout, indefinite) as buf:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/shm_broadcast.py", line 867, in acquire_read
+    raise RuntimeError("cancelled")
+RuntimeError: cancelled
+(APIServer pid=1) INFO 11-04 01:35:26 [utils.py:628] [shutdown] Process manager: send sigterm to process EngineCore
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1]
+(APIServer pid=1) INFO 11-04 01:35:27 [core_client.py:770] [shutdown] MPClient: start timeout=0s
+(APIServer pid=1) INFO 11-04 01:35:27 [core_client.py:772] [shutdown] MPClient: stopping engine manager
+(APIServer pid=1) INFO 11-04 01:35:27 [core_client.py:774] [shutdown] MPClient: engine manager stopped
+(APIServer pid=1) INFO 11-04 01:35:27 [core_client.py:775] [shutdown] MPClient: cleaning up background resources
+(APIServer pid=1) INFO 11-04 01:35:27 [core_client.py:777] [shutdown] MPClient: complete
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 2 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 3 leaked shared_memory objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

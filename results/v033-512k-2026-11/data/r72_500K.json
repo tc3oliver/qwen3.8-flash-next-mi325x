@@ -1,0 +1,38 @@
+{
+ "label": "r72_500K",
+ "target": 500000,
+ "seed": 500000,
+ "expected": {
+  "ALPHA": "onyx-7750-dune",
+  "BRAVO": "russet-6614-kelp",
+  "CHARLIE": "russet-6644-basalt",
+  "PRESSURE": "12.054"
+ },
+ "start": "2026-11-16 03:55:54",
+ "prompt_tokens": 499763,
+ "ttft_s": 23.030340909957886,
+ "total_s": 23.108579397201538,
+ "prefill_tok_s": 21700.199834380735,
+ "answer": "ALPHA=onyx-7750-dune, BRAVO=russet-6614-kelp, CHARLIE=russet-6644-basalt, PRESSURE=12.054 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 52,
+ "decode_req": {
+  "ttft_s": 0.789482593536377,
+  "completion_tokens": 256,
+  "tpot_ms": 3.8347889395321118,
+  "decode_tok_s": 260.77054455101546,
+  "cached_tokens": 499200
+ },
+ "hbm_peak_gib": {
+  "4": 250.019775390625,
+  "5": 244.88465881347656,
+  "6": 244.8846778869629,
+  "7": 250.01964569091797
+ },
+ "end": "2026-11-16 03:56:19"
+}

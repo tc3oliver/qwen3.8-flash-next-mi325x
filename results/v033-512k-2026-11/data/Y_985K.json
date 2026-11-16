@@ -1,0 +1,38 @@
+{
+ "label": "Y_985K",
+ "target": 985000,
+ "seed": 985000,
+ "expected": {
+  "ALPHA": "umber-7868-velvet",
+  "BRAVO": "onyx-1795-velvet",
+  "CHARLIE": "xenon-8665-yarrow",
+  "PRESSURE": "84.194"
+ },
+ "start": "2026-11-16 01:49:52",
+ "prompt_tokens": 984294,
+ "ttft_s": 58.87770462036133,
+ "total_s": 58.92063760757446,
+ "prefill_tok_s": 16717.601447723686,
+ "answer": "ALPHA=umber-7868-velvet, BRAVO=onyx-1795-velvet, CHARLIE=xenon-8665-yarrow, PRESSURE=84.194 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 52,
+ "decode_req": {
+  "ttft_s": 1.9010405540466309,
+  "completion_tokens": 256,
+  "tpot_ms": 3.8146346223120595,
+  "decode_tok_s": 262.14830488637926,
+  "cached_tokens": 982400
+ },
+ "hbm_peak_gib": {
+  "4": 253.23992156982422,
+  "5": 102.12197875976562,
+  "6": 102.12197494506836,
+  "7": 253.23980331420898
+ },
+ "end": "2026-11-16 01:50:54"
+}

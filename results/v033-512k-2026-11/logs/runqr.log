@@ -1,0 +1,9 @@
+QR start 02:48:15
+QR lc1m-qr45 healthy 02:52:36 | GPU KV cache size: 9,913,399 tokens, Maximum concurrency for 524,288 tokens per request: 18.91x | env=256 | Using ['QUICK_REDUCE', 'CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0'
+QR lc1m-qr67 healthy 02:52:36 | GPU KV cache size: 9,913,399 tokens, Maximum concurrency for 524,288 tokens per request: 18.91x | env=256 | Using ['QUICK_REDUCE', 'CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0'
+QR functional: 9/9 passed -> data/functional-qr.json | GSM8K zero-shot subset n=1319 accuracy=0.9674
+QR stage500K:   answer='ALPHA=onyx-7750-dune, BRAVO=russet-6614-kelp, CHARLIE=russet-6644-basalt, PRESSURE=12.054 bar' [QR_500K] decode: ttft(2nd)=0.9s tokens=256 TPOT=4.2 ms (239.7 tok/s) 
+QR sim: {'requests': 1222, 'errors': 0, 'ttft_cold_p50': 14.635, 'ttft_warm_p50': 0.55, 'ttft_warm_p95': 1.01, 'warm_cache_hit': 0.9511}
+QR lc1m-qr45 faults=0 running=true
+QR lc1m-qr67 faults=0 running=true
+QR all-done 03:09:07

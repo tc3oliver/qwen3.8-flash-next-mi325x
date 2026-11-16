@@ -1,0 +1,3 @@
+R1_dictoverride faults=2 | "label": "below" "total_positions": 201129 "ok": true "label": "crossing" "ok": false
+R2_configyarn BOOT_DIED
+R2_configyarn faults=0 | 

@@ -1,0 +1,16 @@
+FAIL {"finish": "tool_calls", "next_calls": ["write_file"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8192 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8192 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8192 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["read_file"], "content": ""}
+http://127.0.0.1:8192 pass 9 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8192 pass 9 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["write_file"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8192 pass 8 / 10

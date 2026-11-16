@@ -1,0 +1,32 @@
+{
+ "label": "A_256K",
+ "target": 262144,
+ "seed": 262144,
+ "expected": {
+  "ALPHA": "lantern-2331-yarrow",
+  "BRAVO": "onyx-3900-juniper",
+  "CHARLIE": "russet-1336-velvet",
+  "PRESSURE": "29.997"
+ },
+ "start": "2026-11-04 01:35:02",
+ "prompt_tokens": 262042,
+ "ttft_s": 13.300252437591553,
+ "total_s": 13.423061609268188,
+ "prefill_tok_s": 19702.03206514863,
+ "answer": "ALPHA=lantern-2331-yarrow, BRAVO=onyx-3900-juniper, CHARLIE=russet-1336-velvet, PRESSURE=29.997 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 53,
+ "error": "TypeError(\"'NoneType' object is not subscriptable\")",
+ "hbm_peak_gib": {
+  "4": 240.72028732299805,
+  "5": 0.2792625427246094,
+  "6": 0.2792625427246094,
+  "7": 240.72017669677734
+ },
+ "end": "2026-11-04 01:35:24"
+}

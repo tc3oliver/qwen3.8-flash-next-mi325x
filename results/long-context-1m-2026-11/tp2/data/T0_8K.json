@@ -1,0 +1,38 @@
+{
+ "label": "T0_8K",
+ "target": 8192,
+ "seed": 8192,
+ "expected": {
+  "ALPHA": "umber-3020-xenon",
+  "BRAVO": "russet-2583-velvet",
+  "CHARLIE": "willow-8086-harbor",
+  "PRESSURE": "67.609"
+ },
+ "start": "2026-11-04 01:02:35",
+ "prompt_tokens": 7861,
+ "ttft_s": 2.4277851581573486,
+ "total_s": 2.861176013946533,
+ "prefill_tok_s": 3237.930660209809,
+ "answer": "ALPHA=umber-3020-xenon, BRAVO=russet-2583-velvet, CHARLIE=willow-8086-harbor, PRESSURE=67.609 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 53,
+ "decode_req": {
+  "ttft_s": 0.17539262771606445,
+  "completion_tokens": 256,
+  "tpot_ms": 8.41819538789637,
+  "decode_tok_s": 118.7903052758545,
+  "cached_tokens": 4800
+ },
+ "hbm_peak_gib": {
+  "4": 235.18299102783203,
+  "5": 0.27925872802734375,
+  "6": 0.27925872802734375,
+  "7": 235.18286895751953
+ },
+ "end": "2026-11-04 01:02:41"
+}

@@ -1,0 +1,4 @@
+[QR_500K] built 11645 lines, 1209419 chars
+[QR_500K] prompt_tokens=499763 ttft=24.3s prefill=20538 tok/s correct={'ALPHA': True, 'BRAVO': True, 'CHARLIE': True, 'PRESSURE': True}
+  answer='ALPHA=onyx-7750-dune, BRAVO=russet-6614-kelp, CHARLIE=russet-6644-basalt, PRESSURE=12.054 bar'
+[QR_500K] decode: ttft(2nd)=0.9s tokens=256 TPOT=4.2 ms (239.7 tok/s)

@@ -1,0 +1,8 @@
+# scripts/det3.py <base> 20 on idle servers (functional.py's short_prompt_determinism loop x20; distinct answers per prompt counted over all 60 calls).
+# 262K = v0.32.0 + d02, YARN=0, HIP 4+5; 512K = v0.32.0 + d02, YARN=2, QRMAX=256, DEPLOY=1, HIP 6+7. Console output as printed:
+http://127.0.0.1:8199 runs 20 failed 3
+   Opposite of hot? 57 'The most common opposite of **hot** is **cold**.\n\nHowever, depending on the context, other opposites might be more appropriate:\n\n*   **'
+   Opposite of hot? 3 'The most common opposite of **hot** is **cold**.\n\nHowever, depending on the context, other antonyms might be more appropriate:\n\n*   **'
+http://127.0.0.1:8200 runs 20 failed 2
+   Opposite of hot? 58 'The most common opposite of **hot** is **cold**.\n\nHowever, depending on the context, other opposites might be more appropriate:\n\n*   **'
+   Opposite of hot? 2 'The most common opposite of **hot** is **cold**.\n\nHowever, depending on the context, other antonyms might be more appropriate:\n\n*   **'

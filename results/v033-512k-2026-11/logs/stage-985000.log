@@ -1,0 +1,4 @@
+[Y_985K] built 22941 lines, 2381503 chars
+[Y_985K] prompt_tokens=984294 ttft=58.9s prefill=16718 tok/s correct={'ALPHA': True, 'BRAVO': True, 'CHARLIE': True, 'PRESSURE': True}
+  answer='ALPHA=umber-7868-velvet, BRAVO=onyx-1795-velvet, CHARLIE=xenon-8665-yarrow, PRESSURE=84.194 bar'
+[Y_985K] decode: ttft(2nd)=1.9s tokens=256 TPOT=3.8 ms (262.1 tok/s)

@@ -1,0 +1,38 @@
+{
+ "label": "DEP_300K",
+ "target": 300000,
+ "seed": 300000,
+ "expected": {
+  "ALPHA": "juniper-1422-lantern",
+  "BRAVO": "pewter-9466-willow",
+  "CHARLIE": "ember-4690-xenon",
+  "PRESSURE": "75.854"
+ },
+ "start": "2026-11-16 03:13:27",
+ "prompt_tokens": 299923,
+ "ttft_s": 14.432804584503174,
+ "total_s": 14.549807071685791,
+ "prefill_tok_s": 20780.645801997074,
+ "answer": "ALPHA=juniper-1422-lantern, BRAVO=pewter-9466-willow, CHARLIE=ember-4690-xenon, PRESSURE=75.854 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 52,
+ "decode_req": {
+  "ttft_s": 0.5491485595703125,
+  "completion_tokens": 256,
+  "tpot_ms": 4.279843498678769,
+  "decode_tok_s": 233.65340352017782,
+  "cached_tokens": 297600
+ },
+ "hbm_peak_gib": {
+  "4": 244.30227661132812,
+  "5": 0.27933502197265625,
+  "6": 0.27933502197265625,
+  "7": 244.30215454101562
+ },
+ "end": "2026-11-16 03:13:43"
+}

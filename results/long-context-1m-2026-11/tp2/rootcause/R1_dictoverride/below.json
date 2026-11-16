@@ -1,0 +1,12 @@
+{
+ "label": "below",
+ "target": 200000,
+ "decode": 1500,
+ "prompt_tokens": 199629,
+ "completion_tokens": 1500,
+ "total_positions": 201129,
+ "ttft_s": 11.339339017868042,
+ "ok": true,
+ "crossed_262144": false,
+ "tpot_ms": 4.602709955338878
+}

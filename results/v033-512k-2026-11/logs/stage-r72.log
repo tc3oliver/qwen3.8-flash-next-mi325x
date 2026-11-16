@@ -1,0 +1,4 @@
+[r72_500K] built 11645 lines, 1209419 chars
+[r72_500K] prompt_tokens=499763 ttft=23.0s prefill=21700 tok/s correct={'ALPHA': True, 'BRAVO': True, 'CHARLIE': True, 'PRESSURE': True}
+  answer='ALPHA=onyx-7750-dune, BRAVO=russet-6614-kelp, CHARLIE=russet-6644-basalt, PRESSURE=12.054 bar'
+[r72_500K] decode: ttft(2nd)=0.8s tokens=256 TPOT=3.8 ms (260.8 tok/s)

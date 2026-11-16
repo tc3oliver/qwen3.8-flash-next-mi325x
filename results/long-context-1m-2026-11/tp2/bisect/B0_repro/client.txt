@@ -1,0 +1,8 @@
+[T0_8K] built 180 lines, 19154 chars
+[T0_8K] prompt_tokens=7861 ttft=2.5s prefill=3165 tok/s correct={'ALPHA': True, 'BRAVO': True, 'CHARLIE': True, 'PRESSURE': True}
+  answer='ALPHA=umber-3020-xenon, BRAVO=russet-2583-velvet, CHARLIE=willow-8086-harbor, PRESSURE=67.609 bar'
+[T0_8K] decode: ttft(2nd)=0.2s tokens=256 TPOT=8.9 ms (111.8 tok/s)
+[A_256K] built 6105 lines, 634018 chars
+[A_256K] prompt_tokens=262042 ttft=13.3s prefill=19702 tok/s correct={'ALPHA': True, 'BRAVO': True, 'CHARLIE': True, 'PRESSURE': True}
+  answer='ALPHA=lantern-2331-yarrow, BRAVO=onyx-3900-juniper, CHARLIE=russet-1336-velvet, PRESSURE=29.997 bar'
+[A_256K] ERROR TypeError("'NoneType' object is not subscriptable")

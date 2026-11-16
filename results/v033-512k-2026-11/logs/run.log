@@ -1,0 +1,10 @@
+PHASE 1-start 01:27:29
+PHASE 1-done-b: 9/9 passed -> data/functional-b.json | GSM8K zero-shot subset n=1319 accuracy=0.9568
+PHASE 1-done-y: 9/9 passed -> data/functional-y.json | GSM8K zero-shot subset n=1319 accuracy=0.9621
+PHASE 2-start 01:32:20
+PHASE 2-done-y: {'requests': 1175, 'errors': 0, 'ttft_cold_p50': 18.188, 'ttft_warm_p50': 0.605, 'ttft_warm_p95': 1.056, 'warm_cache_hit': 0.9509, 'mean_prompt_tokens_warm': 93222}
+PHASE 2-done-b: {'requests': 1230, 'errors': 0, 'ttft_cold_p50': 14.171, 'ttft_warm_p50': 0.534, 'ttft_warm_p95': 0.902, 'warm_cache_hit': 0.9516, 'mean_prompt_tokens_warm': 93795}
+PHASE 3-start 01:49:20
+PHASE 3-done-500000:   answer='ALPHA=onyx-7750-dune, BRAVO=russet-6614-kelp, CHARLIE=russet-6644-basalt, PRESSURE=12.054 bar' [Y_500K] decode: ttft(2nd)=1.0s tokens=256 TPOT=3.9 ms (257.2 tok/s) 
+PHASE 3-done-985000:   answer='ALPHA=umber-7868-velvet, BRAVO=onyx-1795-velvet, CHARLIE=xenon-8665-yarrow, PRESSURE=84.194 bar' [Y_985K] decode: ttft(2nd)=1.9s tokens=256 TPOT=3.8 ms (262.1 tok/s) 
+PHASE all-done 01:50:54

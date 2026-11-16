@@ -1,0 +1,21 @@
+FAIL {"finish": "tool_calls", "next_calls": ["write_file", "run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["write_file"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": "The test run completed with one failure. Let me investigate the details."}
+http://127.0.0.1:8194 pass 7 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": "The run finished with one failure. Let me look at the relevant files to understand it."}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": "The run surfaced a failure. Let me look at the relevant files to understand it."}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8194 pass 7 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests", "read_file"], "content": ""}
+http://127.0.0.1:8194 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["read_file", "glob_files"], "content": ""}
+http://127.0.0.1:8194 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["read_file"], "content": ""}
+http://127.0.0.1:8194 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["read_file"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["read_file", "glob_files"], "content": "The test run completed with one failure. Let me look at the relevant code to explain what's going on."}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8194 pass 7 / 10

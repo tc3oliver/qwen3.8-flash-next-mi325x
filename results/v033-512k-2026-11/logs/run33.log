@@ -1,0 +1,17 @@
+V33 start 03:46:41
+V33 lc1m-r10 healthy 03:50:22 | 0.33.0 | Model loading took 91.22 GiB | GPU KV cache size: 9,892,368 tokens
+V33 lc1m-r72 healthy 03:50:32 | 0.33.0 | Model loading took 91.22 GiB | GPU KV cache size: 9,952,458 tokens
+V33 r10 functional: 8/9 passed ->  fails: tool_result_loop  {"fini | GSM8K zero-shot subset n=1319 accuracy=0.9644
+V33 r10 long_probe: prompt_tokens 301048 time 13.8 ok True 'ALPHA=amber-4821-kelp, BRAVO=onyx-7730-dune' crossing: positions 301560 time 2.2 
+V33 r72 functional: 8/9 passed ->  fails: short_prompt_determinism | GSM8K zero-shot subset n=1319 accuracy=0.9613
+V33 r10 stage500K: ttft=22.8s correct={'ALPHA': True, 'BRAVO': True, 'CHARLIE': True, 'PRESSURE': True} TPOT=3.2 ms 
+V33 r72 long_probe: prompt_tokens 301048 time 14.0 ok True 'ALPHA=amber-4821-kelp, BRAVO=onyx-7730-dune' crossing: positions 301560 time 2.5 
+V33 r10 decode: c1 {"n": 1, "agg_tok_s": 229.9, "per_stream_tok_s": 240.6, "ttft_mean_s": 0.1} c16 {"n": 16, "agg_tok_s": 1921.6, "per_stream_tok_s": 130.4, "ttft_mean_s": 0.201}
+V33 r72 stage500K: ttft=23.0s correct={'ALPHA': True, 'BRAVO': True, 'CHARLIE': True, 'PRESSURE': True} TPOT=3.8 ms 
+V33 r72 decode: c1 {"n": 1, "agg_tok_s": 184.8, "per_stream_tok_s": 191.8, "ttft_mean_s": 0.102} c16 {"n": 16, "agg_tok_s": 1715.5, "per_stream_tok_s": 115.6, "ttft_mean_s": 0.207}
+V33 r10 sim: {'requests': 1254, 'errors': 0, 'ttft_cold_p50': 14.03, 'ttft_warm_p50': 0.489, 'ttft_warm_p95': 0.842, 'warm_cache_hit': 0.9685}
+V33 r10 faults=0 running=true
+V33 r72 sim: {'requests': 1241, 'errors': 0, 'ttft_cold_p50': 14.391, 'ttft_warm_p50': 0.491, 'ttft_warm_p95': 0.818, 'warm_cache_hit': 0.9683}
+V33 r72 faults=0 running=true
+V33 b32 decode: c1 {"n": 1, "agg_tok_s": 160.7, "per_stream_tok_s": 166.3, "ttft_mean_s": 0.109} c16 {"n": 16, "agg_tok_s": 1317.1, "per_stream_tok_s": 107.4, "ttft_mean_s": 1.211}
+V33 all-done 04:17:48

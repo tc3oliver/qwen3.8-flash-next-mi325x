@@ -1,0 +1,4 @@
+[P512_500K] built 11645 lines, 1209419 chars
+[P512_500K] prompt_tokens=499763 ttft=24.9s prefill=20078 tok/s correct={'ALPHA': True, 'BRAVO': True, 'CHARLIE': True, 'PRESSURE': True}
+  answer='ALPHA=onyx-7750-dune, BRAVO=russet-6614-kelp, CHARLIE=russet-6644-basalt, PRESSURE=12.054 bar'
+[P512_500K] decode: ttft(2nd)=1.3s tokens=256 TPOT=4.3 ms (233.8 tok/s)

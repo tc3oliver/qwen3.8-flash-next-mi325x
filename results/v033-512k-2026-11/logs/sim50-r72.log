@@ -1,0 +1,17 @@
+{
+ "users": 50,
+ "minutes": 15.0,
+ "think_mean_s": 30,
+ "requests": 1241,
+ "errors": 0,
+ "error_samples": [],
+ "ttft_cold_p50": 14.391,
+ "ttft_cold_p95": 36.177,
+ "ttft_warm_p50": 0.491,
+ "ttft_warm_p95": 0.818,
+ "ttft_warm_p99": 3.69,
+ "warm_cache_hit": 0.9683,
+ "warm_turns_with_cache_miss_gt50pct": 0,
+ "mean_prompt_tokens_warm": 94433,
+ "replica_requests": {}
+}
