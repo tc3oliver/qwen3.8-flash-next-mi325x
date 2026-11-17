@@ -1,5 +1,6 @@
 .env
 runtime/
+deploy/config/model-yarn512/
 logs/
 __pycache__/
 *.pyc

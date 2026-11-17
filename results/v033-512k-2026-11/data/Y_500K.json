@@ -1,0 +1,38 @@
+{
+ "label": "Y_500K",
+ "target": 500000,
+ "seed": 500000,
+ "expected": {
+  "ALPHA": "onyx-7750-dune",
+  "BRAVO": "russet-6614-kelp",
+  "CHARLIE": "russet-6644-basalt",
+  "PRESSURE": "12.054"
+ },
+ "start": "2026-11-16 01:49:21",
+ "prompt_tokens": 499763,
+ "ttft_s": 26.95787239074707,
+ "total_s": 27.043476343154907,
+ "prefill_tok_s": 18538.666284789484,
+ "answer": "ALPHA=onyx-7750-dune, BRAVO=russet-6614-kelp, CHARLIE=russet-6644-basalt, PRESSURE=12.054 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 52,
+ "decode_req": {
+  "ttft_s": 1.0116589069366455,
+  "completion_tokens": 256,
+  "tpot_ms": 3.8878300610710594,
+  "decode_tok_s": 257.2128884986577,
+  "cached_tokens": 497600
+ },
+ "hbm_peak_gib": {
+  "4": 253.23992156982422,
+  "5": 253.3547821044922,
+  "6": 253.3547706604004,
+  "7": 253.23980331420898
+ },
+ "end": "2026-11-16 01:49:50"
+}

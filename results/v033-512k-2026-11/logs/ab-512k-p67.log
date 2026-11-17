@@ -1,0 +1,22 @@
+FAIL {"finish": "tool_calls", "next_calls": ["write_file", "run_tests"], "content": "The suite ran, but one test failed. Let me look at the details."}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": "The test run completed with one failure. Let me look into the code to understand the cause."}
+http://127.0.0.1:8193 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["write_file"], "content": "The run finished with a failure. Let me inspect the source before reporting, so I can tell you whether the bug is in the code or the test."}
+http://127.0.0.1:8193 pass 6 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["read_file", "glob_files"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests", "read_file"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": "Let me get a bit more context on that failure before reporting."}
+http://127.0.0.1:8193 pass 7 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": "The run finished with one failure. Let me look into it."}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": "The suite ran with one failure. Let me look at the details."}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8193 pass 7 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests", "write_file"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["write_file", "run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8193 pass 6 / 10
+http://127.0.0.1:8193 pass 10 / 10

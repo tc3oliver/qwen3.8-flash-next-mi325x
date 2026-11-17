@@ -1,0 +1,38 @@
+{
+ "label": "C_768K",
+ "target": 786432,
+ "seed": 786432,
+ "expected": {
+  "ALPHA": "nickel-4338-pewter",
+  "BRAVO": "basalt-5177-yarrow",
+  "CHARLIE": "juniper-4722-pewter",
+  "PRESSURE": "83.768"
+ },
+ "start": "2026-11-03 09:59:02",
+ "prompt_tokens": 786454,
+ "ttft_s": 41.255687952041626,
+ "total_s": 41.56031775474548,
+ "prefill_tok_s": 19062.92293354135,
+ "answer": "ALPHA=nickel-4338-pewter, BRAVO=basalt-5177-yarrow, CHARLIE=juniper-4722-pewter, PRESSURE=83.768 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 53,
+ "decode_req": {
+  "ttft_s": 1.2959494590759277,
+  "completion_tokens": 256,
+  "tpot_ms": 7.65067362317852,
+  "decode_tok_s": 130.70744476282388,
+  "cached_tokens": null
+ },
+ "hbm_peak_gib": {
+  "4": 233.73868942260742,
+  "5": 233.55105590820312,
+  "6": 233.6916847229004,
+  "7": 233.69168853759766
+ },
+ "end": "2026-11-03 09:59:47"
+}

@@ -1,0 +1,22 @@
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["read_file", "glob_files"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8191 pass 6 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": "The test run completed with one failure. Let me look into it."}
+http://127.0.0.1:8191 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["write_file"], "content": "The suite reports one failure. Since the runner only returns a summary, let me inspect the actual files to diagnose it."}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests", "write_file"], "content": "The run shows one failure. Let me look at the test file and the implementation to understand what's going on."}
+FAIL {"finish": "tool_calls", "next_calls": ["read_file"], "content": ""}
+http://127.0.0.1:8191 pass 7 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests", "run_tests"], "content": "Let me gather a bit more detail on the failure."}
+http://127.0.0.1:8191 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests", "write_file"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8191 pass 7 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["write_file"], "content": "The suite ran with one failure. Let me look at the relevant code to understand it."}
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8191 pass 8 / 10

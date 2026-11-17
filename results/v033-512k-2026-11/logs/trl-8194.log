@@ -1,0 +1,7 @@
+http://127.0.0.1:8194 pass 10 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": "The run surfaced a failure. Let me look at the relevant files to report something useful."}
+FAIL {}
+http://127.0.0.1:8194 pass 8 / 10
+FAIL {"finish": "tool_calls", "next_calls": ["run_tests"], "content": ""}
+http://127.0.0.1:8194 pass 9 / 10
+http://127.0.0.1:8194 pass 10 / 10

@@ -1,0 +1,5 @@
+# Startup lines copied from `docker logs` while the containers were up (containers removed afterwards; full logs not kept).
+# Arms whose console logs do record these lines (512, qr, dep, r10, r72) are in ../logs/run512.log, runqr.log, rundeploy.log, run33.log.
+y   (1M, YaRN factor 4, v0.32.0, HIP 4+5):  Model loading took 91.28 GiB | Available KV cache memory: 138.67 GiB | GPU KV cache size: 10,184,210 tokens, Maximum concurrency for 1,000,000 tokens per request: 10.18x
+b   (262K, v0.32.0, HIP 6+7):               Model loading took 91.19 GiB | Available KV cache memory: 139.28 GiB | GPU KV cache size: 9,363,500 tokens, Maximum concurrency for 262,144 tokens per request: 35.72x
+# Fault grep (memory access fault|HSA_STATUS|hipError|EngineDead) after the y stages: 0 matches, container running, restarts 0. Not checked for b.

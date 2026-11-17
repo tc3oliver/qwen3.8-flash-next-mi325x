@@ -1,0 +1,2 @@
+{"label": "below", "target": 200000, "decode": 1500, "prompt_tokens": 199629, "completion_tokens": 1500, "total_positions": 201129, "ttft_s": 11.282691478729248, "ok": true, "crossed_262144": false, "tpot_ms": 4.536174630387136}
+{"label": "crossing", "target": 262000, "decode": 1500, "prompt_tokens": 261770, "completion_tokens": 1500, "total_positions": 263270, "ttft_s": 13.333291292190552, "ok": true, "crossed_262144": true, "tpot_ms": 4.407451023969593}

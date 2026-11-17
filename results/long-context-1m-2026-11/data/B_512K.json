@@ -1,0 +1,38 @@
+{
+ "label": "B_512K",
+ "target": 524288,
+ "seed": 524288,
+ "expected": {
+  "ALPHA": "harbor-2306-dune",
+  "BRAVO": "xenon-1383-velvet",
+  "CHARLIE": "velvet-7996-sable",
+  "PRESSURE": "35.696"
+ },
+ "start": "2026-11-03 09:58:28",
+ "prompt_tokens": 523464,
+ "ttft_s": 25.870660066604614,
+ "total_s": 26.188145875930786,
+ "prefill_tok_s": 20233.886520573105,
+ "answer": "ALPHA=harbor-2306-dune, BRAVO=xenon-1383-velvet, CHARLIE=velvet-7996-sable, PRESSURE=35.696 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 52,
+ "decode_req": {
+  "ttft_s": 0.8702328205108643,
+  "completion_tokens": 256,
+  "tpot_ms": 7.6482193142760035,
+  "decode_tok_s": 130.74938870194546,
+  "cached_tokens": null
+ },
+ "hbm_peak_gib": {
+  "4": 233.73868942260742,
+  "5": 233.55105590820312,
+  "6": 233.6916847229004,
+  "7": 233.69168853759766
+ },
+ "end": "2026-11-03 09:58:58"
+}

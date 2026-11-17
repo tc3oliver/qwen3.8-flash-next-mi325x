@@ -1,0 +1,38 @@
+{
+ "label": "D2_985K_seed7",
+ "target": 985000,
+ "seed": 7,
+ "expected": {
+  "ALPHA": "harbor-1525-umber",
+  "BRAVO": "nickel-2915-ember",
+  "CHARLIE": "umber-6685-fjord",
+  "PRESSURE": "11.140"
+ },
+ "start": "2026-11-03 10:01:05",
+ "prompt_tokens": 985165,
+ "ttft_s": 54.42869234085083,
+ "total_s": 54.680054903030396,
+ "prefill_tok_s": 18100.104147837403,
+ "answer": "ALPHA=harbor-1525-umber, BRAVO=nickel-2915-ember, CHARLIE=umber-6685-fjord, PRESSURE=11.140 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 50,
+ "decode_req": {
+  "ttft_s": 1.4611587524414062,
+  "completion_tokens": 256,
+  "tpot_ms": 7.651114931293563,
+  "decode_tok_s": 130.69990569739508,
+  "cached_tokens": null
+ },
+ "hbm_peak_gib": {
+  "4": 233.73875427246094,
+  "5": 233.55112075805664,
+  "6": 233.6917495727539,
+  "7": 233.69175338745117
+ },
+ "end": "2026-11-03 10:02:03"
+}

@@ -1,0 +1,38 @@
+{
+ "label": "QR_500K",
+ "target": 500000,
+ "seed": 500000,
+ "expected": {
+  "ALPHA": "onyx-7750-dune",
+  "BRAVO": "russet-6614-kelp",
+  "CHARLIE": "russet-6644-basalt",
+  "PRESSURE": "12.054"
+ },
+ "start": "2026-11-16 02:57:22",
+ "prompt_tokens": 499763,
+ "ttft_s": 24.33367109298706,
+ "total_s": 24.41659951210022,
+ "prefill_tok_s": 20537.92040215548,
+ "answer": "ALPHA=onyx-7750-dune, BRAVO=russet-6614-kelp, CHARLIE=russet-6644-basalt, PRESSURE=12.054 bar",
+ "correct": {
+  "ALPHA": true,
+  "BRAVO": true,
+  "CHARLIE": true,
+  "PRESSURE": true
+ },
+ "completion_tokens": 52,
+ "decode_req": {
+  "ttft_s": 0.8848831653594971,
+  "completion_tokens": 256,
+  "tpot_ms": 4.172091390572342,
+  "decode_tok_s": 239.68794218163484,
+  "cached_tokens": 497600
+ },
+ "hbm_peak_gib": {
+  "4": 244.34947204589844,
+  "5": 250.13970947265625,
+  "6": 250.13970184326172,
+  "7": 244.34934616088867
+ },
+ "end": "2026-11-16 02:57:49"
+}
